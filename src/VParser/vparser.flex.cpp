@@ -1,6 +1,6 @@
-#line 2 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.flex.cpp"
+#line 2 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.flex.cpp"
 
-#line 4 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.flex.cpp"
+#line 4 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.flex.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -663,8 +663,8 @@ static int yy_more_len = 0;
 #define YY_MORE_ADJ (yy_more_len)
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
-#line 2 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 1 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
+#line 4 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 
 /*
  *  Lexical specification for MATLAB 
@@ -693,7 +693,7 @@ void yyinsert_comma_in_input(const int);
 
 
 
-#line 697 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.flex.cpp"
+#line 697 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.flex.cpp"
 
 #define INITIAL 0
 #define TRANSPOSE_STATE 1
@@ -877,11 +877,11 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 55 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 57 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 
 
 
-#line 885 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.flex.cpp"
+#line 885 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.flex.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -972,63 +972,63 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 58 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 60 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("FOR", FOR);
                                 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 63 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 65 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("END", END);
                                 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 68 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 70 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("IF", IF);
                                 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 73 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 75 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("ELSEIF", ELSEIF);
                                 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 78 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 80 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("ELSE", ELSE);
                                 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 83 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 85 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("GLOBAL", GLOBAL);
                                 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 88 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 90 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("WHILE", WHILE);
                                 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 93 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 95 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("FUNCTION", FUNCTION);
                                 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 98 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 100 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("RETURN", RETURN);
                                 }
@@ -1038,14 +1038,14 @@ case 10:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 103 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 105 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   yymore();
                                 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 108 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 110 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("','", ',');
@@ -1053,7 +1053,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 114 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 116 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("';'", ';');
@@ -1061,7 +1061,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 120 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 122 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   // TODO: THIS PART HAS BEEN MODIFIED
 
@@ -1091,7 +1091,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 148 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 150 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(TRANSPOSE_STATE);
 
@@ -1107,7 +1107,7 @@ case 15:
 (yy_c_buf_p) = yy_cp -= 2;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 159 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 161 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   yylval.integerVal = atoi(yytext);
 
@@ -1119,7 +1119,7 @@ case 16:
 (yy_c_buf_p) = yy_cp -= 2;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 166 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 168 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   yylval.integerVal = atoi(yytext);
                                   Return("INTEGER", INTEGER);
@@ -1127,7 +1127,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 172 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 174 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(TRANSPOSE_STATE);
 
@@ -1139,7 +1139,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 182 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 184 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(TRANSPOSE_STATE);
 
@@ -1150,21 +1150,21 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 191 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 193 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 195 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 197 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                 }
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 199 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 201 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   GlobalValues::gSourceLine++;
                                 }
@@ -1172,7 +1172,7 @@ YY_RULE_SETUP
 case 22:
 /* rule 22 can match eol */
 YY_RULE_SETUP
-#line 204 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 206 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   GlobalValues::gSourceLine += yyleng;
@@ -1181,7 +1181,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 211 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 213 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(TRANSPOSE_STATE);
 
@@ -1196,7 +1196,7 @@ YY_RULE_SETUP
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
-#line 223 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 225 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   GlobalValues::gSourceLine++;
@@ -1206,7 +1206,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 231 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 233 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   //cout<<"\nPragma detected!\n";
 
@@ -1216,49 +1216,49 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 238 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 240 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("PARALLEL", PARALLEL);
                                 }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 242 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 244 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("STRUCTURAL", STRUCTURAL);
                                 }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 246 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 248 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("DPU", DPU);
                                 }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 250 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 252 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("CDPU", CDPU);
                                 }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 254 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 256 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("RFILE", RFILE);
                                 }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 258 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 260 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("MEMORY", MEMORY);
                                 }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 262 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 264 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
 								  BEGIN(INITIAL);
                                   Return("ADDRESS_VAR", ADDRESS_VAR);
@@ -1266,7 +1266,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 267 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 269 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
 								  //BEGIN(INITIAL);
                                   Return("RACCU_VAR", RACCU_VAR);
@@ -1274,7 +1274,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 272 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 274 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
 								  BEGIN(INITIAL);
                                   Return("TEMP_VAR", TEMP_VAR);
@@ -1282,7 +1282,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 277 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 279 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
 								  BEGIN(INITIAL);
                                   Return("RESOURCE_SHARING_BEGIN", RESOURCE_SHARING_BEGIN);
@@ -1290,7 +1290,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 282 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 284 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
 								  BEGIN(INITIAL);
                                   Return("RESOURCE_SHARING_END", RESOURCE_SHARING_END);
@@ -1298,7 +1298,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 287 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 289 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   yylval.integerVal = atoi(yytext);
                                   yyinsert_comma_in_input(INTEGER);
@@ -1308,14 +1308,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 294 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 296 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("'<'", '<');
                                 }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 298 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 300 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   //BEGIN(INITIAL);
                                   Return("'>'", '>');
@@ -1323,21 +1323,21 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 303 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 305 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("','", ',');
                                 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 307 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 309 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("'='", '=');
                                 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 311 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 313 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
 								  BEGIN(INITIAL);
                                   Return("'['", '[');
@@ -1345,77 +1345,77 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 316 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 318 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("']'", ']');
                                 }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 320 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 322 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("DPUMODE", DPUMODE);
                                 }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 324 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 326 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("DPUOUT", DPUOUT);
                                 }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 328 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 330 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("DPU_SATURATION", DPU_SATURATION);
                                 }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 332 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 334 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("ADDRESS", ADDRESS_REG);
 								}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 336 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 338 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("EVENDIST", EVENDIST);
                                 }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 340 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 342 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("FULLDIST", FULLDIST);
                                 }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 344 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 346 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("CUSTOMDIST", CUSTOMDIST);
                                 }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 348 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 350 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("VAR_INPUT", VAR_INPUT);
                                 }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 352 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 354 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("VAR_OUTPUT", VAR_OUTPUT);
                                 }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 356 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 358 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
 								  BEGIN(INITIAL);
                                   Return("MEM_ADDRESS", MEM_ADDRESS);
@@ -1423,7 +1423,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 362 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 364 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("CONSTROW", CONSTROW);
@@ -1431,7 +1431,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 368 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 370 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("CONSTCOL", CONSTCOL);
@@ -1439,7 +1439,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 374 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 376 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("CONSTDIMENSION", CONSTDIMENSION);
@@ -1447,7 +1447,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 380 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 382 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("CONSTPARALLELISM", CONSTPARALLELISM);
@@ -1455,7 +1455,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 386 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 388 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("AND", AND);
@@ -1463,7 +1463,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 392 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 394 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("OR", OR);
@@ -1471,7 +1471,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 398 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 400 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("LTHAN", LTHAN);
@@ -1479,7 +1479,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 404 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 406 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("LTHANE", LTHANE);
@@ -1487,7 +1487,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 410 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 412 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("GTHAN", GTHAN);
@@ -1495,7 +1495,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 416 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 418 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("GTHANE", GTHANE);
@@ -1503,7 +1503,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 422 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 424 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("EQUAL", EQUAL);
@@ -1511,7 +1511,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 428 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 430 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("UNEQUAL", UNEQUAL);
@@ -1519,7 +1519,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 434 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 436 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("':'", ':');
@@ -1527,7 +1527,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 440 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 442 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("'+'", '+');
@@ -1535,7 +1535,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 446 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 448 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("'-'", '-');
@@ -1543,7 +1543,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 452 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 454 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("MMUL", MMUL);
@@ -1551,7 +1551,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 458 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 460 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("EMUL", EMUL);
@@ -1559,7 +1559,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 464 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 466 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("MDIV", MDIV);
@@ -1567,7 +1567,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 470 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 472 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("EDIV", EDIV);
@@ -1575,7 +1575,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 476 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 478 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("MLEFTDIV", MLEFTDIV);
@@ -1583,7 +1583,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 482 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 484 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("ELEFTDIV", ELEFTDIV);
@@ -1591,14 +1591,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 488 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 490 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("LEXERROR", LEXERROR);
                                 }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 493 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 495 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(TRANSPOSE_STATE);
                                   Return("TRANSPOSE", TRANSPOSE);
@@ -1606,7 +1606,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 499 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 501 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("EPOWER", EPOWER);
@@ -1614,7 +1614,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 505 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 507 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("MPOWER", MPOWER);
@@ -1622,7 +1622,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 511 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 513 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("NOT", NOT);
@@ -1630,21 +1630,21 @@ YY_RULE_SETUP
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 517 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 519 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("CTRANSPOSE", CTRANSPOSE);
                                 }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 522 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 524 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("LEXERROR", LEXERROR);
                                 }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 527 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 529 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   if (gBracketDepth)
                                   {
@@ -1712,7 +1712,7 @@ case 83:
 (yy_c_buf_p) = yy_cp = yy_bp + 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 589 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 591 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   gBracketDepth--;
@@ -1721,7 +1721,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 596 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 598 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(TRANSPOSE_STATE);
                                   gBracketDepth--;
@@ -1730,7 +1730,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 603 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 605 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("'('", '(');
@@ -1738,7 +1738,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 609 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 611 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(TRANSPOSE_STATE);
                                   Return("')'", ')');
@@ -1746,7 +1746,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 615 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 617 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   BEGIN(INITIAL);
                                   Return("'='", '=');
@@ -1754,17 +1754,17 @@ YY_RULE_SETUP
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 621 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 623 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 {
                                   Return("LEXERROR", LEXERROR);
                                 }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 626 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 628 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 ECHO;
 	YY_BREAK
-#line 1768 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.flex.cpp"
+#line 1768 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.flex.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(TRANSPOSE_STATE):
 case YY_STATE_EOF(PRAGMA_STATE):
@@ -2760,7 +2760,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 626 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.l"
+#line 628 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.l"
 
 
 

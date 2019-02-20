@@ -1,3 +1,20 @@
+// Copyright (C) 2019 Yu Yang
+//
+// This file is part of Vesyla.
+//
+// Vesyla is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Vesyla is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Vesyla.  If not, see <http://www.gnu.org/licenses/>.
+
 #include "MatlabGenerator.hpp"
 namespace vesyla
 {
@@ -5,21 +22,21 @@ namespace filegen
 {
 void MatlabGenerator::generate(string directory_)
 {
-  gen_print_assign_statement(directory_ + "printAssignStatement.m");
-  gen_print_assign_prim_func1(directory_ + "printAssignStatementPrimFunc1.m");
-  gen_print_assign_prim_func2(directory_ + "printAssignStatementPrimFunc2.m");
-  gen_print_assign_prim_func3(directory_ + "printAssignStatementPrimFunc3.m");
-  gen_print_assign_wt(directory_ + "printAssignStatementWT.m");
-  gen_print_for_statement(directory_ + "printForStatement.m");
-  gen_print_result(directory_ + "printResult.m");
-  gen_print_storage_transfer(directory_ + "printStorageTransfer.m");
-  gen_print_value(directory_ + "printValue.m");
-  gen_print_variable(directory_ + "printVariable.m");
+	gen_print_assign_statement(directory_ + "printAssignStatement.m");
+	gen_print_assign_prim_func1(directory_ + "printAssignStatementPrimFunc1.m");
+	gen_print_assign_prim_func2(directory_ + "printAssignStatementPrimFunc2.m");
+	gen_print_assign_prim_func3(directory_ + "printAssignStatementPrimFunc3.m");
+	gen_print_assign_wt(directory_ + "printAssignStatementWT.m");
+	gen_print_for_statement(directory_ + "printForStatement.m");
+	gen_print_result(directory_ + "printResult.m");
+	gen_print_storage_transfer(directory_ + "printStorageTransfer.m");
+	gen_print_value(directory_ + "printValue.m");
+	gen_print_variable(directory_ + "printVariable.m");
 }
 
 void MatlabGenerator::gen_print_assign_statement(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function printAssignStatement(fileID, op1Str, op1Idx, op1IdxStr, op1Val, op2Str, op2Idx, op2IdxStr, op2Val, outStr, outIdx, outIdxStr, outVal, operatorStr, isFixedPoint)
 
 	%fprintf(fileID, '\n\n{ %s(%d) = %s(%d) %s %s(%d) --->', outStr, outIdx, op1Str, op1Idx, operatorStr, op2Str, op2Idx);
@@ -37,13 +54,13 @@ function printAssignStatement(fileID, op1Str, op1Idx, op1IdxStr, op1Val, op2Str,
 	end
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 void MatlabGenerator::gen_print_assign_prim_func1(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function printAssignStatementPrimFunc1(fileID, funcName, op1Str, op1Idx, op1IdxStr, op1Val, outStr, outIdx, outIdxStr, outVal, isFixedPoint)
 
 	if length(op1Idx) == 1
@@ -82,13 +99,13 @@ function printAssignStatementPrimFunc1(fileID, funcName, op1Str, op1Idx, op1IdxS
 	end
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 void MatlabGenerator::gen_print_assign_prim_func2(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function printAssignStatementPrimFunc2(fileID, funcName, op1Str, op1Idx, op1IdxStr, op1Val, op2Str, op2Idx, op2IdxStr, op2Val, outStr, outIdx, outIdxStr, outVal, operatorStr, isFixedPoint)
 
 	if length(op1Idx) == 1
@@ -129,13 +146,13 @@ function printAssignStatementPrimFunc2(fileID, funcName, op1Str, op1Idx, op1IdxS
 	end
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 void MatlabGenerator::gen_print_assign_prim_func3(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function printAssignStatementPrimFunc3(fileID, funcName, op1Str, op1Idx, op1IdxStr, op1Val, op2Str, op2Idx, op2IdxStr, op2Val, op3Str, op3Idx, op3IdxStr, op3Val, outStr, outIdx, outIdxStr, outVal, operatorStr1, operatorStr2, isFixedPoint)
 
 	if length(op1Idx) == 1
@@ -178,13 +195,13 @@ function printAssignStatementPrimFunc3(fileID, funcName, op1Str, op1Idx, op1IdxS
 	end
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 void MatlabGenerator::gen_print_assign_wt(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function printAssignStatementWT(fileID, outStr, outIdx, outIdxStr, outVal, isFixedPoint)
 
 	if length(outIdx) == 1
@@ -198,26 +215,26 @@ function printAssignStatementWT(fileID, outStr, outIdx, outIdxStr, outVal, isFix
 	fprintf(fileID, '\n---------------');
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 void MatlabGenerator::gen_print_for_statement(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function printForStatement(fileID, varStr, value)
 
   fprintf(fileID,'\n\n------------------| For Statement %s=%d |-------------------', varStr, value);
 
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 void MatlabGenerator::gen_print_result(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function printResult(fileID, outStr, outIdx, outVal, isFixedPoint)
 
 	if length(outIdx) == 1
@@ -231,13 +248,13 @@ function printResult(fileID, outStr, outIdx, outVal, isFixedPoint)
 	end
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 void MatlabGenerator::gen_print_storage_transfer(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function printStorageTransfer(fileID, inStr, inIdx, inIdxStr, inVal, outStr, outIdx, outIdxStr, outVal)
 
 	fprintf(fileID, '\n!!! Storage Transfer !!!');
@@ -252,13 +269,13 @@ function printStorageTransfer(fileID, inStr, inIdx, inIdxStr, inVal, outStr, out
 
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 void MatlabGenerator::gen_print_value(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function str = printValue(value, isFixedPoint)
 
 	if isFixedPoint == 1
@@ -269,13 +286,13 @@ function str = printValue(value, isFixedPoint)
 
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 void MatlabGenerator::gen_print_variable(string filename_)
 {
-  string str = R"(
+	string str = R"(
 function printVariable(fileID, var_, varStr_, isFixedPoint_)
 
 	fprintf(fileID,'\n---------------------------------------------------------');
@@ -286,8 +303,8 @@ function printVariable(fileID, var_, varStr_, isFixedPoint_)
 	fprintf(fileID,'*********************************************************');
 end
 )";
-  ofstream ofs(filename_, ofstream::out);
-  ofs << str;
+	ofstream ofs(filename_, ofstream::out);
+	ofs << str;
 }
 
 } // namespace filegen

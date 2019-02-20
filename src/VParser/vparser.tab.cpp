@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 2 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:339  */
+#line 19 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:339  */
 
 
 /* 
@@ -155,7 +155,7 @@ std::vector<std::string> global_reference_list;
  */
 
 
-#line 159 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:339  */
+#line 159 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -175,8 +175,8 @@ std::vector<std::string> global_reference_list;
 
 /* In a future release of Bison, this section will be replaced
    by #include "vparser.tab.hpp".  */
-#ifndef YY_YY_HOME_HERENVARNO_PROJECTS_SILAGO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED
-# define YY_YY_HOME_HERENVARNO_PROJECTS_SILAGO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED
+#ifndef YY_YY_HOME_HERENVARNO_PROJECTS_GITR_SILAGO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED
+# define YY_YY_HOME_HERENVARNO_PROJECTS_GITR_SILAGO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -264,7 +264,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 101 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:355  */
+#line 118 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:355  */
 
           char* text;
           char* symbol;
@@ -317,7 +317,7 @@ union YYSTYPE
           struct _while_t* whileStatement;
         
 
-#line 321 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:355  */
+#line 321 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -330,11 +330,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_HERENVARNO_PROJECTS_SILAGO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED  */
+#endif /* !YY_YY_HOME_HERENVARNO_PROJECTS_GITR_SILAGO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 338 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:358  */
+#line 338 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -638,24 +638,24 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   256,   256,   261,   266,   274,   289,   290,   294,   295,
-     296,   300,   301,   305,   306,   307,   308,   312,   313,   316,
-     317,   318,   322,   327,   333,   342,   345,   352,   384,   404,
-     416,   421,   428,   431,   437,   439,   444,   453,   463,   473,
-     487,   497,   513,   528,   540,   543,   548,   550,   553,   556,
-     560,   563,   569,   572,   579,   604,   617,   625,   633,   640,
-     647,   653,   663,   669,   678,   688,   695,   700,   707,   717,
-     729,   744,   758,   757,   774,   781,   788,   795,   802,   811,
-     820,   826,   832,   838,   844,   850,   856,   862,   868,   874,
-     880,   886,   892,   898,   904,   910,   916,   922,   928,   934,
-     943,   954,   959,   970,   969,  1000,  1015,  1023,  1030,  1038,
-    1048,  1047,  1066,  1075,  1080,  1088,  1093,  1105,  1110,  1124,
-    1129,  1134,  1145,  1150,  1161,  1180,  1211,  1254,  1297,  1302,
-    1310,  1309,  1332,  1331,  1368,  1375,  1379,  1386,  1393,  1412,
-    1417,  1424,  1431,  1466,  1481,  1487,  1493,  1507,  1511,  1516,
-    1552,  1572,  1583,  1596,  1603,  1627,  1641,  1647,  1655,  1670,
-    1687,  1692,  1700,  1703,  1707,  1714,  1726,  1733,  1739,  1747,
-    1752
+       0,   273,   273,   278,   283,   291,   306,   307,   311,   312,
+     313,   317,   318,   322,   323,   324,   325,   329,   330,   333,
+     334,   335,   339,   344,   350,   359,   362,   369,   401,   421,
+     433,   438,   445,   448,   454,   456,   461,   470,   480,   490,
+     504,   514,   530,   545,   557,   560,   565,   567,   570,   573,
+     577,   580,   586,   589,   596,   621,   634,   642,   650,   657,
+     664,   670,   680,   686,   695,   705,   712,   717,   724,   734,
+     746,   761,   775,   774,   791,   798,   805,   812,   819,   828,
+     837,   843,   849,   855,   861,   867,   873,   879,   885,   891,
+     897,   903,   909,   915,   921,   927,   933,   939,   945,   951,
+     960,   971,   976,   987,   986,  1017,  1032,  1040,  1047,  1055,
+    1065,  1064,  1083,  1092,  1097,  1105,  1110,  1122,  1127,  1141,
+    1146,  1151,  1162,  1167,  1178,  1197,  1228,  1271,  1314,  1319,
+    1327,  1326,  1349,  1348,  1385,  1392,  1396,  1403,  1410,  1429,
+    1434,  1441,  1448,  1483,  1498,  1504,  1510,  1524,  1528,  1533,
+    1569,  1589,  1600,  1613,  1620,  1644,  1658,  1664,  1672,  1687,
+    1704,  1709,  1717,  1720,  1724,  1731,  1743,  1750,  1756,  1764,
+    1769
 };
 #endif
 
@@ -1693,31 +1693,31 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 257 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 274 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.FunctionDeclarationType) = root = (yyvsp[0].FunctionDeclarationType);
                       }
-#line 1701 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1701 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 262 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 279 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.FunctionDeclarationType) = root = (yyvsp[0].FunctionDeclarationType);
                       }
-#line 1709 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1709 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 267 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 284 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.FunctionDeclarationType) = root = 0;
                       }
-#line 1717 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1717 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 275 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 292 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("scriptMFile -> opt_delimiter statement_list", true);
 
@@ -1729,56 +1729,56 @@ yyreduce:
 
                         (yyval.FunctionDeclarationType) = mainProgram;
                       }
-#line 1733 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1733 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 323 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 340 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("statement_list -> statement");
                         (yyval.StatementLinkerType) = new StatementLinker((yyvsp[0].StatementType), 0);
 					  }
-#line 1742 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1742 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 328 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 345 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("statement_list -> statement empty_lines");
 
                         (yyval.StatementLinkerType) = new StatementLinker((yyvsp[-1].StatementType), 0);
                       }
-#line 1752 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1752 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 334 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 351 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("statement_list -> statement empty_lines statement_list");
 
                         (yyval.StatementLinkerType) = new StatementLinker((yyvsp[-2].StatementType), (yyvsp[0].StatementLinkerType));
 					  }
-#line 1762 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1762 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 342 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 359 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.PragmaType) = 0;
                       }
-#line 1770 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1770 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 346 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 363 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.PragmaType) = (yyvsp[0].PragmaType);
                       }
-#line 1778 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1778 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 353 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 370 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						printGrammar("C/DPU '[' argument_list ']'");
 						//cout << "\nC/DPU grammar";
@@ -1809,11 +1809,11 @@ yyreduce:
 
                         (yyval.PragmaType) = dpuPragma;
                       }
-#line 1813 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1813 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 385 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 402 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("RFILE '[' argument_list ']'");
                         //cout << "\nRFILE grammar";
@@ -1832,11 +1832,11 @@ yyreduce:
 
                         (yyval.PragmaType) = storagePragma;
                       }
-#line 1836 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1836 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 405 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 422 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						RaccuPragma * raccuPragma = CREATE_OBJECT(RaccuPragma);
 //! Yu Yang 2017-08-01
@@ -1847,55 +1847,55 @@ yyreduce:
 
 						(yyval.PragmaType) = raccuPragma;
 					  }
-#line 1851 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1851 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 417 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 434 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						(yyval.PragmaType) = CREATE_OBJECT(AddressPragma);
 					  }
-#line 1859 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1859 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 422 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 439 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						(yyval.PragmaType) = CREATE_OBJECT(TempVarPragma);
 					  }
-#line 1867 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1867 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 428 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 445 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						(yyval.RaccuOptionsType) = VIR::VirEnumerations::roNone;
 					  }
-#line 1875 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1875 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 432 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 449 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						(yyval.RaccuOptionsType) = VIR::VirEnumerations::roMemoryAddress;
 					  }
-#line 1883 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1883 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 438 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 455 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { (yyval.DPUPragmaType) = CREATE_OBJECT(DPUPragma); }
-#line 1889 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1889 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 440 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 457 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { (yyval.DPUPragmaType) = CREATE_OBJECT(DPUChainPragma); }
-#line 1895 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1895 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 444 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 461 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { 
 						DPUOptions * dpuOptions = new DPUOptions;
 						dpuOptions->dpuMode = 0;
@@ -1904,11 +1904,11 @@ yyreduce:
 
 						(yyval.DPUOptionsType) = dpuOptions;
 					  }
-#line 1908 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1908 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 454 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 471 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						DPUOptions * dpuOptions = new DPUOptions;
 						dpuOptions->dpuMode = 0;
@@ -1917,11 +1917,11 @@ yyreduce:
 
 						(yyval.DPUOptionsType) = dpuOptions;
 					  }
-#line 1921 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1921 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 464 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 481 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						DPUOptions * dpuOptions = new DPUOptions;
 						dpuOptions->dpuMode = 0;
@@ -1930,11 +1930,11 @@ yyreduce:
 
 						(yyval.DPUOptionsType) = dpuOptions;
 					  }
-#line 1934 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1934 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 474 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 491 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						DPUOptions * dpuOptions = new DPUOptions;
 
@@ -1944,11 +1944,11 @@ yyreduce:
 
 						(yyval.DPUOptionsType) = dpuOptions;
 					  }
-#line 1948 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1948 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 487 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 504 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						StorageOptions * storageOptions = new StorageOptions;
 
@@ -1958,11 +1958,11 @@ yyreduce:
 
 						(yyval.StorageOptionsType) = storageOptions;
 					  }
-#line 1962 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1962 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 498 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 515 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						StorageOptions * storageOptions = new StorageOptions;
 
@@ -1977,11 +1977,11 @@ yyreduce:
 
 						(yyval.StorageOptionsType) = storageOptions;
 					  }
-#line 1981 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1981 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 514 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 531 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						StorageOptions * storageOptions = new StorageOptions;
 
@@ -1995,11 +1995,11 @@ yyreduce:
 
 						(yyval.StorageOptionsType) = storageOptions;
 					  }
-#line 1999 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 1999 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 529 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 546 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						StorageOptions * storageOptions = new StorageOptions;
 
@@ -2009,77 +2009,77 @@ yyreduce:
 
 						(yyval.StorageOptionsType) = storageOptions;
 					  }
-#line 2013 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2013 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 541 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 558 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {	(yyval.VariableTypeE) = vtInput; }
-#line 2019 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2019 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 544 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 561 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { (yyval.VariableTypeE) = vtOutput; }
-#line 2025 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2025 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 548 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 565 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { (yyval.StorageDistributionType) = sdEvenDist; }
-#line 2031 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2031 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 551 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 568 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { (yyval.StorageDistributionType) = sdEvenDist; }
-#line 2037 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2037 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 554 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 571 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { (yyval.StorageDistributionType) = sdFullDist; }
-#line 2043 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2043 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 557 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 574 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { (yyval.StorageDistributionType) = sdCustomDist; }
-#line 2049 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2049 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 561 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 578 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { (yyval.StorageTypeE) = stRegFile; }
-#line 2055 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2055 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 564 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 581 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { (yyval.StorageTypeE) = stMemory; }
-#line 2061 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2061 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 569 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 586 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						(yyval.StatementType) = 0;
 					  }
-#line 2069 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2069 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 573 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 590 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         cout<<"\nStatement Type: command_form";
 
                         (yyval.StatementType) = (yyvsp[0].StatementType);
                       }
-#line 2079 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2079 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 580 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 597 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("statement -> sliceName assign_delimiter assignment_pragma\n");
                         
@@ -2103,11 +2103,11 @@ yyreduce:
 
                         (yyval.StatementType) = function_call_statement;
                       }
-#line 2107 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2107 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 605 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 622 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						printGrammar("statement -> assignment assign_delimiter assignment_pragma\n");
 						//cout<<"\nStatement Type: assignment";
@@ -2119,82 +2119,82 @@ yyreduce:
 
                         (yyval.StatementType) = (yyvsp[-2].StatementType);
                       }
-#line 2123 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2123 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 618 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 635 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("statement -> for_command\n");
                         //cout<<"\nStatement Type: for_command";
 
                         (yyval.StatementType) = (yyvsp[0].StatementType);
                       }
-#line 2134 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2134 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 626 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 643 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("statement -> if_command\n");
                         //cout<<"\nStatement Type: if_command";
 
                         (yyval.StatementType) = (yyvsp[0].StatementType);
                       }
-#line 2145 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2145 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 634 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 651 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         cout<<"\nStatement Type: global_command";
 
                         (yyval.StatementType) = (yyvsp[0].StatementType);
                       }
-#line 2155 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2155 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 641 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 658 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         cout<<"\nStatement Type: while_command";
 
                         (yyval.StatementType) = (yyvsp[0].StatementType);
                       }
-#line 2165 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2165 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 648 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 665 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         cout<<"\nStatement Type: return_command";
                         
                         (yyval.StatementType) = (yyvsp[0].StatementType);
                       }
-#line 2175 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2175 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 654 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 671 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("statement -> block_pragma\n");
                         //cout<<"\nStatement Type: block_pragma";
 
 						(yyval.StatementType) = (yyvsp[0].StatementType);
 					  }
-#line 2186 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2186 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 664 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 681 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						(yyval.StatementType) = (yyvsp[0].StatementType);
 					  }
-#line 2194 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2194 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 670 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 687 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						PragmaStatement * pragmaStatement = CREATE_OBJECT(PragmaStatement);
 
@@ -2203,11 +2203,11 @@ yyreduce:
 
 						(yyval.StatementType) = pragmaStatement;
 					  }
-#line 2207 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2207 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 679 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 696 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 						PragmaStatement * pragmaStatement = CREATE_OBJECT(PragmaStatement);
 
@@ -2216,35 +2216,35 @@ yyreduce:
 
 						(yyval.StatementType) = pragmaStatement;
 					  }
-#line 2220 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2220 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 689 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 706 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         // TODO: check what is this one
                       }
-#line 2228 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2228 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 696 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 713 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         // TODO: check what is this one
                       }
-#line 2236 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2236 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 701 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 718 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         // TODO: check what is this one
                       }
-#line 2244 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2244 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 708 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 725 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> INTEGER (" + to_string((yyvsp[0].integerVal)) + ")");
 
@@ -2253,11 +2253,11 @@ yyreduce:
 
                         (yyval.ExpressionType) = integer;
                       }
-#line 2257 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2257 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 718 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 735 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> DOUBLE (" + to_string((yyvsp[0].doubleVal)) + ")");
 
@@ -2268,11 +2268,11 @@ yyreduce:
 
                         (yyval.ExpressionType) = floatingPoint;
                       }
-#line 2272 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2272 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 730 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 747 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> IMAGINARY (" + to_string((yyvsp[0].imaginaryVal)) + ")");
 
@@ -2286,11 +2286,11 @@ yyreduce:
 
                         (yyval.ExpressionType) = complex;
                       }
-#line 2290 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2290 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 745 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 762 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> TEXT");
 
@@ -2302,21 +2302,21 @@ yyreduce:
 
                         (yyval.ExpressionType) = strLiteral;
                       }
-#line 2306 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2306 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 758 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 775 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> '(' parenthesis expr ')'");
 
                         gBracketDelimiter = (yyvsp[-1].delimiter);
                       }
-#line 2316 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2316 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 764 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 781 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         yyinsert_comma_in_input(')');
 
@@ -2326,51 +2326,51 @@ yyreduce:
 
                         (yyval.ExpressionType) = parExpression;
                       }
-#line 2330 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2330 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 775 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 792 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> reference");
 
                         (yyval.ExpressionType) = (yyvsp[0].NameType);
                       }
-#line 2340 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2340 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 782 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 799 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> matrix");
 
                         (yyval.ExpressionType) = (yyvsp[0].ArrayType);
                       }
-#line 2350 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2350 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 789 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 806 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr EPOWER expr");
 
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botEPower, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2360 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2360 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 796 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 813 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr MPOWER expr");
 
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botMPower, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2370 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2370 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 803 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 820 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr TRANSPOSE");
 
@@ -2378,11 +2378,11 @@ yyreduce:
 
                         (yyval.ExpressionType) = CREATE_UNARY_EXPR(uotTranspose, (yyvsp[-1].ExpressionType));
                       }
-#line 2382 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2382 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 812 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 829 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr CTRANSPOSE");
 
@@ -2390,191 +2390,191 @@ yyreduce:
 
                         (yyval.ExpressionType) = CREATE_UNARY_EXPR(uotCTranspose, (yyvsp[-1].ExpressionType));
                       }
-#line 2394 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2394 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 821 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 838 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> NOT expr");
                         (yyval.ExpressionType) = CREATE_UNARY_EXPR(uotNot, (yyvsp[0].ExpressionType));
                       }
-#line 2403 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2403 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 827 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 844 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> '+' expr %prec UNARYPLUS");
                         (yyval.ExpressionType) = CREATE_UNARY_EXPR(uotPlus, (yyvsp[0].ExpressionType));
                       }
-#line 2412 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2412 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 833 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 850 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> '-' expr %prec UNARYMINUS");
                         (yyval.ExpressionType) = CREATE_UNARY_EXPR(uotMinus, (yyvsp[0].ExpressionType));
                       }
-#line 2421 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2421 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 839 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 856 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr MMUL expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botMMul, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2430 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2430 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 845 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 862 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr EMUL expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botEMul, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2439 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2439 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 851 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 868 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr MDIV expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botMDiv, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2448 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2448 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 857 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 874 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr EDIV expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botEDiv, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2457 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2457 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 863 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 880 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr MLEFTDIV expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botMLeftDiv, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2466 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2466 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 869 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 886 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr ELEFTDIV expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botELeftDiv, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2475 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2475 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 89:
-#line 875 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 892 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr '+' expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botAdd, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2484 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2484 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 881 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 898 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr '-' expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botSub, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2493 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2493 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 91:
-#line 887 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 904 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> colon_expr");
                         (yyval.ExpressionType) = (yyvsp[0].RangeExpressionType);
                       }
-#line 2502 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2502 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 893 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 910 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr LTHAN expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botLessThan, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2511 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2511 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 899 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 916 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr LTHANE expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botLessOrEqual, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2520 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2520 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 905 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 922 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr GTHAN expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botGreaterThan, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2529 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2529 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 911 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 928 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr GTHANE expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botGreaterOrEqual, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2538 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2538 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 917 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 934 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr EQUAL expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botEqual, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2547 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2547 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 923 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 940 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr UNEQUAL expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botUnEqual, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2556 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2556 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 929 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 946 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr AND expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botAnd, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2565 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2565 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 935 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 952 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("expr -> expr OR expr");
                         (yyval.ExpressionType) = CREATE_BINARY_EXPR(botOr, (yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionType));
                       }
-#line 2574 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2574 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 943 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 960 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
 
                           printGrammar("parenthesis -> " + to_string(gBracketDelimiter));
@@ -2583,20 +2583,20 @@ yyreduce:
 
                           gBracketDelimiter = '(';
                       }
-#line 2587 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2587 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 955 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 972 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("reference -> identifier");
                         (yyval.NameType) = (yyvsp[0].IdentifierType);
                       }
-#line 2596 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2596 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 960 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 977 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("reference -> identifier '(' ')'");
                         SliceName *sliceName = CREATE_OBJECT(SliceName);
@@ -2606,20 +2606,20 @@ yyreduce:
                         sliceName->is_function_call=true;
                         (yyval.NameType) = sliceName; 
                       }
-#line 2610 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2610 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 970 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 987 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("reference -> identifier '(' parenthesis argument_list ')'");
                         gBracketDelimiter = (yyvsp[-1].delimiter);
                       }
-#line 2619 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2619 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 975 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 992 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         yyinsert_comma_in_input(')');
 
@@ -2642,11 +2642,11 @@ yyreduce:
                         
                         (yyval.NameType) = sliceName; 
                       }
-#line 2646 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2646 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 1001 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1018 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         Identifier *identifier = CREATE_OBJECT(Identifier);
 
@@ -2658,61 +2658,61 @@ yyreduce:
 
                         (yyval.IdentifierType) = identifier;
                       }
-#line 2662 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2662 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 1016 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1033 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("argument_list -> ':'");
 
                         RangeExpression *rangeExpression = CREATE_FULL_RANGE_EXPRESSION;
                         (yyval.ExpressionLinkerType) = new ExpressionLinker(rangeExpression, 0);
                       }
-#line 2673 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2673 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 1024 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1041 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("argument_list -> expr");
 
                         (yyval.ExpressionLinkerType) = new ExpressionLinker((yyvsp[0].ExpressionType), 0);
                       }
-#line 2683 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2683 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 1031 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1048 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("argument_list -> ':' ',' argument_list");
 
                         RangeExpression *rangeExpression = CREATE_FULL_RANGE_EXPRESSION;
                         (yyval.ExpressionLinkerType) = new ExpressionLinker(rangeExpression, (yyvsp[0].ExpressionLinkerType));
                       }
-#line 2694 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2694 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 1039 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1056 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("argument_list -> expr ',' argument_list");
 
                         (yyval.ExpressionLinkerType) = new ExpressionLinker((yyvsp[-2].ExpressionType), (yyvsp[0].ExpressionLinkerType));
                       }
-#line 2704 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2704 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 110:
-#line 1048 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1065 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         gBracketDelimiter = (yyvsp[-1].delimiter);
                       }
-#line 2712 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2712 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 111:
-#line 1053 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1070 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         yyinsert_comma_in_input(']');
 
@@ -2722,49 +2722,49 @@ yyreduce:
 
                         (yyval.ArrayType) = array;
                       }
-#line 2726 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2726 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 112:
-#line 1066 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1083 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.delimiter) = gBracketDelimiter;
 
                         gBracketDelimiter = '[';
                       }
-#line 2736 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2736 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 113:
-#line 1075 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1092 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         // Create an empty array
                         (yyval.ArrayLinkerType) = new ArrayLinker(CREATE_OBJECT(Array), 0, 0);
                       }
-#line 2745 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2745 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 1081 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1098 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         Array *array = CREATE_OBJECT(Array);
                         fillArray((yyvsp[0].ArrayLinkerType), &array->elements());
 
                         (yyval.ArrayLinkerType) = new ArrayLinker(array, 0, 0);
                       }
-#line 2756 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2756 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 1089 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1106 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.ArrayLinkerType) = (yyvsp[-1].ArrayLinkerType);
                       }
-#line 2764 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2764 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 116:
-#line 1094 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1111 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         Array *array = CREATE_OBJECT(Array);
                         fillArray((yyvsp[0].ArrayLinkerType), &array->elements());
@@ -2775,19 +2775,19 @@ yyreduce:
 
                         (yyval.ArrayLinkerType) = linker;
                       }
-#line 2779 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2779 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 117:
-#line 1106 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1123 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.ArrayLinkerType) = (yyvsp[-1].ArrayLinkerType);
                       }
-#line 2787 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2787 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 118:
-#line 1111 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1128 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         Array *array = CREATE_OBJECT(Array);
                         fillArray((yyvsp[0].ArrayLinkerType), &array->elements());
@@ -2798,27 +2798,27 @@ yyreduce:
 
                         (yyval.ArrayLinkerType) = linker;
                       }
-#line 2802 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2802 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 119:
-#line 1125 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1142 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.ArrayLinkerType) = new ArrayLinker((yyvsp[0].ExpressionType), 0, 0);
                       }
-#line 2810 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2810 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 120:
-#line 1130 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1147 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.ArrayLinkerType) = (yyvsp[0].ArrayLinkerType);
                       }
-#line 2818 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2818 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 121:
-#line 1135 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1152 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         ArrayLinker *arrayLinker = new ArrayLinker((yyvsp[0].ExpressionType), (yyvsp[-1].ArrayLinkerType), 0);
 
@@ -2826,19 +2826,19 @@ yyreduce:
 
                         (yyval.ArrayLinkerType) = arrayLinker;
                       }
-#line 2830 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2830 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 122:
-#line 1146 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1163 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.ArrayLinkerType) = new ArrayLinker((yyvsp[-1].ExpressionType), 0, 0);
                       }
-#line 2838 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2838 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 123:
-#line 1151 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1168 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         ArrayLinker *arrayLinker = new ArrayLinker((yyvsp[-1].ExpressionType), (yyvsp[-2].ArrayLinkerType), 0);
 
@@ -2846,11 +2846,11 @@ yyreduce:
 
                         (yyval.ArrayLinkerType) = arrayLinker;
                       }
-#line 2850 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2850 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 124:
-#line 1162 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1179 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         RangeExpression *rangeExpression = CREATE_OBJECT(RangeExpression);
 
@@ -2869,11 +2869,11 @@ yyreduce:
 
                         (yyval.RangeExpressionType) = rangeExpression;
                       }
-#line 2873 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2873 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 125:
-#line 1181 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1198 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         RangeExpression *rangeExpression = CREATE_OBJECT(RangeExpression);
 
@@ -2901,11 +2901,11 @@ yyreduce:
 
                         (yyval.RangeExpressionType) = rangeExpression;
                       }
-#line 2905 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2905 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 126:
-#line 1212 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1229 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         AssignmentStatement *assignStatement = CREATE_OBJECT(AssignmentStatement);
                         assignStatement->lhs().push_back((yyvsp[-2].NameType));
@@ -2948,11 +2948,11 @@ yyreduce:
 
                         (yyval.StatementType) = assignStatement;
                       }
-#line 2952 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2952 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 127:
-#line 1255 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1272 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         AssignmentStatement *assignStatement = CREATE_OBJECT(AssignmentStatement);
                         fillNameList((yyvsp[-3].NameLinkerType), &(assignStatement->lhs()));
@@ -2995,35 +2995,35 @@ yyreduce:
 
                         (yyval.StatementType) = assignStatement;
                       }
-#line 2999 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 2999 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 128:
-#line 1298 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1315 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         //$$ = build_expr_binary_op(ASSIGNMENTexpr, build_expr_MATRIX($1), $3);
                       }
-#line 3007 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3007 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 129:
-#line 1303 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1320 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         //$$ = build_expr_binary_op(ASSIGNMENTexpr, build_expr_MATRIX($1), $3);
                       }
-#line 3015 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3015 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 130:
-#line 1310 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1327 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         gBracketDelimiter = (yyvsp[-1].delimiter);
                       }
-#line 3023 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3023 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 131:
-#line 1314 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1331 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
                         expr_t** const singletons = (expr_t**)
@@ -3038,19 +3038,19 @@ yyreduce:
                         $$ = build_matrix_t(1, vectors);
                         */
                       }
-#line 3042 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3042 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 132:
-#line 1332 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1349 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         gBracketDelimiter = (yyvsp[-3].delimiter);
                       }
-#line 3050 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3050 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 133:
-#line 1336 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1353 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
                         var_expr_t* varExpr;
@@ -3079,44 +3079,44 @@ yyreduce:
                         dealloc_var_expr_t_list($5);
                         */
                       }
-#line 3083 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3083 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 134:
-#line 1368 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1385 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                           (yyval.delimiter) = gBracketDelimiter;
                           gBracketDelimiter = LD;
                       }
-#line 3092 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3092 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 135:
-#line 1376 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1393 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.NameLinkerType) = new NameLinker((yyvsp[0].NameType), 0);
                       }
-#line 3100 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3100 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 136:
-#line 1380 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1397 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.NameLinkerType) = new NameLinker((yyvsp[-2].NameType), (yyvsp[0].NameLinkerType));
                       }
-#line 3108 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3108 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 137:
-#line 1387 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1404 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.StatementType) = (yyvsp[-1].StatementType);
                       }
-#line 3116 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3116 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 138:
-#line 1394 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1411 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         ForStatement *forStatement = CREATE_OBJECT(ForStatement);
 
@@ -3132,35 +3132,35 @@ yyreduce:
 
                         (yyval.StatementType) = forStatement;
                       }
-#line 3136 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3136 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 139:
-#line 1413 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1430 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.ParallelModeType) = pmSequential;
                       }
-#line 3144 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3144 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 140:
-#line 1418 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1435 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.ParallelModeType) = pmParallel;
                       }
-#line 3152 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3152 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 141:
-#line 1425 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1442 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.StatementType) = (yyvsp[-1].StatementType);
                       }
-#line 3160 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3160 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 142:
-#line 1432 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1449 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         IfStatement *ifStatement;
 
@@ -3192,11 +3192,11 @@ yyreduce:
 
                         (yyval.StatementType) = ifStatement;
                       }
-#line 3196 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3196 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 143:
-#line 1467 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1484 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { 
 						// conditional mode (using DPU[0,0] as the processing unit)
                         
@@ -3210,29 +3210,29 @@ yyreduce:
 
                         (yyval.DPUPragmaType) = dpuPragma;
                       }
-#line 3214 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3214 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 144:
-#line 1482 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1499 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { 
                         (yyval.DPUPragmaType) = (yyvsp[-1].DPUPragmaType);
                       }
-#line 3222 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3222 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 145:
-#line 1488 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1505 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     { 
 						// structural mode
 						// return 0 in order to show that it is an structural if statement
 						(yyval.DPUPragmaType) = 0;
 					  }
-#line 3232 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3232 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 146:
-#line 1494 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1511 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         printGrammar("DPU '[' argument_list ']'");
                         //cout << "\nDPU grammar";
@@ -3243,27 +3243,27 @@ yyreduce:
 
                         (yyval.DPUPragmaType) = dpuPragma;
 					  }
-#line 3247 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3247 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 147:
-#line 1507 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1524 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.StatementLinkerType) = 0;
                       }
-#line 3255 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3255 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 148:
-#line 1512 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1529 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.StatementLinkerType) = (yyvsp[0].StatementLinkerType);
                       }
-#line 3263 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3263 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 149:
-#line 1517 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1534 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         IfStatement *ifStatement;
 
@@ -3296,11 +3296,11 @@ yyreduce:
                         (yyval.StatementLinkerType) = new StatementLinker(ifStatement, 0);
 
                       }
-#line 3300 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3300 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 150:
-#line 1553 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1570 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
                         global_t* const globalSt =
@@ -3317,11 +3317,11 @@ yyreduce:
                         $$ = statement;
                         */
                       }
-#line 3321 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3321 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 151:
-#line 1573 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1590 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
                         $$.entries = (char**) alloc_pointers(1);
@@ -3331,11 +3331,11 @@ yyreduce:
                         *($$.entries+$$.size-1) = strcpy(create_string(strlen($1)), $1);
                         */
                       }
-#line 3335 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3335 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 152:
-#line 1584 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1601 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
                         $$.entries = (char**) realloc_pointers((void*)($1.entries), $1.size+1);
@@ -3345,19 +3345,19 @@ yyreduce:
                         *($$.entries+$$.size-1) = strcpy(create_string(strlen($2)), $2);
                         */
                       }
-#line 3349 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3349 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 153:
-#line 1597 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1614 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.StatementType) = (yyvsp[-1].StatementType);
                       }
-#line 3357 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3357 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 154:
-#line 1604 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1621 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
                         statement_t* const statement = alloc_statement_t((statement_type)WHILEstatement);
@@ -3378,11 +3378,11 @@ yyreduce:
                         $$ = statement;
                         */
                       }
-#line 3382 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3382 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 155:
-#line 1628 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1645 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
                         statement_t* const statement = alloc_statement_t((statement_type)RETURNstatement);
@@ -3394,29 +3394,29 @@ yyreduce:
                         $$ = statement;
                         */
                       }
-#line 3398 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3398 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 156:
-#line 1642 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1659 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         FunctionName = (yyvsp[-1].symbol);
                         //$$ = $3;
                       }
-#line 3407 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3407 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 157:
-#line 1648 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1665 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         FunctionName = (yyvsp[-1].symbol);
                         //$$ = $2;
                       }
-#line 3416 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3416 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 158:
-#line 1656 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1673 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
 						            extern file* mfile;
@@ -3430,11 +3430,11 @@ yyreduce:
                         dealloc_var_expr_t_list($5);
                         */
                       }
-#line 3434 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3434 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 159:
-#line 1671 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1688 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
                         extern file* mfile;
@@ -3448,51 +3448,51 @@ yyreduce:
                         dealloc_var_expr_t_list($3);
                         */
                       }
-#line 3452 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3452 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 160:
-#line 1688 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1705 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         //$$ = alloc_var_expr_t($1);
                       }
-#line 3460 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3460 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 161:
-#line 1693 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1710 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.vexpression) = (yyvsp[-1].vexpression);
                       }
-#line 3468 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3468 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 162:
-#line 1700 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1717 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.vexpression) = 0;
                       }
-#line 3476 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3476 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 163:
-#line 1704 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1721 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.vexpression) = 0;
                       }
-#line 3484 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3484 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 164:
-#line 1708 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1725 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         (yyval.vexpression) = (yyvsp[-1].vexpression);
                       }
-#line 3492 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3492 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 165:
-#line 1715 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1732 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         /*
                         var_expr_t* const varExpr = alloc_var_expr_t($1);
@@ -3503,45 +3503,45 @@ yyreduce:
                         $$ = varExpr;
                         */
                       }
-#line 3507 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3507 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 166:
-#line 1727 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1744 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         //$$ = alloc_var_expr_t($1);
                       }
-#line 3515 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3515 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 167:
-#line 1734 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1751 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         //cpp_set_stmt_list((const statement_t*)$2);
                         //$$ = $2;
                       }
-#line 3524 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3524 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 168:
-#line 1740 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1757 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                         //cpp_set_stmt_list((const statement_t*)0);
                         (yyval.StatementType) = 0;
                       }
-#line 3533 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3533 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 169:
-#line 1748 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
+#line 1765 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1646  */
     {
                          yyerror("Lexical error!");
                        }
-#line 3541 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3541 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 3545 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
+#line 3545 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -3769,7 +3769,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 1756 "/home/herenvarno/Projects/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1906  */
+#line 1773 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1906  */
 
 
 static void yyerror(const char* message)
