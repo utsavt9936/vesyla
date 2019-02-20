@@ -1,0 +1,6 @@
+build/
+autotest/work
+autotest/test
+autotest/*.html
+autotest/*.xml
+/Debug/

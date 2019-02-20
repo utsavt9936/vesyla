@@ -1,0 +1,32 @@
+#include "ResourceSharingManager.hpp"
+
+namespace vesyla{
+namespace codegen{
+
+	void ResourceSharingManager::enableResourceSharingRegion(VIR::PragmaStatement * pragmaStatement_, bool isMapCreation_, bool goToNextMap_){
+	
+	static int resourceSharingNo = 0;
+
+	if(pragmaStatement_==NULL){
+		_isResourceSharingRegion = true;
+	}else{
+		if (pragmaStatement_->pragma()->blockProgramType() == bptResourceSharing)
+			_isResourceSharingRegion = pragmaStatement_->pragma()->isBlockBegin();
+	}
+
+	if (_isResourceSharingRegion && isMapCreation_)
+		_resourceSharingVariableMaps.push_back(ResourceSharingVariableMap());
+	else if (_isResourceSharingRegion && !isMapCreation_ && _resourceSharingVariableMaps.size() > 0)
+	{
+		if (goToNextMap_)
+			++resourceSharingNo;
+
+		_currResourceSharingVariableMap = & _resourceSharingVariableMaps[resourceSharingNo];
+	}
+
+	if (isMapCreation_)
+		_isResourceSharingRegion ? _resSharingInstructionManager.initializeInstructionLists(_drraCluster) :
+								   _resSharingInstructionManager.updateDrraInstructions(_drraCluster);
+
+}
+}

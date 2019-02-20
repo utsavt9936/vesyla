@@ -1,0 +1,5 @@
+<SilagoCells>
+	<cell name="DRRA" height="2" width="2" type="1" />
+	<cell name="DiMArch" height="3" width="2" type="2" />
+	<cell name="NoC" height="1" width="1" type="3" />
+</SilagoCells>

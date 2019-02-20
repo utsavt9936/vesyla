@@ -1,0 +1,85 @@
+#include "SysPath.hpp"
+
+namespace vesyla {
+namespace util {
+
+SysPath::SysPath() {
+	GlobalVar glv;
+
+	glv.puts("$CURR_DIR", curr_dir());
+	glv.puts("$HOME_DIR", home_dir());
+	glv.puts("$TEMP_DIR", temp_dir());
+	glv.puts("$CONF_DIR", conf_dir());
+	glv.puts("$PROG_DIR", prog_dir());
+}
+
+string SysPath::find_config_file(const string filename) {
+	GlobalVar glv;
+	string config_path;
+	string config_file;
+	glv.gets("$CURR_DIR", config_path);
+	config_file = config_path + filename;
+	if (boost::filesystem::exists(config_file)) {
+		return config_file;
+	} else {
+		glv.gets("$HOME_DIR", config_path);
+		config_file = config_path + ".vesyla/" + filename;
+		if (boost::filesystem::exists(config_file)) {
+			return config_file;
+		} else {
+			glv.gets("$CONF_DIR", config_path);
+			config_file = config_path + "vesyla/" + filename;
+			if (boost::filesystem::exists(config_file)) {
+				return config_file;
+			} else {
+				glv.gets("$PROG_DIR", config_path);
+				config_file = config_path + "config/" + filename;
+				if (boost::filesystem::exists(config_file)) {
+					return config_file;
+				} else {
+					return "";
+				}
+			}
+		}
+	}
+}
+
+string SysPath::curr_dir() {
+	boost::filesystem::path full_path(boost::filesystem::current_path());
+	return full_path.string() + "/";
+}
+
+string SysPath::home_dir() {
+	boost::filesystem::path full_path("~/");
+	return full_path.string();
+}
+
+string SysPath::temp_dir() {
+	boost::filesystem::path full_path("/tmp/");
+	return full_path.string();
+}
+
+string SysPath::conf_dir() {
+	boost::filesystem::path full_path("/conf/");
+	return full_path.string();
+}
+
+string SysPath::prog_dir() {
+	char szTmp[32];
+	char pBuf[128];
+	sprintf(szTmp, "/proc/%d/exe", getpid());
+	int bytes = readlink(szTmp, pBuf, 128);
+	if (bytes > 127) {
+		bytes = 127;
+	}
+	if (bytes >= 0)
+		pBuf[bytes] = '\0';
+	string path(pBuf);
+	boost::filesystem::path full_path(path);
+	full_path = boost::filesystem::canonical(
+			full_path.parent_path().parent_path());
+	return full_path.string() + "/";
+}
+
+}
+}

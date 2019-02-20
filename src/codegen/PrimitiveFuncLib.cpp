@@ -1,0 +1,100 @@
+#include "PrimitiveFuncLib.hpp"
+
+namespace vesyla{
+namespace codegen{
+
+void PrimitiveFuncLib::load(const string path){
+	using boost::property_tree::ptree;
+	ptree pt;
+	read_xml(path, pt);
+	
+	for(ptree::value_type &v : pt.get_child("PrimitiveFunctions")){
+		if(v.first=="func"){
+			string func_name = v.second.get<string>("<xmlattr>.name", "");
+			FuncConfig fc;
+			fc.mode = v.second.get<int>("<xmlattr>.mode", -1);
+			fc.exec_cycle = v.second.get<int>("<xmlattr>.exec_cycle", -1);
+			fc.reductive = v.second.get<bool>("<xmlattr>.reductive", false);
+			for(ptree::value_type &v1 : v.second.get_child("")){
+				if(v1.first=="in_port"){
+					int arg_pos = v1.second.get<int>("<xmlattr>.arg_pos", -1);
+					int port_pos = v1.second.get<int>("<xmlattr>.port_pos", -1);
+					fc.arg_port[arg_pos] = port_pos;
+				}else if(v1.first=="out_port"){
+					int ret_pos = v1.second.get<int>("<xmlattr>.ret_pos", -1);
+					int port_pos = v1.second.get<int>("<xmlattr>.port_pos", -1);
+					fc.ret_port[ret_pos] = port_pos;
+				}
+			}
+			_primitive_func_map[func_name] = fc;
+		}
+	}
+}
+
+int PrimitiveFuncLib::get_mode(const string func) const{
+	auto it = _primitive_func_map.find(func);
+	if(it==_primitive_func_map.end()){
+		LOG(WARNING) << "No such primitive function '" << func << "'!";
+		return -1;
+	}
+	return it->second.mode;
+}
+
+int PrimitiveFuncLib::get_exec_cycle(const string func) const{
+	auto it = _primitive_func_map.find(func);
+	if(it==_primitive_func_map.end()){
+		LOG(WARNING) << "No such primitive function '" << func << "'!";
+		return -1;
+	}
+	return it->second.exec_cycle;
+}
+
+bool PrimitiveFuncLib::get_reductive(const string func) const {
+	auto it = _primitive_func_map.find(func);
+	if(it==_primitive_func_map.end()){
+		LOG(WARNING) << "No such primitive function '" << func << "'!";
+		return false;
+	}
+	return it->second.reductive;
+}
+
+int PrimitiveFuncLib::get_in_port(const string func, int arg_pos) const{
+	auto it = _primitive_func_map.find(func);
+	if(it==_primitive_func_map.end()){
+		LOG(WARNING) << "No such primitive function '" << func << "'!";
+		return -1;
+	}
+	
+	if(arg_pos<0){
+		return -1;
+	}
+	
+	auto itx = it->second.arg_port.find(arg_pos);
+	if(itx==it->second.arg_port.end()){
+		return -1;
+	}
+	
+	return itx->second;
+}
+
+int PrimitiveFuncLib::get_out_port(const string func, int ret_pos) const{
+	auto it = _primitive_func_map.find(func);
+	if(it==_primitive_func_map.end()){
+		LOG(WARNING) << "No such primitive function '" << func << "'!";
+		return -1;
+	}
+	
+	if(ret_pos<0){
+		return -1;
+	}
+	
+	auto itx = it->second.ret_port.find(ret_pos);
+	if(itx==it->second.ret_port.end()){
+		return -1;
+	}
+	
+	return itx->second;
+}
+
+}
+}

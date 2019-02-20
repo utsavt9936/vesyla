@@ -1,0 +1,15 @@
+<config>
+	<entry name="drra_row" type="int" value="2" />
+	<entry name="drra_col" type="int" value="8" />
+	<entry name="dimarch_row" type="int" value="1" />
+	<entry name="dimarch_col" type="int" value="8" />
+	<entry name="sram_width" type="int" value="256" />
+	<entry name="sram_depth" type="int" value="64" />
+	<entry name="reg_file_width" type="int" value="16" />
+	<entry name="reg_file_depth" type="int" value="32" />
+	<entry name="raccu_reg_file_width" type="int" value="7" />
+	<entry name="raccu_reg_file_depth" type="int" value="8" />
+	<entry name="seq_reg_file_width" type="int" value="27" />
+	<entry name="seq_reg_file_depth" type="int" value="64" />
+	<entry name="raccu_max_loop_num" type="int" value="4" />
+</config>
