@@ -68,49 +68,50 @@ extern int yydebug;
     EVENDIST = 278,
     FULLDIST = 279,
     CUSTOMDIST = 280,
-    DPUMODE = 281,
-    DPUOUT = 282,
-    DPU_SATURATION = 283,
-    ADDRESS_REG = 284,
-    VAR_INPUT = 285,
-    VAR_OUTPUT = 286,
-    RACCU_VAR = 287,
-    ADDRESS_VAR = 288,
-    TEMP_VAR = 289,
-    MEM_ADDRESS = 290,
-    CONSTROW = 291,
-    CONSTCOL = 292,
-    CONSTDIMENSION = 293,
-    CONSTPARALLELISM = 294,
-    RESOURCE_SHARING_BEGIN = 295,
-    RESOURCE_SHARING_END = 296,
-    TEXT = 297,
-    IDENTIFIER = 298,
-    INTEGER = 299,
-    DOUBLE = 300,
-    IMAGINARY = 301,
-    AND = 302,
-    OR = 303,
-    LTHAN = 304,
-    LTHANE = 305,
-    GTHAN = 306,
-    GTHANE = 307,
-    EQUAL = 308,
-    UNEQUAL = 309,
-    xo = 310,
-    MMUL = 311,
-    EMUL = 312,
-    MDIV = 313,
-    EDIV = 314,
-    MLEFTDIV = 315,
-    ELEFTDIV = 316,
-    EPOWER = 317,
-    MPOWER = 318,
-    NOT = 319,
-    UNARYPLUS = 320,
-    UNARYMINUS = 321,
-    TRANSPOSE = 322,
-    CTRANSPOSE = 323
+    COMPRESS = 281,
+    DPUMODE = 282,
+    DPUOUT = 283,
+    DPU_SATURATION = 284,
+    ADDRESS_REG = 285,
+    VAR_INPUT = 286,
+    VAR_OUTPUT = 287,
+    RACCU_VAR = 288,
+    ADDRESS_VAR = 289,
+    TEMP_VAR = 290,
+    MEM_ADDRESS = 291,
+    CONSTROW = 292,
+    CONSTCOL = 293,
+    CONSTDIMENSION = 294,
+    CONSTPARALLELISM = 295,
+    RESOURCE_SHARING_BEGIN = 296,
+    RESOURCE_SHARING_END = 297,
+    TEXT = 298,
+    IDENTIFIER = 299,
+    INTEGER = 300,
+    DOUBLE = 301,
+    IMAGINARY = 302,
+    AND = 303,
+    OR = 304,
+    LTHAN = 305,
+    LTHANE = 306,
+    GTHAN = 307,
+    GTHANE = 308,
+    EQUAL = 309,
+    UNEQUAL = 310,
+    xo = 311,
+    MMUL = 312,
+    EMUL = 313,
+    MDIV = 314,
+    EDIV = 315,
+    MLEFTDIV = 316,
+    ELEFTDIV = 317,
+    EPOWER = 318,
+    MPOWER = 319,
+    NOT = 320,
+    UNARYPLUS = 321,
+    UNARYMINUS = 322,
+    TRANSPOSE = 323,
+    CTRANSPOSE = 324
   };
 #endif
 
@@ -119,7 +120,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 118 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1909  */
+#line 119 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1909  */
 
           char* text;
           char* symbol;
@@ -172,7 +173,7 @@ union YYSTYPE
           struct _while_t* whileStatement;
         
 
-#line 176 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.hpp" /* yacc.c:1909  */
+#line 177 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
