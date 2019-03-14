@@ -2074,7 +2074,7 @@ yyreduce:
 						storageOptions->distribution = sdEvenDist;
 						storageOptions->isForIndirectAddress = false;
 						storageOptions->variableType = vtIntermediate;
-
+            storageOptions->en_compression = false;
 						(yyval.StorageOptionsType) = storageOptions;
 					  }
 #line 2081 "/home/herenvarno/Projects/gitr/SiLago/vesyla/src/VParser/vparser.tab.cpp" /* yacc.c:1646  */
