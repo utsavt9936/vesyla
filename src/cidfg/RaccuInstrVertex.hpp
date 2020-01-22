@@ -26,19 +26,19 @@ namespace cidfg
 {
 class RaccuInstrVertex : public InstrVertex
 {
-	enum OperandType
+	/*	enum OperandType
 	{
 		RACCU_OPERAND_IMMEDIATE,
 		RACCU_OPERAND_REGISTER
-	};
+	};*/
 
 public:
-	OperandType op0_type;
+	/*OperandType op0_type;
 	int op0_value;
 	OperandType op1_type;
 	int op1_value;
 	int ret_value;
-	string func_name;
+	string func_name;*/
 
 public:
 	RaccuInstrVertex();

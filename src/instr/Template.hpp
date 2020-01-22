@@ -15,28 +15,40 @@
 // You should have received a copy of the GNU General Public License
 // along with Vesyla.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __VESYLA_UTIL_CONFIG_HPP__
-#define __VESYLA_UTIL_CONFIG_HPP__
-
-#include <boost/foreach.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
-#include "GlobalVar.hpp"
-
-using namespace std;
+#include "util/Common.hpp"
 
 namespace vesyla
 {
-namespace util
+namespace instr
 {
-class Config
+class ArgumentTemplate
 {
 public:
-	Config(string config_file_);
-	~Config();
+	string arg_name;
+	string arg_type;
+	string arg_default;
+	int arg_bitwidth;
+	int arg_position;
 };
 
-} // namespace util
-} // namespace vesyla
+class InstructionTemplate
+{
+public:
+	string instr_name;
+	int instr_code;
+	int instr_code_bitwidth;
+	unordered_map<string, ArgumentTemplate> instr_args;
+};
 
-#endif // __VESYLA_UTIL_CONFIG_HPP__
+class Template
+{
+public:
+	unordered_map<string, InstructionTemplate> table;
+
+public:
+	Template();
+	Template(string path_);
+	bool load_from_xml(string path_);
+};
+} // namespace instr
+} // namespace vesyla

@@ -15,28 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Vesyla.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __VESYLA_UTIL_CONFIG_HPP__
-#define __VESYLA_UTIL_CONFIG_HPP__
-
-#include <boost/foreach.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
-#include "GlobalVar.hpp"
-
-using namespace std;
+#include "Engine.hpp"
 
 namespace vesyla
 {
-namespace util
+namespace feopt
 {
-class Config
+class LoopMergeEngine
 {
 public:
-	Config(string config_file_);
-	~Config();
+	void transform(cidfg::CidfgGraph &g_);
 };
-
-} // namespace util
+} // namespace feopt
 } // namespace vesyla
-
-#endif // __VESYLA_UTIL_CONFIG_HPP__

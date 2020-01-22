@@ -170,7 +170,6 @@ void DescriptorGenerator::gen_stage_1_callback(cidfg::CidfgGraph &g_, cidfg::Cid
 		}
 		else if (vi->l2_linker.is_valid)
 		{
-			LOG(DEBUG) << "L2 VALID";
 			duration = (instruction->numberOfAddress.value + 1);
 		}
 		cidfg::Edge e1(id_v1, 0, id_v2, 0, "", cidfg::Edge::DEPENDENCY, duration, duration);
@@ -356,6 +355,13 @@ void DescriptorGenerator::gen_stage_1(cidfg::CidfgGraph &g_, schedule::Descripto
 			new_g.add_edge(e0);
 			new_g.add_edge(e1);
 		}
+		else if (v_src->vertex_type == cidfg::Vertex::ROUTE_INSTR_VERTEX && v_dest->vertex_type == cidfg::Vertex::HIERARCHICAL_INSTR_VERTEX)
+		{
+			cidfg::Edge e0(sub_vertex_map[v_src->id][0], 0, sub_vertex_map[v_dest->id][0], 0, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX);
+			cidfg::Edge e1(sub_vertex_map[v_dest->id][0], 0, sub_vertex_map[v_src->id][1], 0, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX);
+			new_g.add_edge(e0);
+			new_g.add_edge(e1);
+		}
 		else if (v_src->vertex_type == cidfg::Vertex::REFI_INSTR_VERTEX && v_dest->vertex_type == cidfg::Vertex::DPU_INSTR_VERTEX)
 		{
 			RefiInstruction *instr_src = static_cast<BIR::RefiInstruction *>(static_cast<cidfg::InstrVertex *>(v_src)->instr);
@@ -364,7 +370,12 @@ void DescriptorGenerator::gen_stage_1(cidfg::CidfgGraph &g_, schedule::Descripto
 			new_g.add_edge(e0);
 			if (e->dest_port == 0)
 			{
-				cidfg::Edge e1(sub_vertex_map[v_src->id][2], 0, sub_vertex_map[v_dest->id][1], 0, "", cidfg::Edge::DEPENDENCY, instr_dest->executionCycle + 1, instr_dest->executionCycle + 1);
+				int addition_delay = 0;
+				if (instr_dest->output_register)
+				{
+					addition_delay = 1;
+				}
+				cidfg::Edge e1(sub_vertex_map[v_src->id][2], 0, sub_vertex_map[v_dest->id][1], 0, "", cidfg::Edge::DEPENDENCY, instr_dest->executionCycle + addition_delay, instr_dest->executionCycle + addition_delay);
 				new_g.add_edge(e1);
 			}
 		}
@@ -400,8 +411,16 @@ void DescriptorGenerator::gen_stage_1(cidfg::CidfgGraph &g_, schedule::Descripto
 		}
 		else if (v_src->vertex_type == cidfg::Vertex::REFI_INSTR_VERTEX && (e->src_port == 0)) // this is a RAW dependency edge of some variable
 		{
-			cidfg::Edge e0(sub_vertex_map[v_src->id][2], 0, sub_vertex_map[v_dest->id][0], 0, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX);
-			new_g.add_edge(e0);
+			if (v_dest->vertex_type == cidfg::Vertex::REFI_INSTR_VERTEX)
+			{
+				cidfg::Edge e0(sub_vertex_map[v_src->id][2], 0, sub_vertex_map[v_dest->id][1], 0, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX);
+				new_g.add_edge(e0);
+			}
+			else
+			{
+				cidfg::Edge e0(sub_vertex_map[v_src->id][2], 0, sub_vertex_map[v_dest->id][0], 0, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX);
+				new_g.add_edge(e0);
+			}
 		}
 		else if (v_src->vertex_type == cidfg::Vertex::REFI_INSTR_VERTEX && v_dest->vertex_type == cidfg::Vertex::REFI_INSTR_VERTEX && e->edge_type != cidfg::Edge::DEPENDENCY)
 		{
@@ -418,9 +437,9 @@ void DescriptorGenerator::gen_stage_1(cidfg::CidfgGraph &g_, schedule::Descripto
 
 			if (instr_src->isRead)
 			{
-				cidfg::Edge e0(sub_vertex_map[v_src->id][2], 0, sub_vertex_map[v_dest->id][1], 0, "", cidfg::Edge::DEPENDENCY, instr_src->hopNumber, instr_src->hopNumber);
+				cidfg::Edge e0(sub_vertex_map[v_src->id][2], 0, sub_vertex_map[v_dest->id][1], 0, "", cidfg::Edge::DEPENDENCY, instr_src->hopNumber + 1, instr_src->hopNumber + 1);
 				new_g.add_edge(e0);
-				cidfg::Edge e1(sub_vertex_map[v_src->id][3], 0, sub_vertex_map[v_dest->id][2], 0, "", cidfg::Edge::DEPENDENCY, 0, 0);
+				cidfg::Edge e1(sub_vertex_map[v_dest->id][2], 0, sub_vertex_map[v_src->id][3], 0, "", cidfg::Edge::DEPENDENCY, 1, 1);
 				new_g.add_edge(e1);
 			}
 			else
@@ -463,18 +482,18 @@ void DescriptorGenerator::gen_stage_1(cidfg::CidfgGraph &g_, schedule::Descripto
 			}
 			if (flag_strong_dependency)
 			{
-				cidfg::Edge e0(sub_vertex_map[v_src->id].back(), 0, sub_vertex_map[v_dest->id][0], 0, "", cidfg::Edge::DEPENDENCY, e->d_lo, e->d_hi);
+				cidfg::Edge e0(sub_vertex_map[v_src->id].back(), 0, sub_vertex_map[v_dest->id][0], 0, "", cidfg::Edge::DEPENDENCY, e->d_lo, e->d_hi, e->dynamic, e->src_hook, e->dest_hook);
 				new_g.add_edge(e0);
 			}
 			else
 			{
-				cidfg::Edge e0(sub_vertex_map[v_src->id][0], 0, sub_vertex_map[v_dest->id][0], 0, "", cidfg::Edge::DEPENDENCY, e->d_lo, e->d_hi);
+				cidfg::Edge e0(sub_vertex_map[v_src->id][0], 0, sub_vertex_map[v_dest->id][0], 0, "", cidfg::Edge::DEPENDENCY, e->d_lo, e->d_hi, e->dynamic, e->src_hook, e->dest_hook);
 				new_g.add_edge(e0);
 			}
 		}
 		else
 		{
-			cidfg::Edge e0(sub_vertex_map[v_src->id][0], 0, sub_vertex_map[v_dest->id][0], 0, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX);
+			cidfg::Edge e0(sub_vertex_map[v_src->id][0], 0, sub_vertex_map[v_dest->id][0], 0, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX, e->dynamic, e->src_hook, e->dest_hook);
 			new_g.add_edge(e0);
 		}
 	}
@@ -584,7 +603,10 @@ void DescriptorGenerator::gen_stage_1(cidfg::CidfgGraph &g_, schedule::Descripto
 		{
 			cidfg::HierarchicalInstrVertex *v_src = static_cast<cidfg::HierarchicalInstrVertex *>(new_g.get_vertex(e->src_id));
 			cidfg::HierarchicalInstrVertex *v_dest = static_cast<cidfg::HierarchicalInstrVertex *>(new_g.get_vertex(e->dest_id));
-			schedule::Constraint c(v_src->name, v_dest->name, e->d_lo, e->d_hi);
+			schedule::Constraint::Hook src_hook, dest_hook;
+			src_hook = e->src_hook == cidfg::Edge::HOOK_BEGIN ? schedule::Constraint::HOOK_BEGIN : schedule::Constraint::HOOK_END;
+			dest_hook = e->dest_hook == cidfg::Edge::HOOK_BEGIN ? schedule::Constraint::HOOK_BEGIN : schedule::Constraint::HOOK_END;
+			schedule::Constraint c(v_src->name, v_dest->name, e->d_lo, e->d_hi, src_hook, dest_hook);
 			d_.add_constraint(c);
 		}
 	}

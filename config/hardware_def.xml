@@ -1,7 +1,7 @@
 <config>
 	<entry name="drra_row" type="int" value="2" />
 	<entry name="drra_col" type="int" value="8" />
-	<entry name="dimarch_row" type="int" value="1" />
+	<entry name="dimarch_row" type="int" value="2" />
 	<entry name="dimarch_col" type="int" value="8" />
 	<entry name="sram_width" type="int" value="256" />
 	<entry name="sram_depth" type="int" value="64" />
@@ -18,5 +18,5 @@
 	<entry name="max_repetition_offset" type="int" value="16" />
 	
 	<!-- deprecated configuration -->
-	<entry name="extra_dimarch_hop_delay" type="int" value="0"/>
+	<entry name="extra_dimarch_hop_delay" type="int" value="1"/>
 </config>

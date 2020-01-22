@@ -57,6 +57,7 @@ public:
 	string solution_to_str(void) const;
 	void fill_scheduled_time(Graph &g_);
 	virtual Gecode::IntVar cost(void) const;
+	void print(void) const;
 	virtual void constrain(const Gecode::Space &b_);
 };
 

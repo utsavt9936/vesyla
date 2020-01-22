@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_HOME_HERENVARNO_PROJECT_SILAGO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED
-# define YY_YY_HOME_HERENVARNO_PROJECT_SILAGO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED
+#ifndef YY_YY_HOME_HERENVARNO_PROJECTS_GITR_SILAGO_VESYLA_DEMO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED
+# define YY_YY_HOME_HERENVARNO_PROJECTS_GITR_SILAGO_VESYLA_DEMO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -72,46 +72,47 @@ extern int yydebug;
     DPUMODE = 282,
     DPUOUT = 283,
     DPU_SATURATION = 284,
-    ADDRESS_REG = 285,
-    VAR_INPUT = 286,
-    VAR_OUTPUT = 287,
-    RACCU_VAR = 288,
-    ADDRESS_VAR = 289,
-    TEMP_VAR = 290,
-    MEM_ADDRESS = 291,
-    CONSTROW = 292,
-    CONSTCOL = 293,
-    CONSTDIMENSION = 294,
-    CONSTPARALLELISM = 295,
-    RESOURCE_SHARING_BEGIN = 296,
-    RESOURCE_SHARING_END = 297,
-    TEXT = 298,
-    IDENTIFIER = 299,
-    INTEGER = 300,
-    DOUBLE = 301,
-    IMAGINARY = 302,
-    AND = 303,
-    OR = 304,
-    LTHAN = 305,
-    LTHANE = 306,
-    GTHAN = 307,
-    GTHANE = 308,
-    EQUAL = 309,
-    UNEQUAL = 310,
-    xo = 311,
-    MMUL = 312,
-    EMUL = 313,
-    MDIV = 314,
-    EDIV = 315,
-    MLEFTDIV = 316,
-    ELEFTDIV = 317,
-    EPOWER = 318,
-    MPOWER = 319,
-    NOT = 320,
-    UNARYPLUS = 321,
-    UNARYMINUS = 322,
-    TRANSPOSE = 323,
-    CTRANSPOSE = 324
+    DPU_DYNAMIC = 285,
+    ADDRESS_REG = 286,
+    VAR_INPUT = 287,
+    VAR_OUTPUT = 288,
+    RACCU_VAR = 289,
+    ADDRESS_VAR = 290,
+    TEMP_VAR = 291,
+    MEM_ADDRESS = 292,
+    CONSTROW = 293,
+    CONSTCOL = 294,
+    CONSTDIMENSION = 295,
+    CONSTPARALLELISM = 296,
+    RESOURCE_SHARING_BEGIN = 297,
+    RESOURCE_SHARING_END = 298,
+    TEXT = 299,
+    IDENTIFIER = 300,
+    INTEGER = 301,
+    DOUBLE = 302,
+    IMAGINARY = 303,
+    AND = 304,
+    OR = 305,
+    LTHAN = 306,
+    LTHANE = 307,
+    GTHAN = 308,
+    GTHANE = 309,
+    EQUAL = 310,
+    UNEQUAL = 311,
+    xo = 312,
+    MMUL = 313,
+    EMUL = 314,
+    MDIV = 315,
+    EDIV = 316,
+    MLEFTDIV = 317,
+    ELEFTDIV = 318,
+    EPOWER = 319,
+    MPOWER = 320,
+    NOT = 321,
+    UNARYPLUS = 322,
+    UNARYMINUS = 323,
+    TRANSPOSE = 324,
+    CTRANSPOSE = 325
   };
 #endif
 
@@ -120,7 +121,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 119 "/home/herenvarno/Project/SiLago/vesyla/src/VParser/vparser.y" /* yacc.c:1909  */
+#line 120 "/home/herenvarno/Projects/gitr/SiLago/vesyla_demo/vesyla/src/VParser/vparser.y" /* yacc.c:1909  */
 
           char* text;
           char* symbol;
@@ -173,7 +174,7 @@ union YYSTYPE
           struct _while_t* whileStatement;
         
 
-#line 177 "/home/herenvarno/Project/SiLago/vesyla/src/VParser/vparser.tab.hpp" /* yacc.c:1909  */
+#line 178 "/home/herenvarno/Projects/gitr/SiLago/vesyla_demo/vesyla/src/VParser/vparser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -200,4 +201,4 @@ extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_HERENVARNO_PROJECT_SILAGO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED  */
+#endif /* !YY_YY_HOME_HERENVARNO_PROJECTS_GITR_SILAGO_VESYLA_DEMO_VESYLA_SRC_VPARSER_VPARSER_TAB_HPP_INCLUDED  */

@@ -64,7 +64,9 @@
 			"type_traits": "cpp",
 			"tuple": "cpp",
 			"utility": "cpp",
-			"valarray": "cpp"
+			"valarray": "cpp",
+			"cfenv": "cpp",
+			"regex": "cpp"
 		},
 		"python.pythonPath": "/usr/bin/python3",
 		"licenser.license": "GPLv3",

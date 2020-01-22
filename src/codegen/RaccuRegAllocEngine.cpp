@@ -27,6 +27,39 @@ void RaccuRegAllocEngine::transform(CidfgGraph &g_)
 {
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void RaccuRegAllocEngine::create_graph(CidfgGraph &g_, Graph &g0_, VIR::Coordinate coord_, std::unordered_map<int, Graph::vertex_descriptor> &map_g2g0_, std::unordered_map<Graph::vertex_descriptor, int> &map_g02g_)
 {
 	std::unordered_map<int, int> selected_vertex;
@@ -96,6 +129,60 @@ void RaccuRegAllocEngine::create_graph(CidfgGraph &g_, Graph &g0_, VIR::Coordina
 		if (selected_vertex.find(e->src_id) != selected_vertex.end() && selected_vertex.find(e->dest_id) != selected_vertex.end())
 		{
 			add_edge(map_g2g0_[e->src_id], map_g2g0_[e->dest_id], e->var_name, g0_);
+		}
+	}
+}
+
+int RaccuRegAllocEngine::pre_assign(Graph &g0_)
+{
+	std::unordered_map<string, int> map_pre_assign;
+	Graph::edge_iterator e, e_end;
+	for (tie(e, e_end) = edges(g0_); e != e_end; e++)
+	{
+		if (strncmp(g0_[*e].c_str(), "temp_", strlen("temp_")) == 0)
+		{
+			continue;
+		}
+		if (map_pre_assign.find(g0_[*e]) != map_pre_assign.end())
+		{
+			g0_[*e] = "RR_" + to_string(map_pre_assign[g0_[*e]]);
+		}
+		else
+		{
+			int id = map_pre_assign.size();
+			map_pre_assign[g0_[*e]] = id;
+			g0_[*e] = "RR_" + to_string(id);
+		}
+	}
+	return map_pre_assign.size();
+}
+
+void RaccuRegAllocEngine::pre_group(Graph &g0_)
+{
+	int group_counter = 0;
+	std::unordered_map<string, string> edge_group;
+	Graph::vertex_iterator vi, vi_end;
+	for (tie(vi, vi_end) = vertices(g0_); vi != vi_end; vi++)
+	{
+		if (g0_[*vi] == 0)
+		{
+			Graph::out_edge_iterator oei, oei_end;
+			for (tie(oei, oei_end) = out_edges(*vi, g0_); oei != oei_end; oei++)
+			{
+				if (strncmp(g0_[*oei].c_str(), "temp_", strlen("temp_")) == 0)
+				{
+					if (edge_group.find(g0_[*oei]) != edge_group.end())
+					{
+						g0_[*oei] = edge_group[g0_[*oei]];
+					}
+					else
+					{
+						edge_group[g0_[*oei]] = "GROUP_" + to_string(group_counter);
+						g0_[*oei] = "GROUP_" + to_string(group_counter);
+					}
+				}
+			}
+			group_counter++;
 		}
 	}
 }

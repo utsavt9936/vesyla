@@ -725,17 +725,18 @@ void ComputationVertexConverter::convert(cidfg::CidfgGraph &g_)
 				BIR::DPUInstruction *instr = CREATE_OBJECT_B(DPUInstruction);
 				fill_dpu_instr(instr, g_, vv->id);
 				string instr_mode_str = instr->mode;
-				if (strncmp(instr_mode_str.c_str(), "silago_dpu_comparison", strlen("silago_dpu_comparison")) == 0)
-				{
-					instr_mode_str = "silago_dpu_comparison";
-				}
-				else if (strncmp(instr_mode_str.c_str(), "silago_dpu_comparison_with_constant", strlen("silago_dpu_comparison_with_constant")) == 0)
+				if (strncmp(instr_mode_str.c_str(), "silago_dpu_comparison_with_constant", strlen("silago_dpu_comparison_with_constant")) == 0)
 				{
 					instr_mode_str = "silago_dpu_comparison_with_constant";
+				}
+				else if (strncmp(instr_mode_str.c_str(), "silago_dpu_comparison", strlen("silago_dpu_comparison")) == 0)
+				{
+					instr_mode_str = "silago_dpu_comparison";
 				}
 				instr->modeValue = _pf_lib.get_mode(instr_mode_str);
 				instr->executionCycle = _pf_lib.get_exec_cycle(instr_mode_str);
 				instr->reductive = _pf_lib.get_reductive(instr_mode_str);
+				instr->output_register = _pf_lib.get_output_register(instr_mode_str);
 
 				CHECK_GE(instr->modeValue, 0);
 				CHECK_GE(instr->executionCycle, 0);
@@ -948,7 +949,10 @@ void ComputationVertexConverter::convert_raccu_vertex(cidfg::CidfgGraph &g_, vec
 						cidfg::VarVertex *vv = static_cast<cidfg::VarVertex *>(v);
 						if (!vv->is_iterator)
 						{
-							vv->var_name = vt_[vv->coord.to_str() + vv->var_name];
+							if (vt_.find(vv->coord.to_str() + vv->var_name) != vt_.end())
+							{
+								vv->var_name = vt_[vv->coord.to_str() + vv->var_name];
+							}
 						}
 					}
 					else if (v->is_sink())
@@ -960,7 +964,10 @@ void ComputationVertexConverter::convert_raccu_vertex(cidfg::CidfgGraph &g_, vec
 							{
 								if (e->dest_id == vv->id)
 								{
-									e->var_name = vt_[vv->coord.to_str() + vv->var_name];
+									if (vt_.find(vv->coord.to_str() + vv->var_name) != vt_.end())
+									{
+										e->var_name = vt_[vv->coord.to_str() + vv->var_name];
+									}
 								}
 							}
 						}
@@ -1001,7 +1008,10 @@ void ComputationVertexConverter::convert_raccu_vertex(cidfg::CidfgGraph &g_, vec
 							{
 								if (e->dest_id == vv->id)
 								{
-									e->var_name = vt_[vv->coord.to_str() + vv->var_name];
+									if (vt_.find(vv->coord.to_str() + vv->var_name) != vt_.end())
+									{
+										e->var_name = vt_[vv->coord.to_str() + vv->var_name];
+									}
 								}
 							}
 						}
@@ -1026,7 +1036,10 @@ void ComputationVertexConverter::convert_raccu_vertex(cidfg::CidfgGraph &g_, vec
 								{
 									if (e->dest_id == vv->id)
 									{
-										e->var_name = vt_[vv->coord.to_str() + vv->var_name];
+										if (vt_.find(vv->coord.to_str() + vv->var_name) != vt_.end())
+										{
+											e->var_name = vt_[vv->coord.to_str() + vv->var_name];
+										}
 									}
 								}
 							}
@@ -1228,6 +1241,21 @@ std::map<string, int> ComputationVertexConverter::allocate_raccu_reg_for_connect
 		index++;
 	}
 
+	// Force a fixed schedule for those RACCU instructions
+	boost::graph_traits<CustomGraph>::vertex_descriptor prev;
+	for (auto ii = c.rbegin(); ii != c.rend(); ++ii)
+	{
+
+		if (ii == c.rbegin())
+		{
+			prev = *ii;
+			continue;
+		}
+		cidfg::Edge e0(g0[prev], 100, g0[*ii], 100, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX);
+		g_.add_edge(e0);
+		prev = *ii;
+	}
+
 	// Fill the edge interval
 	for (auto &eid : edge_list_)
 	{
@@ -1351,7 +1379,7 @@ std::map<string, int> ComputationVertexConverter::allocate_raccu_reg_for_connect
 		{
 			if (g_.get_edge(eid)->src_id == g0[*ii])
 			{
-				LOG(DEBUG) << "Allocate RR_" << to_string(new_color_vector[color_vec[edge_family_record[eid]]]) << " for " << g_.get_vertex(g_.get_edge(eid)->src_id)->coord.to_str() + g_.get_edge(eid)->var_name;
+				//LOG(DEBUG) << "Allocate RR_" << to_string(new_color_vector[color_vec[edge_family_record[eid]]]) << " for " << g_.get_vertex(g_.get_edge(eid)->src_id)->coord.to_str() + g_.get_edge(eid)->var_name;
 				CHECK_LT(new_color_vector[color_vec[edge_family_record[eid]]], _raccu_reg_file_depth)
 						<< "Too much RACCU registers required!";
 

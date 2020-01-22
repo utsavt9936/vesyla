@@ -17,7 +17,10 @@
 
 #include "Scheduler.hpp"
 
+//#define SCHEDULE_ENGINE_NAME ConstraintProgrammingEngine
+//#define SCHEDULE_ENGINE_NAME_STR "ConstraintProgrammingEngine"
 #define SCHEDULE_ENGINE_NAME RandomEngine
+#define SCHEDULE_ENGINE_NAME_STR "RandomEngine"
 
 namespace vesyla
 {
@@ -37,35 +40,46 @@ string to_dot(Graph g0)
 	}
 	for (tie(ei, ei_end) = edges(g0); ei != ei_end; ei++)
 	{
-		str += g0[source(*ei, g0)].name() + " -> " + g0[target(*ei, g0)].name() + "[label=\"[" + to_string(g0[*ei].d_lo) + "," + to_string(g0[*ei].d_hi) + "]\"];\n";
+		str += g0[source(*ei, g0)].name() + " -> " + g0[target(*ei, g0)].name() + "[label=\"[";
+		if (g0[*ei].d_lo == INT_MIN)
+		{
+			str += "-INF";
+		}
+		else
+		{
+			str += to_string(g0[*ei].d_lo);
+		}
+		str += ",";
+		if (g0[*ei].d_hi == INT_MAX)
+		{
+			str += "+INF";
+		}
+		else
+		{
+			str += to_string(g0[*ei].d_hi);
+		}
+		str += "]\"];\n";
 	}
 	str += "}\n";
 	return str;
 }
 
-void Scheduler::load_from_json(string _input_str)
-{
-	auto j = json::parse(_input_str);
-	root.load_from_json(j);
-}
-
-void Scheduler::schedule_legacy()
-{
-	root.schedule();
-	int start_in = 0;
-	root.update_abs_start(start_in);
-	int offset_in = 0;
-	root.update_abs_offset(offset_in);
-	add_to_dict(root);
-}
-
 void Scheduler::schedule()
 {
+	gen_script();
 	check_instr_count(_desc);
 	to_dot_graph(_desc, 0);
 	merge_hierarchical_blocks_with_hard_link();
 	to_dot_graph(_desc, 1);
-	schedule_vertex(_desc.entry());
+
+	LOG(INFO) << "Schedule HDG with " << _desc.get_all_operation_names().size() << " vertices.";
+	auto start_time = std::chrono::high_resolution_clock::now();
+	vector<string> name_list;
+	schedule_vertex(_desc.entry(), name_list);
+	auto stop_time = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time);
+	LOG(INFO) << "Schedule time = " << duration.count() << "ms";
+
 	update_scheduled_time();
 	_desc.fill_timestamp();
 	to_dot_graph(_desc, 2);
@@ -84,46 +98,6 @@ void Scheduler::check_instr_count(Descriptor &d_)
 			LOG(FATAL) << "Cell " << p.first << " has more than " << max_instr_count << " instructions!";
 		}
 	}
-}
-
-void Scheduler::add_to_dict(DependencyGraph::Vertex &v_)
-{
-	_lut[v_.name] = &v_;
-	if (v_.node_type == DependencyGraph::HIRARICHICAL_NODE && v_.subgraph)
-	{
-		add_to_dict(*(v_.subgraph));
-	}
-	if (v_.node_type == DependencyGraph::HIRARICHICAL_NODE && v_.subgraph_extra)
-	{
-		add_to_dict(*(v_.subgraph_extra));
-	}
-}
-void Scheduler::add_to_dict(DependencyGraph &g_)
-{
-	for (auto &vv : g_.vertex_list())
-	{
-		add_to_dict(vv);
-	}
-}
-
-int Scheduler::get_start_time(string path)
-{
-	if (_lut.find(path) != _lut.end())
-	{
-		return _lut[path]->start;
-	}
-	LOG(FATAL) << "No such vertex with path \"" << path << "\".";
-	return -1;
-}
-
-int Scheduler::get_offset(string path)
-{
-	if (_lut.find(path) != _lut.end())
-	{
-		return _lut[path]->offset;
-	}
-	LOG(FATAL) << "No such vertex with path \"" << path << "\".";
-	return -1;
 }
 
 int Scheduler::get_unique_id()
@@ -591,6 +565,8 @@ Graph Scheduler::predict_order(Graph &g0)
 		// build tranlation map
 		std::unordered_map<int, int> sn_translate_map;
 		int sn_translate_index = 1000;
+		int lock_count = 0;
+		int key_count = 0;
 		for (tie(vi, vi_end) = vertices(g0); vi != vi_end; vi++)
 		{
 			boost::graph_traits<MarkedGraph>::vertex_descriptor vd;
@@ -610,11 +586,13 @@ Graph Scheduler::predict_order(Graph &g0)
 					{
 						if (f.type() == Frame::KEY)
 						{
+							key_count++;
 							flag_key = true;
 							key_sn = f.sn;
 						}
 						else if (f.type() == Frame::LOCK)
 						{
+							lock_count++;
 							flag_lock = true;
 							lock_sn = f.sn;
 						}
@@ -631,6 +609,11 @@ Graph Scheduler::predict_order(Graph &g0)
 					break;
 				}
 			}
+		}
+
+		if (lock_count <= 0 || key_count <= 0)
+		{
+			continue;
 		}
 
 		// Build the marked graph
@@ -650,6 +633,7 @@ Graph Scheduler::predict_order(Graph &g0)
 					bool flag_lock = false;
 					bool flag_period = false;
 					int sn = -1;
+					int sn_period = -1;
 					for (auto &f : r.second)
 					{
 						if (f.type() == Frame::KEY)
@@ -665,7 +649,7 @@ Graph Scheduler::predict_order(Graph &g0)
 						else if (f.type() == Frame::PERIOD)
 						{
 							flag_period = true;
-							sn = temp_sn_counter;
+							sn_period = temp_sn_counter;
 							temp_sn_counter++;
 						}
 					}
@@ -702,8 +686,8 @@ Graph Scheduler::predict_order(Graph &g0)
 						vd = add_vertex(Frame::PERIOD, g1);
 						g0_2_g1[*vi] = vd;
 						g1_2_g0[vd] = *vi;
-						sn_2_v_map[sn].insert(vd);
-						v_2_sn_map[vd] = sn;
+						sn_2_v_map[sn_period].insert(vd);
+						v_2_sn_map[vd] = sn_period;
 					}
 					else
 					{
@@ -808,7 +792,7 @@ Graph Scheduler::predict_order(Graph &g0)
 			reachable_from_leaf = visited;
 			visited.clear();
 			p.second.clear();
-			set_intersection(reachable_from_root.begin(), reachable_from_root.end(), reachable_from_leaf.begin(), reachable_from_leaf.end(), std::inserter(p.second, p.second.begin()));
+			std::set_intersection(reachable_from_root.begin(), reachable_from_root.end(), reachable_from_leaf.begin(), reachable_from_leaf.end(), std::inserter(p.second, p.second.begin()));
 			for (auto &v : p.second)
 			{
 				v_2_sn_map[v] = sn;
@@ -901,11 +885,18 @@ Graph Scheduler::predict_order(Graph &g0)
 		}
 		for (auto &m : vec)
 		{
-			add_edge(m.first, m.second, g1);
+			if (m.first != m.second)
+			{
+				if (g00[g1_2_g0[m.first]].name() == "ROOT_1193_0")
+				{
+					LOG(DEBUG) << "FOUND (" << rs << ") ROOT_1193_0 -> " << g00[g1_2_g0[m.second]].name();
+				}
+				add_edge(m.first, m.second, g1);
+			}
 		}
 
 		// Now, find each corssing-region edge.
-		vec.clear();
+		/*		vec.clear();
 		for (tie(mei, mei_end) = edges(g1); mei != mei_end; mei++)
 		{
 			boost::graph_traits<MarkedGraph>::vertex_descriptor v_src, v_dest;
@@ -922,8 +913,15 @@ Graph Scheduler::predict_order(Graph &g0)
 		}
 		for (auto &m : vec)
 		{
-			add_edge(m.first, m.second, g1);
-		}
+			if (m.first != m.second)
+			{
+				if (g00[g1_2_g0[m.first]].name() == "ROOT_1193_0")
+				{
+					LOG(DEBUG) << "FOUND 111 ROOT_1193_0 -> " << g00[g1_2_g0[m.second]].name();
+				}
+				add_edge(m.first, m.second, g1);
+			}
+		}*/
 
 		boost::graph_traits<MarkedGraph>::edge_iterator eii, eii_end;
 		for (tie(eii, eii_end) = edges(g1); eii != eii_end; eii++)
@@ -935,12 +933,11 @@ Graph Scheduler::predict_order(Graph &g0)
 			string dest_name = g0[vd_dest].name();
 
 			// check if there is already an edge
-			if (!edge(vd_src, vd_dest, g0).second)
+			if (!edge(vd_src, vd_dest, g00).second)
 			{
 				add_edge(vd_src, vd_dest, Constraint(src_name, dest_name, 1, INT_MAX), g00);
-				continue;
 			}
-			if (edge(vd_src, vd_dest, g0).second && g0[edge(vd_src, vd_dest, g0).first].d_lo <= 0)
+			else if (edge(vd_src, vd_dest, g00).second && g0[edge(vd_src, vd_dest, g00).first].d_lo <= 0)
 			{
 				add_edge(vd_src, vd_dest, Constraint(src_name, dest_name, 1, INT_MAX), g00);
 			}
@@ -948,7 +945,7 @@ Graph Scheduler::predict_order(Graph &g0)
 	}
 
 	return g00;
-} // namespace schedule
+}
 
 void Scheduler::adjust_interblock_constraints(string parent_block_, vector<string> name_list_)
 {
@@ -995,7 +992,7 @@ void Scheduler::adjust_interblock_constraints(string parent_block_, vector<strin
 	}
 }
 
-bool Scheduler::schedule_vertex(string name_)
+bool Scheduler::schedule_vertex(string name_, vector<string> &added_name_list_)
 {
 	Operation &o = _desc.get_mutable_operation(name_);
 	o.scheduled_time = 0;
@@ -1026,11 +1023,11 @@ bool Scheduler::schedule_vertex(string name_)
 		adjust_interblock_constraints(o.name(), o.children1);
 	}
 	CHECK(rot1.verify());
+
 	CHECK(rot0.unite(rot1, 0));
 
 	if (o.is_bulk)
 	{
-
 		// When merge ROTs of its children, use the largest range of all resource to fill
 		// all resource. In order to guarantee the two herarchical nodes will not overlap.
 		// The problem of overlapping will affect the Loop nodes.
@@ -1117,7 +1114,7 @@ bool Scheduler::schedule_vertex(string name_)
 	else
 	{
 		// When merge ROTs of its children, don't use the largest range of all resource to fill
-		// all resource. This can apply to all nodes except for loop nodes.
+		// all resource. This can apply to all nodes except for bulk nodes.
 		int t0 = INT_MAX;
 		int t1 = INT_MIN;
 
@@ -1184,14 +1181,95 @@ bool Scheduler::schedule_vertex(string name_)
 	o.rot.merge(empty_rot, 0);
 	CHECK(o.rot.verify());
 
+	// Expand the hierarchical node if necessary, adjust all its connection
+	int duration = 0;
+	for (auto &e : o.rot)
+	{
+		string r = e.first;
+		Timetable tb = e.second;
+		for (auto &f : tb)
+		{
+			int t = 0;
+			if (f.type() == Frame::KEY)
+			{
+				t = f.t1;
+			}
+			else if (f.type() == Frame::LOCK)
+			{
+				t = f.t0;
+			}
+			else if (f.type() == Frame::PERIOD)
+			{
+				t = f.t1;
+			}
+			if (t > duration)
+			{
+				duration = t;
+			}
+		}
+	}
+
+	Operation o_end(o.name() + "_end");
+	_desc.add_operation(o_end);
+	added_name_list_.push_back(o.name() + "_end");
+	Constraint c_end(o.name(), o.name() + "_end", duration, duration);
+	_desc.add_constraint(c_end);
+
+	for (auto &op_name : _desc.get_all_operation_names())
+	{
+		Operation &op = _desc.get_mutable_operation(op_name);
+		if (std::find(op.children0.begin(), op.children0.end(), o.name()) != op.children0.end())
+		{
+			op.add_child(o.name() + "_end", 0);
+		}
+		if (std::find(op.children1.begin(), op.children1.end(), o.name()) != op.children1.end())
+		{
+			op.add_child(o.name() + "_end", 1);
+		}
+	}
+
+	vector<Constraint *> clist;
+	vector<Constraint> new_constraints;
+	clist = _desc.get_src_constraints(o.name());
+	for (auto &c : clist)
+	{
+		if (c->dest_hook == Constraint::HOOK_END)
+		{
+			Constraint cc(c->src(), o.name() + "_end", c->d_lo, c->d_hi, Constraint::HOOK_BEGIN, Constraint::HOOK_BEGIN);
+			new_constraints.push_back(cc);
+			_desc.remove_constraint(c->src(), c->dest());
+		}
+	}
+	clist = _desc.get_dest_constraints(o.name());
+	for (auto &c : clist)
+	{
+		if (c->src_hook == Constraint::HOOK_END)
+		{
+			Constraint cc(o.name() + "_end", c->dest(), c->d_lo, c->d_hi, Constraint::HOOK_BEGIN, Constraint::HOOK_BEGIN);
+			new_constraints.push_back(cc);
+			_desc.remove_constraint(c->src(), c->dest());
+		}
+	}
+	for (auto c : new_constraints)
+	{
+		_desc.add_constraint(c);
+	}
+
 	return true;
 }
 
 bool Scheduler::schedule_hierarchical_dependency_graph(vector<string> name_list_)
 {
+
+	vector<string> added_name_list;
 	for (auto &n : name_list_)
 	{
-		CHECK(schedule_vertex(n));
+		CHECK(schedule_vertex(n, added_name_list));
+	}
+
+	for (auto &n : added_name_list)
+	{
+		name_list_.push_back(n);
 	}
 
 	CHECK(schedule_dependency_graph(name_list_));
@@ -1220,11 +1298,28 @@ bool Scheduler::schedule_dependency_graph(vector<string> name_list_)
 		}
 	}
 
+	// Logging the graph for debugging
+	vesyla::util::GlobalVar glv;
+	string path, path1;
+	CHECK(glv.gets("$OUTPUT_DIR", path));
+	path = path + "schedule/";
+	mkdir(path.c_str(), 0755);
+	path1 = path + "g_" + to_string(_graph_counter) + ".dot";
+
+	std::set<string> op_set;
+	for (auto n : name_list_)
+	{
+		op_set.insert(n);
+	}
+	ofstream ofs(path1, ofstream::out);
+	ofs << _desc.generate_dot_graph(op_set);
+	ofs.close();
+
 	// FIXME: Why after changing the order of remove_redundant_link() and pack_hard_links(), the result is totally different?
 	// FIXME: remove_redundent_link has bug, sometimes it will stack at a infinit loop
-	//Graph g1 = remove_redundent_links(g0);
-	Graph g1;
-	copy_graph(g0, g1);
+	Graph g1 = remove_redundent_links(g0);
+	//Graph g1;
+	//copy_graph(g0, g1);
 	map<string, boost::graph_traits<Graph>::vertex_descriptor> gdict1;
 	graph_traits<Graph>::vertex_iterator vi, vi_end;
 	for (tie(vi, vi_end) = vertices(g1); vi != vi_end; vi++)
@@ -1236,13 +1331,22 @@ bool Scheduler::schedule_dependency_graph(vector<string> name_list_)
 	{
 		g2[*vi].scheduled_time = INT_MIN;
 	}
-	// cout << "before ----------------------------------------" << endl;
-	// cout << to_dot(g2) << endl;
+	path1 = path + "g_" + to_string(_graph_counter) + "_pack_hard_links" + ".dot";
+	ofstream ofs1(path1, ofstream::out);
+	ofs1 << to_dot(g2);
+	ofs1.close();
+
 	g2 = eliminate_negative_links(g2);
+	path1 = path + "g_" + to_string(_graph_counter) + "_eliminate_negative_links" + ".dot";
+	ofstream ofs2(path1, ofstream::out);
+	ofs2 << to_dot(g2);
+	ofs2.close();
 
 	g2 = predict_order(g2);
-	// cout << "after ----------------------------------------" << endl;
-	// cout << to_dot(g2) << endl;
+	path1 = path + "g_" + to_string(_graph_counter) + "_predict_order" + ".dot";
+	ofstream ofs3(path1, ofstream::out);
+	ofs3 << to_dot(g2);
+	ofs3.close();
 
 	// set all scheduled_time to INT_MIN to mark them as "unscheduled"
 	for (tie(vi, vi_end) = vertices(g2); vi != vi_end; vi++)
@@ -1253,6 +1357,14 @@ bool Scheduler::schedule_dependency_graph(vector<string> name_list_)
 	Rot global_rot;
 	int min_schedule_time = INT_MAX;
 
+	// for (tie(vi, vi_end) = vertices(g2); vi != vi_end; vi++)
+	// {
+	// 	LOG(DEBUG) << "Schedule vertex11111111111111111111 " << g2[*vi].name()
+	// 						 << endl
+	// 						 << g2[*vi].rot.dump();
+	// }
+
+	LOG(INFO) << "Using schedule engine : " << SCHEDULE_ENGINE_NAME_STR;
 	SCHEDULE_ENGINE_NAME eng(&_desc);
 	CHECK(eng.schedule_graph(g2, global_rot, min_schedule_time));
 
@@ -1316,6 +1428,8 @@ bool Scheduler::schedule_dependency_graph(vector<string> name_list_)
 		}
 	}
 
+	_graph_counter++;
+
 	return true;
 }
 
@@ -1342,6 +1456,36 @@ void Scheduler::update_scheduled_time(string name_)
 
 void Scheduler::merge_hierarchical_blocks_with_hard_link()
 {
+	bool flag_found_inter_block_hard_link = false;
+	for (auto n : _desc.get_all_operation_names())
+	{
+		Operation o = _desc.get_operation(n);
+		if (o.children0.size() > 0)
+		{
+			for (auto c : o.children0)
+			{
+				for (auto e : _desc.get_dest_constraints(c))
+				{
+					if (e->d_lo == e->d_hi)
+					{
+						if (std::find(o.children0.begin(), o.children0.end(), e->dest()) == o.children0.end())
+						{
+							flag_found_inter_block_hard_link = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (flag_found_inter_block_hard_link == false)
+	{
+		return;
+	}
+
+	LOG(WARNING) << "Found Inter-block hard link!";
+
 	bool flag_changed = true;
 	while (flag_changed)
 	{
@@ -1435,6 +1579,22 @@ void Scheduler::to_dot_graph(Descriptor &d_, int stage_)
 	ofstream ofs0(path_dot, ofstream::out);
 	ofs0 << d_.generate_dot_graph();
 	ofs0.close();
+}
+
+void Scheduler::gen_script()
+{
+	vesyla::util::GlobalVar glv;
+	string path;
+	CHECK(glv.gets("$OUTPUT_DIR", path));
+	path = path + "schedule/";
+	mkdir(path.c_str(), 0755);
+	string path_dot;
+	path_dot = path + "convert.sh";
+	ofstream ofs0(path_dot, ofstream::out);
+	vesyla::cidfg::ScriptGenerator sg;
+	ofs0 << sg.generate();
+	ofs0.close();
+	chmod(path_dot.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
 }
 
 } // namespace schedule

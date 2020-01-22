@@ -1,17 +1,17 @@
 // Copyright (C) 2019 Yu Yang
-// 
+//
 // This file is part of Vesyla.
-// 
+//
 // Vesyla is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Vesyla is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Vesyla.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -32,6 +32,25 @@ BranchVertexConverter::~BranchVertexConverter()
 
 void BranchVertexConverter::convert(cidfg::CidfgGraph &g_)
 {
+	std::unordered_map<int, int> map_shadow_2_main;
+	std::unordered_map<int, int> map_branch_body_id;
+	std::unordered_map<int, int> map_branch_then1_id;
+	for (auto &v : g_.get_vertices())
+	{
+		if (v->vertex_type == cidfg::Vertex::BRANCH_VERTEX)
+		{
+			int eid = g_.get_in_edge(v->id, 100);
+			if (eid >= 0)
+			{
+				cidfg::Vertex *vsrc = g_.get_vertex(g_.get_edge(eid)->src_id);
+				if (vsrc && vsrc->vertex_type == cidfg::Vertex::BRANCH_VERTEX)
+				{
+					map_shadow_2_main[v->id] = vsrc->id;
+				}
+			}
+		}
+	}
+
 	std::set<int> remove_vertices;
 	for (auto &v : g_.get_vertices())
 	{
@@ -43,18 +62,18 @@ void BranchVertexConverter::convert(cidfg::CidfgGraph &g_)
 
 			cidfg::HierarchicalVertex *vv = static_cast<cidfg::HierarchicalVertex *>(v);
 
-			cidfg::HierarchicalInstrVertex v_branch;
 			cidfg::BranchInstrVertex v_brn;
 			cidfg::HierarchicalInstrVertex v_body;
 			cidfg::HierarchicalInstrVertex v_then1;
 			cidfg::JumpInstrVertex v_jump;
 			cidfg::WaitInstrVertex v_wait;
-			v_branch.coord = v->coord;
 			v_brn.coord = v->coord;
 			v_body.coord = v->coord;
 			v_then1.coord = v->coord;
 			v_jump.coord = v->coord;
 			v_wait.coord = v->coord;
+
+			v_body.is_bulk = true;
 
 			BIR::WaitInstruction *i_wait = CREATE_OBJECT_B(WaitInstruction);
 			i_wait->numberOfCycles(0, true);
@@ -68,14 +87,15 @@ void BranchVertexConverter::convert(cidfg::CidfgGraph &g_)
 			i_brn->falseAddressInstruction = i_jump;
 			v_brn.instr = i_brn;
 
-			int id_v_branch = g_.add_vertex(v_branch, parent_id, child_index);
-			int id_v_brn = g_.add_vertex(v_brn, id_v_branch, 0);
-			int id_v_body = g_.add_vertex(v_body, id_v_branch, 0);
-			int id_v_wait = g_.add_vertex(v_wait, id_v_branch, 0);
+			int id_v_brn = g_.add_vertex(v_brn, parent_id, child_index);
+			int id_v_body = g_.add_vertex(v_body, parent_id, child_index);
+			int id_v_wait = g_.add_vertex(v_wait, parent_id, child_index);
 			int id_v_then1 = g_.add_vertex(v_then1, id_v_body, 0);
 			int id_v_jump = g_.add_vertex(v_jump, id_v_body, 0);
 
-			cidfg::HierarchicalInstrVertex *ptr_v_branch = static_cast<cidfg::HierarchicalInstrVertex *>(g_.get_vertex(id_v_branch));
+			map_branch_body_id[v->id] = id_v_body;
+			map_branch_then1_id[v->id] = id_v_then1;
+
 			cidfg::HierarchicalInstrVertex *ptr_v_brn = static_cast<cidfg::HierarchicalInstrVertex *>(g_.get_vertex(id_v_brn));
 			cidfg::HierarchicalInstrVertex *ptr_v_body = static_cast<cidfg::HierarchicalInstrVertex *>(g_.get_vertex(id_v_body));
 			cidfg::HierarchicalInstrVertex *ptr_v_then1 = static_cast<cidfg::HierarchicalInstrVertex *>(g_.get_vertex(id_v_then1));
@@ -168,9 +188,9 @@ void BranchVertexConverter::convert(cidfg::CidfgGraph &g_)
 				}
 			}
 
-			cidfg::Edge e0(id_v_brn, 0, id_v_body, 0, "", cidfg::Edge::DEPENDENCY, 1, 1);
-			cidfg::Edge e1(id_v_body, 0, id_v_wait, 0, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX);
-			cidfg::Edge e2(id_v_then1, 0, id_v_jump, 0, "", cidfg::Edge::DEPENDENCY, 1, INT_MAX);
+			cidfg::Edge e0(id_v_brn, 0, id_v_body, 0, "", cidfg::Edge::DEPENDENCY, 1, 1, false, cidfg::Edge::HOOK_BEGIN, cidfg::Edge::HOOK_BEGIN);
+			cidfg::Edge e1(id_v_body, 0, id_v_wait, 0, "", cidfg::Edge::DEPENDENCY, 1, 1, false, cidfg::Edge::HOOK_END, cidfg::Edge::HOOK_BEGIN);
+			cidfg::Edge e2(id_v_then1, 0, id_v_jump, 0, "", cidfg::Edge::DEPENDENCY, 1, 1, false, cidfg::Edge::HOOK_END, cidfg::Edge::HOOK_BEGIN);
 			g_.add_edge(e0);
 			g_.add_edge(e1);
 			g_.add_edge(e2);
@@ -179,7 +199,7 @@ void BranchVertexConverter::convert(cidfg::CidfgGraph &g_)
 			{
 				if (e->src_id == v->id)
 				{
-					e->src_id = id_v_branch;
+					e->src_id = id_v_brn;
 				}
 				if (e->dest_id == v->id)
 				{
@@ -192,7 +212,7 @@ void BranchVertexConverter::convert(cidfg::CidfgGraph &g_)
 					}
 					else
 					{
-						e->dest_id = id_v_branch;
+						e->dest_id = id_v_brn;
 					}
 				}
 			}
@@ -206,7 +226,46 @@ void BranchVertexConverter::convert(cidfg::CidfgGraph &g_)
 	{
 		g_.del_vertex(id);
 	}
-} // namespace codegen
+
+	// move shadow child to main vertex
+	for (auto &pair : map_shadow_2_main)
+	{
+		int min_children_count = 0;
+		cidfg::HierarchicalVertex *main = static_cast<cidfg::HierarchicalVertex *>(g_.get_vertex(map_branch_body_id[pair.second]));
+		cidfg::HierarchicalVertex *shadow = static_cast<cidfg::HierarchicalVertex *>(g_.get_vertex(map_branch_body_id[pair.first]));
+		cidfg::HierarchicalVertex *main_then = static_cast<cidfg::HierarchicalVertex *>(g_.get_vertex(map_branch_then1_id[pair.second]));
+		cidfg::HierarchicalVertex *shadow_then = static_cast<cidfg::HierarchicalVertex *>(g_.get_vertex(map_branch_then1_id[pair.first]));
+		min_children_count = min(main->children.size(), shadow->children.size());
+		for (auto i = 0; i < min_children_count; i++)
+		{
+			for (auto j = 0; j < shadow->children[i].size(); j++)
+			{
+				main->children[i].push_back(shadow->children[i][j]);
+			}
+		}
+		shadow->children.clear();
+		min_children_count = min(main_then->children.size(), shadow_then->children.size());
+		for (auto i = 0; i < min_children_count; i++)
+		{
+			for (auto j = 0; j < shadow_then->children[i].size(); j++)
+			{
+				main_then->children[i].push_back(shadow_then->children[i][j]);
+			}
+		}
+		shadow_then->children.clear();
+		for (auto &e : g_.get_edges())
+		{
+			if (e->src_id == shadow->id)
+			{
+				e->src_id = main->id;
+			}
+			if (e->src_id == shadow_then->id)
+			{
+				e->src_id = main_then->id;
+			}
+		}
+	}
+}
 
 } // namespace codegen
 } // namespace vesyla

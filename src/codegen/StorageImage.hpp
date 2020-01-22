@@ -64,6 +64,9 @@ public:
 
 	string print_for_profiler();
 	string print_for_testbench();
+
+private:
+	void find_all_assign_statement(vector<VIR::Statement *> v_, vector<VIR::Statement *> &list_);
 };
 } // namespace codegen
 } // namespace vesyla

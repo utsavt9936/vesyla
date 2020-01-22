@@ -28,6 +28,7 @@
 #include "RandomEngine.hpp"
 #include "EnhancedBnbEngine.hpp"
 #include "ConstraintProgrammingEngine.hpp"
+#include "cidfg/ScriptGenerator.hpp"
 
 #include <boost/graph/transitive_closure.hpp>
 #include <boost/graph/transitive_reduction.hpp>
@@ -55,35 +56,31 @@ public:
 	DependencyGraph::Vertex root;
 
 private:
-	map<string, DependencyGraph::Vertex *> _lut;
+	//map<string, DependencyGraph::Vertex *> _lut;
 	Descriptor _desc;
 	int _id_counter;
+	int _graph_counter;
 
 public:
-	Scheduler() { _id_counter = 0; }
-	Scheduler(Descriptor desc_) : _desc(desc_) { _id_counter = 0; }
-	void load_from_json(string _input_str);
-	void schedule();
-	void schedule_legacy();
-	void add_to_dict(DependencyGraph::Vertex &v_);
-	void add_to_dict(DependencyGraph &g_);
-	int get_start_time(string path);
-	int get_offset(string path);
-	void dump_all()
+	Scheduler()
 	{
-		for (auto &n : _lut)
-		{
-			cout << n.first << ":" << n.second->start << ", " << n.second->pack_id << ", " << n.second->pack_offset << ", " << n.second->offset << endl;
-		}
+		_id_counter = 0;
+		_graph_counter = 0;
+	}
+	Scheduler(Descriptor desc_) : _desc(desc_)
+	{
+		_id_counter = 0;
+		_graph_counter = 0;
 	}
 
+	void schedule();
 	int get_unique_id();
 	Graph pack_hard_links(Graph &g0);
 	Graph remove_redundent_links(Graph &g0);
 	Graph eliminate_negative_links(Graph &g0);
 	Graph predict_order(Graph &g0);
 	bool schedule_graph(Graph &g, Rot &global_rot_in, int &min_end_time);
-	bool schedule_vertex(string name_);
+	bool schedule_vertex(string name_, vector<string> &added_name_list_);
 	bool schedule_dependency_graph(vector<string> name_list_);
 	bool schedule_hierarchical_dependency_graph(vector<string> name_list_);
 	void update_scheduled_time(string name_ = "");
@@ -106,7 +103,9 @@ private:
 	void adjust_interblock_constraints(string parent_block_, vector<string> name_list_);
 	void merge_hierarchical_blocks_with_hard_link();
 	void to_dot_graph(Descriptor &d_, int stage_);
-	void check_instr_count(Descriptor& d_);
+	void check_instr_count(Descriptor &d_);
+
+	void gen_script();
 };
 
 } // namespace schedule

@@ -36,6 +36,47 @@ void RtlGenerator::generate(map<string, vector<BIR::Instruction *>> instr_lists_
 	gen_run_gui(directory_ + "run_gui.do");
 }
 
+// void RtlGenerator::sync(map<string, vector<BIR::Instruction *>> &instr_lists_)
+// {
+// 	int utilized_drra_row;
+// 	int utilized_drra_col;
+// 	util::GlobalVar glv;
+// 	CHECK(glv.geti("utilized_drra_row", utilized_drra_row));
+// 	CHECK(glv.geti("utilized_drra_col", utilized_drra_col));
+
+// 	// DRRA instructions
+// 	for (int rowIndex = 0; rowIndex < utilized_drra_row; ++rowIndex)
+// 		for (int colIndex = 0; colIndex < utilized_drra_col; ++colIndex)
+// 		{
+// 			VIR::Coordinate coord(rowIndex, colIndex);
+// 			if (instr_lists_.find(coord.to_str()) == instr_lists_.end())
+// 			{
+// 				continue;
+// 			}
+// 			vector<Instruction *> &instr_list = instr_lists_[coord.to_str()];
+// 			if (instr_list.size() > 0)
+// 			{
+// 				// NOTE: Here remember to insert WAIT instruction at the beginning of each cell to compensate the cycle for instruction loading propagation.
+// 				int init_delay = utilized_drra_row - 1 + utilized_drra_col - 1 - rowIndex - colIndex;
+// 				if (init_delay > 0)
+// 				{
+// 					WaitInstruction *wi = CREATE_OBJECT_B(WaitInstruction);
+// 					wi->numberOfCycles.value = init_delay - 1;
+// 					wi->numberOfCycles.isStatic = true;
+// 					wi->minScheduledClkCycle = 0 - init_delay;
+// 					wi->maxScheduledClkCycle = -1;
+// 					vector<Instruction *> temp = instr_list;
+// 					instr_list.clear();
+// 					instr_list.push_back(wi);
+// 					for (auto i : temp)
+// 					{
+// 						instr_list.push_back(i);
+// 					}
+// 				}
+// 			}
+// 		}
+// }
+
 void RtlGenerator::gen_fill_data(string filename_)
 {
 	string str = R"(
@@ -49,23 +90,120 @@ module fill_data;
 		for (genvar row = 0; row < ROWS; row++)
 			for (genvar col = 0; col < COLUMNS; col++)
 			begin
-				// Correspondence: AGU_Wr_0 -> data_in_0; AGU_Wr_1 -> data_in_1; AGU_Rd_0 -> data_out_reg_0_left; AGU_Rd_1 -> data_out_reg_1_left;
-				assign `currRegData.dataIn0 		= `regFileData(data_in_0);
-				assign `currRegData.dataIn1 		= `regFileData(data_in_1);
-				assign `currRegData.dataOut0 		= `regFileData(data_out_reg_0_left);
-				assign `currRegData.dataOut1 		= `regFileData(data_out_reg_1_left);
-				assign `currRegData.addrIn0 		= `aguAddress(Wr_0);
-				assign `currRegData.addrIn1 		= `aguAddress(Wr_1);
-				assign `currRegData.addrOut0 		= `aguAddress(Rd_0);
-				assign `currRegData.addrOut1 		= `aguAddress(Rd_1);
-				assign `currRegData.addrenIn0 		= `aguAddressEn(Wr_0);
-				assign `currRegData.addrenIn1 		= `aguAddressEn(Wr_1);
-				assign `currRegData.addrenOut0		= `aguAddressEn(Rd_0);
-				assign `currRegData.addrenOut1		= `aguAddressEn(Rd_1);
-				assign `currRegData.instStartIn0	= `fabricRegTop.AGU_Wr_0_instantiate.instr_start;
-
-				assign `currSequencerData.pc 		= `fabricCell.seq_gen.pc;
-				assign `currSequencerData.currInst 	= `fabricCell.seq_gen.instr;
+				if(row==0)
+				begin
+					if(col==0)
+					begin
+						assign `currRegData.dataIn0 		= `regFileData_top_l_corner(data_in_0);
+						assign `currRegData.dataIn1 		= `regFileData_top_l_corner(data_in_1);
+						assign `currRegData.dataOut0 		= `regFileData_top_l_corner(data_out_reg_0_left);
+						assign `currRegData.dataOut1 		= `regFileData_top_l_corner(data_out_reg_1_left);
+						assign `currRegData.addrIn0 		= `aguAddress_top_l_corner(Wr_0);
+						assign `currRegData.addrIn1 		= `aguAddress_top_l_corner(Wr_1);
+						assign `currRegData.addrOut0 		= `aguAddress_top_l_corner(Rd_0);
+						assign `currRegData.addrOut1 		= `aguAddress_top_l_corner(Rd_1);
+						assign `currRegData.addrenIn0 		= `aguAddressEn_top_l_corner(Wr_0);
+						assign `currRegData.addrenIn1 		= `aguAddressEn_top_l_corner(Wr_1);
+						assign `currRegData.addrenOut0		= `aguAddressEn_top_l_corner(Rd_0);
+						assign `currRegData.addrenOut1		= `aguAddressEn_top_l_corner(Rd_1);
+						assign `currRegData.instStartIn0	= `fabricRegTop_top_l_corner.AGU_Wr_0_instantiate.instr_start;
+						assign `currSequencerData.pc 		= `fabricCell_top_l_corner.seq_gen.pc;
+						assign `currSequencerData.currInst 	= `fabricCell_top_l_corner.seq_gen.instr;
+					end
+					else if(col==COLUMNS-1)
+					begin
+						assign `currRegData.dataIn0 		= `regFileData_top_r_corner(data_in_0);
+						assign `currRegData.dataIn1 		= `regFileData_top_r_corner(data_in_1);
+						assign `currRegData.dataOut0 		= `regFileData_top_r_corner(data_out_reg_0_left);
+						assign `currRegData.dataOut1 		= `regFileData_top_r_corner(data_out_reg_1_left);
+						assign `currRegData.addrIn0 		= `aguAddress_top_r_corner(Wr_0);
+						assign `currRegData.addrIn1 		= `aguAddress_top_r_corner(Wr_1);
+						assign `currRegData.addrOut0 		= `aguAddress_top_r_corner(Rd_0);
+						assign `currRegData.addrOut1 		= `aguAddress_top_r_corner(Rd_1);
+						assign `currRegData.addrenIn0 		= `aguAddressEn_top_r_corner(Wr_0);
+						assign `currRegData.addrenIn1 		= `aguAddressEn_top_r_corner(Wr_1);
+						assign `currRegData.addrenOut0		= `aguAddressEn_top_r_corner(Rd_0);
+						assign `currRegData.addrenOut1		= `aguAddressEn_top_r_corner(Rd_1);
+						assign `currRegData.instStartIn0	= `fabricRegTop_top_r_corner.AGU_Wr_0_instantiate.instr_start;
+						assign `currSequencerData.pc 		= `fabricCell_top_r_corner.seq_gen.pc;
+						assign `currSequencerData.currInst 	= `fabricCell_top_r_corner.seq_gen.instr;
+					end
+					else
+					begin
+						assign `currRegData.dataIn0 		= `regFileData_top(data_in_0);
+						assign `currRegData.dataIn1 		= `regFileData_top(data_in_1);
+						assign `currRegData.dataOut0 		= `regFileData_top(data_out_reg_0_left);
+						assign `currRegData.dataOut1 		= `regFileData_top(data_out_reg_1_left);
+						assign `currRegData.addrIn0 		= `aguAddress_top(Wr_0);
+						assign `currRegData.addrIn1 		= `aguAddress_top(Wr_1);
+						assign `currRegData.addrOut0 		= `aguAddress_top(Rd_0);
+						assign `currRegData.addrOut1 		= `aguAddress_top(Rd_1);
+						assign `currRegData.addrenIn0 		= `aguAddressEn_top(Wr_0);
+						assign `currRegData.addrenIn1 		= `aguAddressEn_top(Wr_1);
+						assign `currRegData.addrenOut0		= `aguAddressEn_top(Rd_0);
+						assign `currRegData.addrenOut1		= `aguAddressEn_top(Rd_1);
+						assign `currRegData.instStartIn0	= `fabricRegTop_top.AGU_Wr_0_instantiate.instr_start;
+						assign `currSequencerData.pc 		= `fabricCell_top.seq_gen.pc;
+						assign `currSequencerData.currInst 	= `fabricCell_top.seq_gen.instr;
+					end
+				end
+				else
+				begin
+					if(col==0)
+					begin
+						assign `currRegData.dataIn0 		= `regFileData_bot_l_corner(data_in_0);
+						assign `currRegData.dataIn1 		= `regFileData_bot_l_corner(data_in_1);
+						assign `currRegData.dataOut0 		= `regFileData_bot_l_corner(data_out_reg_0_left);
+						assign `currRegData.dataOut1 		= `regFileData_bot_l_corner(data_out_reg_1_left);
+						assign `currRegData.addrIn0 		= `aguAddress_bot_l_corner(Wr_0);
+						assign `currRegData.addrIn1 		= `aguAddress_bot_l_corner(Wr_1);
+						assign `currRegData.addrOut0 		= `aguAddress_bot_l_corner(Rd_0);
+						assign `currRegData.addrOut1 		= `aguAddress_bot_l_corner(Rd_1);
+						assign `currRegData.addrenIn0 		= `aguAddressEn_bot_l_corner(Wr_0);
+						assign `currRegData.addrenIn1 		= `aguAddressEn_bot_l_corner(Wr_1);
+						assign `currRegData.addrenOut0		= `aguAddressEn_bot_l_corner(Rd_0);
+						assign `currRegData.addrenOut1		= `aguAddressEn_bot_l_corner(Rd_1);
+						assign `currRegData.instStartIn0	= `fabricRegTop_bot_l_corner.AGU_Wr_0_instantiate.instr_start;
+						assign `currSequencerData.pc 		= `fabricCell_bot_l_corner.seq_gen.pc;
+						assign `currSequencerData.currInst 	= `fabricCell_bot_l_corner.seq_gen.instr;
+					end
+					else if(col==COLUMNS-1)
+					begin
+						assign `currRegData.dataIn0 		= `regFileData_bot_r_corner(data_in_0);
+						assign `currRegData.dataIn1 		= `regFileData_bot_r_corner(data_in_1);
+						assign `currRegData.dataOut0 		= `regFileData_bot_r_corner(data_out_reg_0_left);
+						assign `currRegData.dataOut1 		= `regFileData_bot_r_corner(data_out_reg_1_left);
+						assign `currRegData.addrIn0 		= `aguAddress_bot_r_corner(Wr_0);
+						assign `currRegData.addrIn1 		= `aguAddress_bot_r_corner(Wr_1);
+						assign `currRegData.addrOut0 		= `aguAddress_bot_r_corner(Rd_0);
+						assign `currRegData.addrOut1 		= `aguAddress_bot_r_corner(Rd_1);
+						assign `currRegData.addrenIn0 		= `aguAddressEn_bot_r_corner(Wr_0);
+						assign `currRegData.addrenIn1 		= `aguAddressEn_bot_r_corner(Wr_1);
+						assign `currRegData.addrenOut0		= `aguAddressEn_bot_r_corner(Rd_0);
+						assign `currRegData.addrenOut1		= `aguAddressEn_bot_r_corner(Rd_1);
+						assign `currRegData.instStartIn0	= `fabricRegTop_bot_r_corner.AGU_Wr_0_instantiate.instr_start;
+						assign `currSequencerData.pc 		= `fabricCell_bot_r_corner.seq_gen.pc;
+						assign `currSequencerData.currInst 	= `fabricCell_bot_r_corner.seq_gen.instr;
+					end
+					else
+					begin
+						assign `currRegData.dataIn0 		= `regFileData_bot(data_in_0);
+						assign `currRegData.dataIn1 		= `regFileData_bot(data_in_1);
+						assign `currRegData.dataOut0 		= `regFileData_bot(data_out_reg_0_left);
+						assign `currRegData.dataOut1 		= `regFileData_bot(data_out_reg_1_left);
+						assign `currRegData.addrIn0 		= `aguAddress_bot(Wr_0);
+						assign `currRegData.addrIn1 		= `aguAddress_bot(Wr_1);
+						assign `currRegData.addrOut0 		= `aguAddress_bot(Rd_0);
+						assign `currRegData.addrOut1 		= `aguAddress_bot(Rd_1);
+						assign `currRegData.addrenIn0 		= `aguAddressEn_bot(Wr_0);
+						assign `currRegData.addrenIn1 		= `aguAddressEn_bot(Wr_1);
+						assign `currRegData.addrenOut0		= `aguAddressEn_bot(Rd_0);
+						assign `currRegData.addrenOut1		= `aguAddressEn_bot(Rd_1);
+						assign `currRegData.instStartIn0	= `fabricRegTop_bot.AGU_Wr_0_instantiate.instr_start;
+						assign `currSequencerData.pc 		= `fabricCell_bot.seq_gen.pc;
+						assign `currSequencerData.currInst 	= `fabricCell_bot.seq_gen.instr;
+					end
+				end
 			end
 	endgenerate
 
@@ -73,10 +211,37 @@ module fill_data;
 		for (genvar row = 0; row < ROWS-1; row++)
 			for (genvar col = 0; col < COLUMNS; col++)
 			begin
-				assign `currSramData.readEn 		= `sramReadEn;
-				assign `currSramData.writeEn		= `sramWriteEn;
-				assign `currSramData.writeAddress 	= `sramWriteAddress;
-				assign `currSramData.data 			= `sramMemData;
+				if(row==0)
+				begin
+					if (col==0)
+					begin
+						assign `currSramData.readEn 		= `stile_bot_l_corner.SRAM_rw_r;
+						assign `currSramData.writeEn		= `stile_bot_l_corner.SRAM_rw_w;
+						assign `currSramData.writeAddress 	= `stile_bot_l_corner.SRAM_rw_addrs_out_w;
+						assign `currSramData.data 			= `stile_bot_l_corner.memory_out;
+					end
+					else if(col == COLUMNS-1)
+					begin
+						assign `currSramData.readEn 		= `stile_bot_r_corner.SRAM_rw_r;
+						assign `currSramData.writeEn		= `stile_bot_r_corner.SRAM_rw_w;
+						assign `currSramData.writeAddress 	= `stile_bot_r_corner.SRAM_rw_addrs_out_w;
+						assign `currSramData.data 			= `stile_bot_r_corner.memory_out;
+					end
+					else
+					begin
+						assign `currSramData.readEn 		= `stile_bot.SRAM_rw_r;
+						assign `currSramData.writeEn		= `stile_bot.SRAM_rw_w;
+						assign `currSramData.writeAddress 	= `stile_bot.SRAM_rw_addrs_out_w;
+						assign `currSramData.data 			= `stile_bot.memory_out;
+					end
+				end
+				else
+				begin
+					assign `currSramData.readEn 		= `stile.SRAM_rw_r;
+					assign `currSramData.writeEn		= `stile.SRAM_rw_w;
+					assign `currSramData.writeAddress 	= `stile.SRAM_rw_addrs_out_w;
+					assign `currSramData.data 			= `stile.memory_out;
+				end
 			end
 	endgenerate
 
@@ -97,26 +262,63 @@ void RtlGenerator::gen_macros(string filename_)
 `define _MACROS_
 
 // Some macro definitions for simpler access
-`define fabricCell 			DUT.MTRF_COLS[col].MTRF_ROWS[row].SILEGO_cell.MTRF_cell
-`define fabricRegTop 		`fabricCell.reg_top
-`define aguAddressEn(port)	`fabricRegTop.AGU_``port``_instantiate.addr_en
-`define aguAddress(port)	`fabricRegTop.AGU_``port``_instantiate.addr_out
-`define regFileData(port)	`fabricRegTop.RegisterFile.``port
-`define dimarchDataIn 		`fabricRegTop.dimarch_data_in
+`define fabricCell_bot_l_corner				DUT.MTRF_COLS[col].MTRF_ROWS[row].if_drra_bot_l_corner.Silago_bot_l_corner_inst.SILEGO_cell.MTRF_cell
+`define fabricCell_bot_r_corner				DUT.MTRF_COLS[col].MTRF_ROWS[row].if_drra_bot_r_corner.Silago_bot_r_corner_inst.SILEGO_cell.MTRF_cell
+`define fabricCell_bot								DUT.MTRF_COLS[col].MTRF_ROWS[row].if_drra_bot.Silago_bot_inst.SILEGO_cell.MTRF_cell
+`define fabricCell_top_l_corner				DUT.MTRF_COLS[col].MTRF_ROWS[row].if_drra_top_l_corner.Silago_top_l_corner_inst.SILEGO_cell.MTRF_cell
+`define fabricCell_top_r_corner				DUT.MTRF_COLS[col].MTRF_ROWS[row].if_drra_top_r_corner.Silago_top_r_corner_inst.SILEGO_cell.MTRF_cell
+`define fabricCell_top								DUT.MTRF_COLS[col].MTRF_ROWS[row].if_drra_top.Silago_top_inst.SILEGO_cell.MTRF_cell
+
+`define fabricRegTop_bot_l_corner 		`fabricCell_bot_l_corner.reg_top
+`define fabricRegTop_bot_r_corner 		`fabricCell_bot_r_corner.reg_top
+`define fabricRegTop_bot							`fabricCell_bot.reg_top
+`define fabricRegTop_top_l_corner 		`fabricCell_top_l_corner.reg_top
+`define fabricRegTop_top_r_corner			`fabricCell_top_r_corner.reg_top
+`define fabricRegTop_top							`fabricCell_top.reg_top
+
+`define aguAddressEn_bot_l_corner(port)	`fabricRegTop_bot_l_corner.AGU_``port``_instantiate.addr_en
+`define aguAddressEn_bot_r_corner(port)	`fabricRegTop_bot_r_corner.AGU_``port``_instantiate.addr_en
+`define aguAddressEn_bot(port)					`fabricRegTop_bot.AGU_``port``_instantiate.addr_en
+`define aguAddressEn_top_l_corner(port)	`fabricRegTop_top_l_corner.AGU_``port``_instantiate.addr_en
+`define aguAddressEn_top_r_corner(port)	`fabricRegTop_top_r_corner.AGU_``port``_instantiate.addr_en
+`define aguAddressEn_top(port)					`fabricRegTop_top.AGU_``port``_instantiate.addr_en
+
+`define aguAddress_bot_l_corner(port)	`fabricRegTop_bot_l_corner.AGU_``port``_instantiate.addr_out
+`define aguAddress_bot_r_corner(port)	`fabricRegTop_bot_r_corner.AGU_``port``_instantiate.addr_out
+`define aguAddress_bot(port)					`fabricRegTop_bot.AGU_``port``_instantiate.addr_out
+`define aguAddress_top_l_corner(port)	`fabricRegTop_top_l_corner.AGU_``port``_instantiate.addr_out
+`define aguAddress_top_r_corner(port)	`fabricRegTop_top_r_corner.AGU_``port``_instantiate.addr_out
+`define aguAddress_top(port)					`fabricRegTop_top.AGU_``port``_instantiate.addr_out
+
+`define regFileData_bot_l_corner(port)	`fabricRegTop_bot_l_corner.RegisterFile.``port
+`define regFileData_bot_r_corner(port)	`fabricRegTop_bot_r_corner.RegisterFile.``port
+`define regFileData_bot(port)						`fabricRegTop_bot.RegisterFile.``port
+`define regFileData_top_l_corner(port)	`fabricRegTop_top_l_corner.RegisterFile.``port
+`define regFileData_top_r_corner(port)	`fabricRegTop_top_r_corner.RegisterFile.``port
+`define regFileData_top(port)						`fabricRegTop_top.RegisterFile.``port
+
+`define dimarchDataIn_bot_l_corner			`fabricRegTop_bot_l_corner.dimarch_data_in
+`define dimarchDataIn_bot_r_corner			`fabricRegTop_bot_r_corner.dimarch_data_in
+`define dimarchDataIn_bot								`fabricRegTop_bot.dimarch_data_in
+`define dimarchDataIn_top_l_corner			`fabricRegTop_top_l_corner.dimarch_data_in
+`define dimarchDataIn_top_r_corner			`fabricRegTop_top_r_corner.dimarch_data_in
+`define dimarchDataIn_top								`fabricRegTop_top.dimarch_data_in
+
 `define currRegVariable		regFileVariables[row][col][address]
 `define currRegData 		regData[row][col]
 `define currSequencerData	sequencerData[row][col]
 `define currInstruction		`currSequencerData.currInst
 `define currFixedPointStatus regFileFixedPointStatus[row][col][address]
 
-`define stile				DUT.DiMArch_COLS[col].DiMArch_ROWS[row].u_STILE
-`define sramReadEn			`stile.SRAM_rw_r
-`define sramWriteEn			`stile.SRAM_rw_w
-`define sramWriteAddress	`stile.SRAM_rw_addrs_out_w
-`define sramMemData			`stile.memory_out
+`define stile_bot_l_corner				DUT.DiMArch_COLS[col].DiMArch_ROWS[row].if_dimarch_bot_l_corner.DiMArchTile_bot_l_inst.u_STILE
+`define stile_bot_r_corner				DUT.DiMArch_COLS[col].DiMArch_ROWS[row].if_dimarch_bot_r_corner.DiMArchTile_bot_r_inst.u_STILE
+`define stile_bot									DUT.DiMArch_COLS[col].DiMArch_ROWS[row].if_dimarch_bot.DiMArchTile_bot_inst.u_STILE
+`define stile											DUT.DiMArch_COLS[col].DiMArch_ROWS[row].if_dimarch.DiMArchTile_inst.u_STILE
+
+
 `define currSramData		sramData[0][col]
 
-`endif //_MACROS_
+`endif //_MACROS_ 
 )";
 	ofstream ofs(filename_, ofstream::out);
 	ofs << str;
@@ -772,7 +974,7 @@ vcom -mixedsvvh const_package.vhd
 vlog profiler.sv
 vcom testbench.vhd
 
-vsim testbench
+vsim -t 1ps -novopt testbench
 set StdArithNoWarnings 1
 set NumericStdNoWarnings 1
 run 0 ns;
@@ -798,7 +1000,7 @@ vcom testbench.vhd
 
 # -------------------------------------------------
 # Call vsim to invoke simulator
-vsim -voptargs=+acc testbench
+vsim -t 1ps -novopt testbench
 #vsim -coverage -debugDB testbench_opt
 # -------------------------------------------------
 # Set the window types and source the wave do file
@@ -874,9 +1076,14 @@ string RtlGenerator::dump_drra_wave(map<string, vector<BIR::Instruction *>> inst
 
 	int utilized_drra_row;
 	int utilized_drra_col;
+	int drra_row;
+	int drra_col;
+
 	util::GlobalVar glv;
 	CHECK(glv.geti("utilized_drra_row", utilized_drra_row));
 	CHECK(glv.geti("utilized_drra_col", utilized_drra_col));
+	CHECK(glv.geti("drra_row", drra_row));
+	CHECK(glv.geti("drra_col", drra_col));
 
 	string str = "";
 	const string groupStr = "add wave -group ";
@@ -909,16 +1116,46 @@ string RtlGenerator::dump_drra_wave(map<string, vector<BIR::Instruction *>> inst
 			if (flag_need_wave)
 			{
 				string cellLabel = " <" + to_string(rowIndex) + ", " + to_string(colIndex) + ">";
-				string regSignagure = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/SILEGO_cell/MTRF_cell/reg_top/";
+				string regSignature = "";
+				if (rowIndex == 0)
+				{
+					if (colIndex == 0)
+					{
+						regSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_top_l_corner/Silago_top_l_corner_inst/SILEGO_cell/MTRF_cell/reg_top/";
+					}
+					else if (colIndex == drra_col - 1)
+					{
+						regSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_top_r_corner/Silago_top_r_corner_inst/SILEGO_cell/MTRF_cell/reg_top/";
+					}
+					else
+					{
+						regSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_top/Silago_top_inst/SILEGO_cell/MTRF_cell/reg_top/";
+					}
+				}
+				else
+				{
+					if (colIndex == 0)
+					{
+						regSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_bot_l_corner/Silago_bot_l_corner_inst/SILEGO_cell/MTRF_cell/reg_top/";
+					}
+					else if (colIndex == drra_col - 1)
+					{
+						regSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_bot_r_corner/Silago_bot_r_corner_inst/SILEGO_cell/MTRF_cell/reg_top/";
+					}
+					else
+					{
+						regSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_bot/Silago_bot_inst/SILEGO_cell/MTRF_cell/reg_top/";
+					}
+				}
 
 				str += ("");
 				str += (groupStr + "\"RegFile" + cellLabel + "\"	-radix decimal \\") + "\n";
-				str += (labelStr + "data_out_reg_0 	" + regSignagure + "RegisterFile/data_out_reg_0_left		\\") + "\n";
-				str += (labelStr + "data_out_reg_1 	" + regSignagure + "RegisterFile/data_out_reg_1_left		\\") + "\n";
-				str += (labelStr + "data_in_0 		" + regSignagure + "RegisterFile/data_in_0					\\") + "\n";
-				str += (labelStr + "data_in_1 		" + regSignagure + "RegisterFile/data_in_1					\\") + "\n";
-				str += (labelStr + "data_in_2 		" + regSignagure + "RegisterFile/data_in_2					\\") + "\n";
-				str += (labelStr + "reg_out			" + regSignagure + "RegisterFile/reg_out") + "\n";
+				str += (labelStr + "data_out_reg_0 	" + regSignature + "RegisterFile/data_out_reg_0_left		\\") + "\n";
+				str += (labelStr + "data_out_reg_1 	" + regSignature + "RegisterFile/data_out_reg_1_left		\\") + "\n";
+				str += (labelStr + "data_in_0 		" + regSignature + "RegisterFile/data_in_0					\\") + "\n";
+				str += (labelStr + "data_in_1 		" + regSignature + "RegisterFile/data_in_1					\\") + "\n";
+				str += (labelStr + "data_in_dimarch 		" + regSignature + "RegisterFile/dimarch_data_in					\\") + "\n";
+				str += (labelStr + "reg_out			" + regSignature + "RegisterFile/reg_out") + "\n";
 			}
 		}
 	}
@@ -942,7 +1179,38 @@ string RtlGenerator::dump_drra_wave(map<string, vector<BIR::Instruction *>> inst
 			if (flag_need_wave)
 			{
 				string cellLabel = " <" + to_string(rowIndex) + ", " + to_string(colIndex) + ">";
-				string cellSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/SILEGO_cell/MTRF_cell/";
+				string cellSignature = "";
+				if (rowIndex == 0)
+				{
+					if (colIndex == 0)
+					{
+						cellSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_top_l_corner/Silago_top_l_corner_inst/SILEGO_cell/MTRF_cell/";
+					}
+					else if (colIndex == drra_col - 1)
+					{
+						cellSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_top_r_corner/Silago_top_r_corner_inst/SILEGO_cell/MTRF_cell/";
+					}
+					else
+					{
+						cellSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_top/Silago_top_inst/SILEGO_cell/MTRF_cell/";
+					}
+				}
+				else
+				{
+					if (colIndex == 0)
+					{
+						cellSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_bot_l_corner/Silago_bot_l_corner_inst/SILEGO_cell/MTRF_cell/";
+					}
+					else if (colIndex == drra_col - 1)
+					{
+						cellSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_bot_r_corner/Silago_bot_r_corner_inst/SILEGO_cell/MTRF_cell/";
+					}
+					else
+					{
+						cellSignature = "/DUT/MTRF_COLS(" + to_string(colIndex) + ")/MTRF_ROWS(" + to_string(rowIndex) + ")/if_drra_bot/Silago_bot_inst/SILEGO_cell/MTRF_cell/";
+					}
+				}
+
 				string seqSignature = cellSignature + "seq_gen/";
 				string dpuSignature = cellSignature + "dpu_gen/";
 				string regSignagure = cellSignature + "reg_top/";
@@ -972,7 +1240,7 @@ string RtlGenerator::dump_drra_wave(map<string, vector<BIR::Instruction *>> inst
 				str += (labelStr + "data_out_reg_1 	" + regSignagure + "RegisterFile/data_out_reg_1_left		\\") + "\n";
 				str += (labelStr + "data_in_0 		" + regSignagure + "RegisterFile/data_in_0					\\") + "\n";
 				str += (labelStr + "data_in_1 		" + regSignagure + "RegisterFile/data_in_1					\\") + "\n";
-				str += (labelStr + "data_in_2 		" + regSignagure + "RegisterFile/data_in_2					\\") + "\n";
+				str += (labelStr + "data_in_dimarch 		" + regSignagure + "RegisterFile/dimarch_data_in					\\") + "\n";
 				str += (labelStr + "reg_out			" + regSignagure + "RegisterFile/reg_out") + "\n";
 				str += (groupStr + "\"AGU Wr0" + cellLabel + "\"	-radix decimal \\") + "\n";
 				str += (labelStr + "instr_start " + regSignagure + "AGU_Wr_0_instantiate/instr_start	\\") + "\n";
@@ -1000,9 +1268,13 @@ string RtlGenerator::dump_dimarch_wave(codegen::StorageImage si_)
 {
 	int utilized_dimarch_row;
 	int utilized_dimarch_col;
+	int dimarch_row;
+	int dimarch_col;
 	util::GlobalVar glv;
 	CHECK(glv.geti("utilized_dimarch_row", utilized_dimarch_row));
 	CHECK(glv.geti("utilized_dimarch_col", utilized_dimarch_col));
+	CHECK(glv.geti("dimarch_row", dimarch_row));
+	CHECK(glv.geti("dimarch_row", dimarch_col));
 
 	const string groupStr = "add wave -group ";
 	const string labelStr = "\t-label ";
@@ -1020,7 +1292,28 @@ string RtlGenerator::dump_dimarch_wave(codegen::StorageImage si_)
 		for (int rowIndex = 0; rowIndex < utilized_dimarch_row; ++rowIndex)
 		{
 			string rowStr = to_string(rowIndex);
-			string stileMemSignature = "/DUT/DiMArch_COLS(" + colStr + ")/DiMArch_ROWS(" + rowStr + ")/u_STILE/u_sram/rw/mem";
+			string stileMemSignature = "";
+			if (rowIndex == 0)
+			{
+				if (colIndex == 0)
+				{
+					stileMemSignature = "/DUT/DiMArch_COLS(" + colStr + ")/DiMArch_ROWS(" + rowStr + ")/if_dimarch_bot_l_corner/DiMArchTile_bot_l_inst/u_STILE/u_sram/rw/mem";
+				}
+				else if (colIndex == dimarch_col - 1)
+				{
+					stileMemSignature = "/DUT/DiMArch_COLS(" + colStr + ")/DiMArch_ROWS(" + rowStr + ")/if_dimarch_bot_r_corner/DiMArchTile_bot_r_inst/u_STILE/u_sram/rw/mem";
+				}
+				else
+				{
+					stileMemSignature = "/DUT/DiMArch_COLS(" + colStr + ")/DiMArch_ROWS(" + rowStr + ")/if_dimarch_bot/DiMArchTile_bot_inst/u_STILE/u_sram/rw/mem";
+				}
+			}
+			else
+			{
+				stileMemSignature = "/DUT/DiMArch_COLS(" + colStr + ")/DiMArch_ROWS(" + rowStr + ")/if_dimarch/DiMArchTile_inst/u_STILE/u_sram/rw/mem";
+			}
+
+			"/DUT/DiMArch_COLS(" + colStr + ")/DiMArch_ROWS(" + rowStr + ")/u_STILE/u_sram/rw/mem";
 			string backslash = (rowIndex != utilized_dimarch_row - 1) ? "	\\" : "";
 
 			str += (labelStr + "\"STILE <" + rowStr + ">\"	" + stileMemSignature + backslash) + "\n";
@@ -1088,17 +1381,18 @@ string RtlGenerator::dump_testbench_header(map<string, vector<BIR::Instruction *
 	Common::write_line(str, "SIGNAL clk            : std_logic := '0';", 1);
 	Common::write_line(str, "SIGNAL rst_n          : std_logic := '0';", 1);
 	Common::write_line(str, "SIGNAL instr_load     : std_logic := '0';", 1);
-	Common::write_line(str, "SIGNAL instr_input    : std_logic_vector(INSTR_WIDTH downto 0);", 1);
+	Common::write_line(str, "SIGNAL instr_input    : std_logic_vector(INSTR_WIDTH-1 downto 0);", 1);
 	Common::write_line(str, "SIGNAL seq_address_rb : std_logic_vector(ROWS-1 downto 0);", 1);
 	Common::write_line(str, "SIGNAL seq_address_cb : std_logic_vector(COLUMNS-1 downto 0);", 1);
+	Common::write_line(str, "SIGNAL clk_input : std_logic_vector(COLUMNS-1 downto 0);", 1);
+	Common::write_line(str, "SIGNAL rst_input : std_logic_vector(COLUMNS-1 downto 0);", 1);
 	Common::write_line(str, "", 1);
-	Common::write_line(str, "SIGNAL fabric_reg_wr_2		: std_logic := '0';", 1);
-	Common::write_line(str, "SIGNAL fabric_reg_rd_2		: std_logic := '0';", 1);
-	Common::write_line(str, "SIGNAL fabric_reg_wr_addr_2 : std_logic_vector(REG_FILE_MEM_ADDR_WIDTH-1 downto 0) := (OTHERS => '0');", 1);
-	Common::write_line(str, "SIGNAL fabric_reg_rd_addr_2 : std_logic_vector(REG_FILE_MEM_ADDR_WIDTH-1 downto 0) := (OTHERS => '0');", 1);
-	Common::write_line(str, "SIGNAL fabric_data_in_reg_2 : signed(REG_FILE_MEM_DATA_WIDTH-1 DOWNTO 0) := (OTHERS => '0');", 1);
-	Common::write_line(str, "SIGNAL fabric_data_out_2 	: signed(REG_FILE_MEM_DATA_WIDTH-1 DOWNTO 0);", 1);
 	Common::write_line(str, "SIGNAL tb_or_dimarch 		: std_logic;", 1);
+	Common::write_line(str, "", 1);
+	Common::write_line(str, "SIGNAL SRAM_INST_ver_top_in	: INST_SIGNAL_TYPE(0 to COLUMNS-1, 0 to 0);", 1);
+	Common::write_line(str, "SIGNAL top_splitter_dir_in_array	: DIRECTION_TYPE(0 to COLUMNS-1,0 to 0);", 1);
+	Common::write_line(str, "SIGNAL south_in_array			: DATA_IO_SIGNAL_TYPE(0 to COLUMNS-1);", 1);
+	Common::write_line(str, "", 1);
 	Common::write_line(str, "SIGNAL tb_en    : std_logic;", 1);
 	Common::write_line(str, "SIGNAL tb_addrs : std_logic_vector (SRAM_ADDRESS_WIDTH-1 downto 0);", 1);
 	Common::write_line(str, "SIGNAL tb_inp   : std_logic_vector (SRAM_WIDTH-1 downto 0);", 1);
@@ -1174,29 +1468,36 @@ string RtlGenerator::dump_testbench_header(map<string, vector<BIR::Instruction *
 	Common::write_line(str, "");
 
 	Common::write_line(str, "PRF : ENTITY work.profiler", 1);
-	Common::write_line(str, "PORT MAP (clk	=> clk,", 2);
-	Common::write_line(str, "		  rst_n	=> rst_n);", 2);
+	Common::write_line(str, "PORT MAP (clk   => clk,", 2);
+	Common::write_line(str, "          rst_n => rst_n);", 2);
 	Common::write_line(str, "", 1);
 
+	Common::write_line(str, "input_gen: FOR i in 0 to COLUMNS-1 GENERATE", 1);
+	Common::write_line(str, "SRAM_INST_ver_top_in(i,0) <= ('0', (others => '0'), (others => '0'));", 2);
+	Common::write_line(str, "top_splitter_dir_in_array(i,0) <= (others => '0');", 2);
+	Common::write_line(str, "south_in_array(i) <= (others => '0');", 2);
+	Common::write_line(str, "END GENERATE;", 1);
+	Common::write_line(str, "", 1);
+	Common::write_line(str, "clk_input <= (others => '0');", 1);
+	Common::write_line(str, "rst_input <= (others => '0');", 1);
+	Common::write_line(str, "", 1);
 	Common::write_line(str, "DUT : ENTITY work.fabric", 1);
-	Common::write_line(str, "PORT MAP (clk					=> clk,", 2);
-	Common::write_line(str, "          rst_n					=> rst_n,", 2);
-	Common::write_line(str, "          instr_ld				=> instr_load,", 2);
-	Common::write_line(str, "          instr_inp				=> instr_input,", 2);
-	Common::write_line(str, "          seq_address_rb		=> seq_address_rb,", 2);
-	Common::write_line(str, "          seq_address_cb		=> seq_address_cb,", 2);
-	Common::write_line(str, "          fabric_reg_wr_2		=> fabric_reg_wr_2,", 2);
-	Common::write_line(str, "          fabric_reg_rd_2		=> fabric_reg_rd_2,", 2);
-	Common::write_line(str, "          fabric_reg_wr_addr_2	=> fabric_reg_wr_addr_2,", 2);
-	Common::write_line(str, "          fabric_reg_rd_addr_2	=> fabric_reg_rd_addr_2,", 2);
-	Common::write_line(str, "          fabric_data_in_reg_2	=> fabric_data_in_reg_2,", 2);
-	Common::write_line(str, "          fabric_data_out_2		=> fabric_data_out_2,", 2);
-	Common::write_line(str, "          tb_or_dimarch			=> tb_or_dimarch,", 2);
-	Common::write_line(str, "          tb_en 				=> tb_en,", 2);
-	Common::write_line(str, "          tb_addrs				=> tb_addrs,", 2);
-	Common::write_line(str, "          tb_inp  				=> tb_inp,", 2);
-	Common::write_line(str, "          tb_ROW 				=> tb_ROW,", 2);
-	Common::write_line(str, "          tb_COL  				=> tb_COL);", 2);
+	Common::write_line(str, "PORT MAP (clk                       => clk,", 2);
+	Common::write_line(str, "          rst_n                     => rst_n,", 2);
+	Common::write_line(str, "          clk_input                 => clk_input,", 2);
+	Common::write_line(str, "          rst_input                 => rst_input,", 2);
+	Common::write_line(str, "          instr_ld                  => instr_load,", 2);
+	Common::write_line(str, "          instr_inp                 => instr_input,", 2);
+	Common::write_line(str, "          seq_address_rb            => seq_address_rb,", 2);
+	Common::write_line(str, "          seq_address_cb            => seq_address_cb,", 2);
+	Common::write_line(str, "          dir_south_in_array        => south_in_array,", 2);
+	Common::write_line(str, "          top_splitter_dir_in_array => top_splitter_dir_in_array,", 2);
+	Common::write_line(str, "          SRAM_INST_ver_top_in      => SRAM_INST_ver_top_in,", 2);
+	Common::write_line(str, "          tb_en                     => tb_en,", 2);
+	Common::write_line(str, "          tb_addrs                  => tb_addrs,", 2);
+	Common::write_line(str, "          tb_inp                    => tb_inp,", 2);
+	Common::write_line(str, "          tb_ROW                    => tb_ROW,", 2);
+	Common::write_line(str, "          tb_COL                    => tb_COL);", 2);
 
 	Common::write_line(str, "", 1);
 	Common::write_line(str, "rst_n <= '0' AFTER 2.5 ns, '1' AFTER 4 ns;", 1);
@@ -1208,7 +1509,10 @@ string RtlGenerator::dump_testbench_header(map<string, vector<BIR::Instruction *
 	Common::write_line(str, "VARIABLE curr_cell		  : integer := 0;", 2);
 
 	if (utilized_dimarch_row * utilized_dimarch_col > 0)
+	{
 		Common::write_line(str, "VARIABLE mem_load_counter : integer := 0;", 2);
+		Common::write_line(str, "VARIABLE mem_load_init_delay_counter : integer := 0;", 2);
+	}
 
 	Common::write_line(str, "VARIABLE reg_load_counter : integer := 0;", 2);
 	Common::write_line(str, "BEGIN", 1);
@@ -1240,16 +1544,17 @@ string RtlGenerator::dump_testbench_header(map<string, vector<BIR::Instruction *
 	{
 		Common::write_line(str, "IF (mem_load_counter < mem_load_cycles) THEN", 3);
 
-		Common::write_line(str, "", 4);
-		Common::write_line(str, "instr_load <= '0';");
-		Common::write_line(str, "tb_en      <= '1';");
-		Common::write_line(str, "tb_addrs   <= mem_init_values(mem_load_counter).address;", 4);
-		Common::write_line(str, "tb_ROW     <= mem_init_values(mem_load_counter).row;", 4);
-		Common::write_line(str, "tb_COL     <= mem_init_values(mem_load_counter).col;", 4);
-		Common::write_line(str, "tb_inp     <= mem_init_values(mem_load_counter).data;", 4);
-		Common::write_line(str, "", 4);
-		Common::write_line(str, "mem_load_counter := mem_load_counter + 1;", 4);
-		Common::write_line(str, "", 4);
+		Common::write_line(str, "if(mem_load_init_delay_counter >= (mem_init_values(mem_load_counter).row + mem_init_values(mem_load_counter).col)) then", 4);
+		Common::write_line(str, "instr_load <= '0';", 5);
+		Common::write_line(str, "tb_en      <= '1';", 5);
+		Common::write_line(str, "tb_addrs   <= mem_init_values(mem_load_counter).address;", 5);
+		Common::write_line(str, "tb_ROW     <= mem_init_values(mem_load_counter).row;", 5);
+		Common::write_line(str, "tb_COL     <= mem_init_values(mem_load_counter).col;", 5);
+		Common::write_line(str, "tb_inp     <= mem_init_values(mem_load_counter).data;", 5);
+		Common::write_line(str, "", 5);
+		Common::write_line(str, "mem_load_counter := mem_load_counter + 1;", 5);
+		Common::write_line(str, "end if;", 4);
+		Common::write_line(str, "mem_load_init_delay_counter := mem_load_init_delay_counter + 1;", 4);
 
 		Common::write_line(str, "ELSIF (reg_load_counter < reg_load_cycles) THEN", 3);
 	}
@@ -1259,15 +1564,6 @@ string RtlGenerator::dump_testbench_header(map<string, vector<BIR::Instruction *
 	}
 
 	// Register file load part
-	Common::write_line(str, "", 4);
-	Common::write_line(str, "instr_load			 <= '0';", 4);
-	Common::write_line(str, "instr_input			 <= (OTHERS =>'0');", 4);
-	Common::write_line(str, "fabric_reg_wr_2		 <= '1';", 4);
-	Common::write_line(str, "seq_address_rb       <= reg_init_values(reg_load_counter).row;", 4);
-	Common::write_line(str, "seq_address_cb       <= reg_init_values(reg_load_counter).col;", 4);
-	Common::write_line(str, "fabric_reg_wr_addr_2 <= reg_init_values(reg_load_counter).address;", 4);
-	Common::write_line(str, "fabric_data_in_reg_2 <= reg_init_values(reg_load_counter).data;", 4);
-	Common::write_line(str, "", 4);
 	Common::write_line(str, "reg_load_counter := reg_load_counter + 1;", 4);
 	Common::write_line(str, "", 4);
 
@@ -1285,12 +1581,11 @@ string RtlGenerator::dump_testbench_header(map<string, vector<BIR::Instruction *
 	Common::write_line(str, "seq_address_rb <= cell_infos(curr_cell).row;", 4);
 	Common::write_line(str, "seq_address_cb <= cell_infos(curr_cell).col;", 4);
 	Common::write_line(str, "instr_load     <= '1';", 4);
-	Common::write_line(str, "instr_input    <= std_logic_vector(instruction(inst_counter));", 4);
+	Common::write_line(str, "instr_input    <= std_logic_vector(instruction(inst_counter)(INSTR_WIDTH-1 downto 0));", 4);
 	Common::write_line(str, "inst_counter   := inst_counter + 1;", 4);
 	Common::write_line(str, "", 4);
 	Common::write_line(str, "ELSE", 3);
 	Common::write_line(str, "instr_load      <= '0';", 4);
-	Common::write_line(str, "fabric_reg_wr_2 <= '0';", 4);
 	Common::write_line(str, "END IF;", 3);
 	Common::write_line(str, "END IF;", 2);
 	Common::write_line(str, "END PROCESS StimuliSequencer;", 1);
@@ -1404,7 +1699,9 @@ string dumpVhdlDpuInstruction(BIR::DPUInstruction *dpuInst_)
 	{
 		if (dpuInst_->fixedPointMode)
 		{
+			LOG(DEBUG) << dpuInst_->float_imm_data;
 			dpuInst_->constantValue = (int)(dpuInst_->float_imm_data * (1 << 7));
+			LOG(DEBUG) << dpuInst_->constantValue;
 		}
 		else
 		{

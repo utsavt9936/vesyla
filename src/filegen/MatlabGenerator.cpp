@@ -453,31 +453,33 @@ string dumpMatlabStatement(VIR::Statement *statement_, int level_)
 	case ktIfStatement:
 	{
 		IfStatement *ifStatement = (IfStatement *)statement_;
-		Common::write_line(str, "if " + dumpMatlabExpression(ifStatement->condition(), false), level_);
-		for (auto &s : ifStatement->thenPart())
+
+		if (ifStatement->elsePart().size() == 0)
 		{
-			Common::write_line(str, dumpMatlabStatement(s, level_ + 1));
+			Common::write_line(str, "if " + dumpMatlabExpression(ifStatement->condition(), false), level_);
+			for (auto &s : ifStatement->thenPart())
+			{
+				Common::write_line(str, dumpMatlabStatement(s, level_ + 1));
+			}
+			Common::write_line(str, "end", level_);
 		}
-		Common::write_line(str, "end", level_);
+		else
+		{
+			Common::write_line(str, "if " + dumpMatlabExpression(ifStatement->condition(), false), level_);
+			for (auto &s : ifStatement->thenPart())
+			{
+				Common::write_line(str, dumpMatlabStatement(s, level_ + 1));
+			}
+			Common::write_line(str, "else", level_);
+			for (auto &s : ifStatement->elsePart())
+			{
+				Common::write_line(str, dumpMatlabStatement(s, level_ + 1));
+			}
+			Common::write_line(str, "end", level_);
+		}
 	}
 	break;
 
-	case ktIfThenElseStatement:
-	{
-		IfThenElseStatement *ifThenElseStatement = (IfThenElseStatement *)statement_;
-		Common::write_line(str, "if " + dumpMatlabExpression(ifThenElseStatement->condition(), false), level_);
-		for (auto &s : ifThenElseStatement->thenPart())
-		{
-			Common::write_line(str, dumpMatlabStatement(s, level_ + 1));
-		}
-		Common::write_line(str, "else", level_);
-		for (auto &s : ifThenElseStatement->elsePart())
-		{
-			Common::write_line(str, dumpMatlabStatement(s, level_ + 1));
-		}
-		Common::write_line(str, "end", level_);
-	}
-	break;
 	case ktAssignmentStatement:
 	{
 		AssignmentStatement *assignStatement = (AssignmentStatement *)statement_;

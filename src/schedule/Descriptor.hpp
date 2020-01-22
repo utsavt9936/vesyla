@@ -31,6 +31,16 @@
 #include "Constraint.hpp"
 #include "VManager/MemoryManager.hpp"
 
+#include <boost/graph/transitive_closure.hpp>
+#include <boost/graph/transitive_reduction.hpp>
+#include <boost/graph/graphviz.hpp>
+#include <boost/graph/graph_utility.hpp>
+#include <boost/graph/graph_traits.hpp>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/connected_components.hpp>
+#include <boost/graph/topological_sort.hpp>
+#include <boost/graph/copy.hpp>
+
 namespace pt = boost::property_tree;
 using namespace BIR;
 using namespace BIR::BIREnumerations;
@@ -124,6 +134,8 @@ public:
 
 	string generate_dot_graph_for_operation(string operation_, std::set<string> &operation_set_);
 	string generate_dot_graph();
+	string generate_dot_graph(string name_);
+	string generate_dot_graph(std::set<string> names_);
 	string generate_schedule_table();
 };
 

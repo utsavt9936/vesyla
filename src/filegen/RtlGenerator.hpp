@@ -23,6 +23,7 @@
 #include "BIR/BIRIncludeAll.hpp"
 #include "Common.hpp"
 #include "codegen/StorageImage.hpp"
+#include "VManager/MemoryManager.hpp"
 
 using namespace BIR;
 using namespace BIR::BIREnumerations;
@@ -40,6 +41,7 @@ public:
 
 private:
 	string InputFileName();
+	void sync(map<string, vector<BIR::Instruction *>> &instr_lists_);
 	void gen_fill_data(string filename_);
 	void gen_macros(string filename_);
 	void gen_name_mangling(string filename_);

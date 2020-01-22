@@ -127,7 +127,7 @@ string dumpDpuInstruction(BIR::DPUInstruction *dpuInst_)
 }
 
 // This method dumps the common parts of all instructions.
-string dumpInstructionHeader(BIR::Instruction *instruction_, int index_, int clkCounter_)
+string dumpInstructionHeader(BIR::Instruction *instruction_, int index_, int clkCounter_, int cell_init_delay_)
 {
 	std::stringstream str;
 	str << setw(2) << index_ << " (" << setw(3) << clkCounter_ << "): ";
@@ -180,7 +180,7 @@ string dumpInstructionHeader(BIR::Instruction *instruction_, int index_, int clk
 		break;
 	}
 
-	str << cmdName << "| Sch: [" << setw(3) << instruction_->minScheduledClkCycle << " , " << setw(3) << instruction_->maxScheduledClkCycle << "] | ";
+	str << cmdName << "| Sch: [" << setw(3) << instruction_->minScheduledClkCycle + cell_init_delay_ << " , " << setw(3) << instruction_->maxScheduledClkCycle + cell_init_delay_ << "] | ";
 	return str.str();
 }
 
@@ -361,9 +361,10 @@ void SyncInstrGenerator::generate(map<string, vector<BIR::Instruction *>> instr_
 					Common::write_line(ofs, "#                        CELL <" + to_string(rowIndex) + ", " + to_string(colIndex) + ">");
 					Common::write_line(ofs, "# ------------------------------------------------------------------------------");
 				}
+				int cell_init_delay = rowIndex + colIndex;
 				for (int instIndex = 0, offset = 0; instIndex < instr_list.size(); ++instIndex)
 				{
-					str = dump_instr(instr_list[instIndex], instIndex, offset);
+					str = dump_instr(instr_list[instIndex], instIndex, offset, cell_init_delay);
 					Common::write_line(ofs, str);
 				}
 				Common::write_line(ofs, "");
@@ -373,18 +374,18 @@ void SyncInstrGenerator::generate(map<string, vector<BIR::Instruction *>> instr_
 }
 
 // This method dumps a DRRA instruction
-string SyncInstrGenerator::dump_instr(BIR::Instruction *instruction_, int index_, int &offset_)
+string SyncInstrGenerator::dump_instr(BIR::Instruction *instruction_, int index_, int &offset_, int cell_init_delay_)
 {
 	string str = "";
 	static int clkCounter;
 	static int saveClkCounter;
 
 	if (index_ == 0)
-		clkCounter = 0;
+		clkCounter = cell_init_delay_;
 	else if (instruction_->kind() != bktRefi2Instruction && instruction_->kind() != bktRefi3Instruction)
 		clkCounter++;
 
-	str += dumpInstructionHeader(instruction_, index_ + offset_, clkCounter);
+	str += dumpInstructionHeader(instruction_, index_ + offset_, clkCounter, cell_init_delay_);
 	if (instruction_->kind() == bktSRAMInstruction)
 	{
 		offset_ += 2;

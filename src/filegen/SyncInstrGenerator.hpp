@@ -37,7 +37,7 @@ public:
 	void generate(map<string, vector<BIR::Instruction *>> instr_lists, string filename_);
 
 private:
-	string dump_instr(BIR::Instruction *instruction_, int index_, int &offset_);
+	string dump_instr(BIR::Instruction *instruction_, int index_, int &offset_, int cell_init_delay_);
 };
 } // namespace filegen
 } // namespace vesyla

@@ -36,16 +36,25 @@ Synchronizer::~Synchronizer()
 map<string, vector<BIR::Instruction *>> Synchronizer::synchronize(
     map<string, vector<BIR::Instruction *>> instr_lists_, int end_time_)
 {
+  int utilized_drra_row;
+  int utilized_drra_col;
+  util::GlobalVar glv;
+  CHECK(glv.geti("utilized_drra_row", utilized_drra_row));
+  CHECK(glv.geti("utilized_drra_col", utilized_drra_col));
+  int total_delay = utilized_drra_row + utilized_drra_col - 2;
   map<string, vector<BIR::Instruction *>> scheduled_instr_lists;
   for (auto &e : instr_lists_)
   {
-    scheduled_instr_lists[e.first] = sync_one_cell(e.second, end_time_);
+    int row, col;
+    sscanf(e.first.c_str(), "%d_%d", &row, &col);
+    int init_delay = total_delay - row - col;
+    scheduled_instr_lists[e.first] = sync_one_cell(init_delay, e.second, end_time_);
   }
   return scheduled_instr_lists;
 }
 
 vector<BIR::Instruction *>
-Synchronizer::sync_one_cell(vector<BIR::Instruction *> instr_list_, int end_time_)
+Synchronizer::sync_one_cell(int init_delay_, vector<BIR::Instruction *> instr_list_, int end_time_)
 {
   vector<BIR::Instruction *> new_instr_list = adjust_refis(instr_list_);
   int instr_index = 0;
@@ -55,6 +64,18 @@ Synchronizer::sync_one_cell(vector<BIR::Instruction *> instr_list_, int end_time
   clks.push_back(0);
 
   vector<BIR::Instruction *> scheduled_instr_list;
+
+  // Add initial delay for all instructions of this cell
+  for (auto &instr : new_instr_list)
+  {
+    instr->issue_time += init_delay_;
+    instr->arrive_time += init_delay_;
+    instr->activation_time += init_delay_;
+    instr->end_time += init_delay_;
+    instr->minScheduledClkCycle += init_delay_;
+    instr->maxScheduledClkCycle += init_delay_;
+  }
+
   for (auto &instr : new_instr_list)
   {
     switch (instr->kind())
@@ -344,6 +365,10 @@ vector<BIR::Instruction *> Synchronizer::adjust_refis(vector<BIR::Instruction *>
             {
               if (instr_list_1[j]->minScheduledClkCycle < earlist_issue_time)
               {
+                if (instr_list_1[j]->kind() == BIR::BIREnumerations::bktLoopHeaderInstruction || instr_list_1[j]->kind() == BIR::BIREnumerations::bktLoopTailInstruction)
+                {
+                  LOG(FATAL) << "Sync failed: REFI can't move across loop boundary! Try to disable REFI rearrange optimization engine and try again!";
+                }
                 instr_list_2.push_back(instr_list_1[j]);
               }
               else if (instr_list_1[j]->minScheduledClkCycle > earlist_issue_time)

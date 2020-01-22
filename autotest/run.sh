@@ -181,6 +181,8 @@ do
 	echo "vcom \"$fabric_path/hw_setting.vhd\"" >> run_gui1.do
 	echo "vcom -mixedsvvh \"$fabric_path/mtrf/top_consts_types_package.vhd\"" >> run_cmd1.do
 	echo "vcom -mixedsvvh \"$fabric_path/mtrf/top_consts_types_package.vhd\"" >> run_gui1.do
+	echo "vlog -F \"$fabric_path/fabric_files_verilog.f\"" >> run_cmd1.do
+	echo "vlog -F \"$fabric_path/fabric_files_verilog.f\"" >> run_gui1.do
 	echo "vcom -F \"$fabric_path/fabric_files.f\"" >> run_cmd1.do
 	echo "vcom -F \"$fabric_path/fabric_files.f\"" >> run_gui1.do
 	echo "vlog -F test_util_files.f" >> run_cmd1.do
@@ -202,8 +204,7 @@ do
 	mv run_cmd1.do run_cmd.do
 	mv run_gui1.do run_gui.do
 	
-	vsim -c -do run_cmd.do || { echo 'QuestaSim simulation Failed!!!' ; exit 1; }
-	cp results/sv_results1_exc_$testcase.txt $final_results_dir/
+	vsim -c -do run_cmd.do &> /dev/null|| { echo 'QuestaSim simulation Failed!!!' ; exit 1; }
 done
 echo "Done!"
 

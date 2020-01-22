@@ -20,6 +20,10 @@
 
 #include "Engine.hpp"
 #include <boost/graph/graph_traits.hpp>
+#include <random>
+#include <algorithm>
+#include <iterator>
+#include <chrono>
 
 namespace vesyla
 {
@@ -36,8 +40,9 @@ public:
 	bool schedule_graph(Graph &g_, Rot &global_rot_in_, int &min_end_time_);
 
 private:
-	bool schedule_graph_trial(Graph &g, Rot &global_rot_in, int &min_end_time);
+	bool schedule_graph_trial(Graph &g, Rot &global_rot_in, int &min_end_time, int max_slack);
 	bool schedule_one_node(Graph::vertex_descriptor vd, Graph &g_, Rot &global_rot_in, int &min_end_time);
+	int find_slack(Graph &g_, Graph::vertex_descriptor vd_, int max_slack_);
 };
 } // namespace schedule
 } // namespace vesyla

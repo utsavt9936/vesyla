@@ -122,11 +122,11 @@ VIR::Statement *Elaborator::elaborate_if_statement(VIR::IfStatement *s_)
 	_var_table.pop();
 	var_tab = _var_table.top();
 	_var_table.push(var_tab);
-	v = s_->thenPart();
-	s_->thenPart().clear();
+	v = s_->elsePart();
+	s_->elsePart().clear();
 	for (auto &s : v)
 	{
-		s_->thenPart().push_back(elaborate_statement(s));
+		s_->elsePart().push_back(elaborate_statement(s));
 	}
 	_var_table.pop();
 
@@ -202,7 +202,7 @@ VIR::Statement *Elaborator::elaborate_assign_statement(VIR::AssignmentStatement 
 			else
 			{
 				LOG(FATAL) << "Line " << s_->lineNumber()
-									 << "Illegal declaration with LHS type of " << s_->lhs()[0]->kindStr();
+									 << " : Illegal declaration with LHS type of " << s_->lhs()[0]->kindStr();
 			}
 		}
 		else if (s_->pragma()->kind() == ktRaccuPragma)
@@ -221,7 +221,7 @@ VIR::Statement *Elaborator::elaborate_assign_statement(VIR::AssignmentStatement 
 			else
 			{
 				LOG(FATAL) << "Line " << s_->lineNumber()
-									 << "Illegal RACCU Variable declaration!";
+									 << " : Illegal RACCU Variable declaration!";
 			}
 		}
 		else if (s_->pragma()->kind() == ktDPUChainPragma)
@@ -239,7 +239,7 @@ VIR::Statement *Elaborator::elaborate_assign_statement(VIR::AssignmentStatement 
 			else
 			{
 				LOG(FATAL) << "Line " << s_->lineNumber()
-									 << "Illegal DPU Chain Variable declaration!";
+									 << " : Illegal DPU Chain Variable declaration!";
 			}
 		}
 		else if (s_->pragma()->kind() == ktDPUPragma)
@@ -256,7 +256,8 @@ VIR::Statement *Elaborator::elaborate_assign_statement(VIR::AssignmentStatement 
 			for (auto &expr : v)
 			{
 				Expression *expr0 = elaborate_expression(expr);
-				CHECK_EQ(expr0->kind(), ktSliceName);
+				CHECK_EQ(expr0->kind(), ktSliceName) << "Line " << s_->lineNumber()
+																						 << " : Illegal LHS variable!";
 				s_->lhs().push_back(static_cast<Name *>(expr0));
 			}
 			s_->type(atArithmetic);
@@ -264,7 +265,7 @@ VIR::Statement *Elaborator::elaborate_assign_statement(VIR::AssignmentStatement 
 		else
 		{
 			LOG(FATAL) << "Line " << s_->lineNumber()
-								 << "Illegal pragma used in assignment statement!";
+								 << " : Illegal pragma used in assignment statement!";
 		}
 	}
 	else
@@ -297,7 +298,7 @@ VIR::Statement *Elaborator::elaborate_assign_statement(VIR::AssignmentStatement 
 					else
 					{
 						LOG(FATAL) << "Line " << s_->lineNumber()
-											 << "Illegal slicename object type!";
+											 << " : Illegal slicename object type!";
 					}
 				}
 				else
@@ -430,10 +431,10 @@ VIR::Statement *Elaborator::elaborate_assign_statement(VIR::AssignmentStatement 
 		{
 			CHECK_EQ(s_->lhs().size(), 1)
 					<< "Line " << s_->lineNumber()
-					<< "Normal address calculation only allow one LHS scalar variable";
+					<< " : Normal address calculation only allow one LHS scalar variable";
 			CHECK_EQ(s_->lhs()[0]->kind(), ktIdentifier)
 					<< "Line " << s_->lineNumber()
-					<< "Normal address calculation should have identifier as LHS";
+					<< " : Normal address calculation should have identifier as LHS";
 			s_->type(atAddressCalculation);
 			if (lhs_has_new_var)
 			{
@@ -622,7 +623,7 @@ VIR::Expression *Elaborator::elaborate_slice_name(VIR::SliceName *e_)
 		CHECK(ve.object_type == otMemory ||
 					ve.object_type == otRegisterFile)
 				<< "Line " << e_->lineNumber()
-				<< "Illegal Slice Name : " << name;
+				<< " : Illegal Slice Name : " << name;
 		e_->prefix(e_->prefix());
 		vector<Expression *> v = e_->suffix();
 		e_->suffix().clear();
@@ -635,7 +636,7 @@ VIR::Expression *Elaborator::elaborate_slice_name(VIR::SliceName *e_)
 		// semantic checking
 		CHECK_EQ(e_->suffix().size(), 1)
 				<< "Line " << e_->lineNumber()
-				<< "Too much suffix in slice name" << name;
+				<< " : Too much suffix in slice name" << name;
 
 		return e_;
 	}

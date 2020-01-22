@@ -24,6 +24,7 @@ namespace cidfg
 
 CidfgGraph::CidfgGraph()
 {
+	name = "CidfgGraph";
 	id_counter = 0;
 }
 
@@ -651,7 +652,14 @@ string CidfgGraph::generate_dot_graph()
 	{
 		if (vertex_set.find(e.second->src_id) != vertex_set.end() && vertex_set.find(e.second->dest_id) != vertex_set.end())
 		{
-			str += to_string(e.second->src_id) + " -> " + to_string(e.second->dest_id) + "[taillabel=\"" + to_string(e.second->src_port) + "\", headlabel=\"" + to_string(e.second->dest_port) + "\"";
+			if (e.second->edge_type == Edge::DEPENDENCY)
+			{
+				str += to_string(e.second->src_id) + " -> " + to_string(e.second->dest_id) + "[taillabel=\"\", headlabel=\"\"";
+			}
+			else
+			{
+				str += to_string(e.second->src_id) + " -> " + to_string(e.second->dest_id) + "[taillabel=\"" + to_string(e.second->src_port) + "\", headlabel=\"" + to_string(e.second->dest_port) + "\"";
+			}
 			string temp_var_prefix = "temp_var_";
 			if (e.second->edge_type != Edge::DEPENDENCY && (e.second->var_name != "" && strncmp(e.second->var_name.c_str(), temp_var_prefix.c_str(), temp_var_prefix.size())))
 			{
@@ -931,11 +939,11 @@ string CidfgGraph::generate_dot_graph_for_vertex(int vid, set<int> &vertex_set_)
 			}
 			else if (i == 1)
 			{
-				str += "cluster_" + to_string(vv->id) + "_" + to_string(i) + "_entry [shape=diamond, style=filled, fillcolor=red, label=\"\"];\n";
+				str += "cluster_" + to_string(vv->id) + "_" + to_string(i) + "_entry [shape=circle, style=filled, fillcolor=red, label=\"\", width=.2, fixedsize=true];\n";
 			}
 			else
 			{
-				str += "cluster_" + to_string(vv->id) + "_" + to_string(i) + "_entry [shape=diamond, style=filled, fillcolor=yellow, label=\"" + to_string(i) + "\"];\n";
+				str += "cluster_" + to_string(vv->id) + "_" + to_string(i) + "_entry [shape=circle, style=filled, fillcolor=yellow, label=\"" + to_string(i) + "\", width=.2, fixedsize=true];\n";
 			}
 
 			for (int j = 0; j < vv->children[i].size(); j++)
@@ -1078,6 +1086,172 @@ void CidfgGraph::get_parent(int id_, int &parent_id_, int &child_index_)
 			}
 		}
 	}
+}
+
+CidfgGraph::CidfgGraph(boost::property_tree::ptree p_)
+{
+	name = "CidfgGraph";
+}
+
+boost::property_tree::ptree CidfgGraph::serialize()
+{
+	namespace pt = boost::property_tree;
+	pt::ptree p;
+	for (auto &v : get_vertices())
+	{
+		pt::ptree p0;
+		p0.put("id", v->id);
+		p0.put("vertex_type", v->vertex_type);
+		p0.put("coord", v->coord.to_str());
+		if (v->is_instr())
+		{
+			InstrVertex *vv = static_cast<InstrVertex *>(v);
+			p0.put("instr", vv->instr->id());
+		}
+		switch (v->vertex_type)
+		{
+		case Vertex::ROOT_VERTEX:
+		case Vertex::GENERAL_HIERARCHICAL_VERTEX:
+		case Vertex::HIERARCHICAL_INSTR_VERTEX:
+		case Vertex::BRANCH_VERTEX:
+		{
+			HierarchicalVertex *vv = static_cast<HierarchicalVertex *>(v);
+			for (int i = 0; i < vv->children.size(); i++)
+			{
+				for (int j = 0; j < vv->children[i].size(); j++)
+				{
+					pt::ptree p1;
+					p1.put("index", i);
+					p1.put("id", vv->children[i][j]);
+					p0.add_child("child", p1);
+				}
+			}
+			break;
+		}
+		case Vertex::CONST_VERTEX:
+		{
+			ConstVertex *vv = static_cast<ConstVertex *>(v);
+			p0.put("value_type", vv->value_type);
+			p0.put("int_data", vv->int_data);
+			p0.put("float_data", vv->float_data);
+			break;
+		}
+		case Vertex::VAR_VERTEX:
+		{
+			VarVertex *vv = static_cast<VarVertex *>(v);
+			p0.put("var_name", vv->var_name);
+			p0.put("is_iterator", vv->is_iterator);
+			break;
+		}
+		case Vertex::REG_VAR_VERTEX:
+		{
+			RegVarVertex *vv = static_cast<RegVarVertex *>(v);
+			p0.put("var_name", vv->var_name);
+			break;
+		}
+		case Vertex::SRAM_VAR_VERTEX:
+		{
+			SramVarVertex *vv = static_cast<SramVarVertex *>(v);
+			p0.put("var_name", vv->var_name);
+			p0.put("sram_coord", vv->sram_coord.to_str());
+			break;
+		}
+		case Vertex::SRAM_SINK_VERTEX:
+		{
+			SramSinkVertex *vv = static_cast<SramSinkVertex *>(v);
+			p0.put("var_name", vv->var_name);
+			p0.put("sram_coord", vv->sram_coord.to_str());
+			break;
+		}
+		case Vertex::VAR_SINK_VERTEX:
+		{
+			VarSinkVertex *vv = static_cast<VarSinkVertex *>(v);
+			p0.put("var_name", vv->var_name);
+			break;
+		}
+		case Vertex::REG_SINK_VERTEX:
+		{
+			RegSinkVertex *vv = static_cast<RegSinkVertex *>(v);
+			p0.put("var_name", vv->var_name);
+			break;
+		}
+		case Vertex::COMPUTATION_VERTEX:
+		{
+			ComputationVertex *vv = static_cast<ComputationVertex *>(v);
+			p0.put("func_name", vv->func_name);
+			p0.put("is_on_dpu", vv->is_on_dpu);
+			p0.put("dont_touch", vv->dont_touch);
+			break;
+		}
+		case Vertex::READING_VERTEX:
+		{
+			ReadingVertex *vv = static_cast<ReadingVertex *>(v);
+			p0.put("is_sram", vv->is_sram);
+			p0.put("en_compression", vv->en_compression);
+			break;
+		}
+		case Vertex::WRITING_VERTEX:
+		{
+			WritingVertex *vv = static_cast<WritingVertex *>(v);
+			p0.put("is_sram", vv->is_sram);
+			p0.put("en_compression", vv->en_compression);
+			break;
+		}
+		case Vertex::READ_AND_INDEX_VERTEX:
+		{
+			ReadAndIndexVertex *vv = static_cast<ReadAndIndexVertex *>(v);
+			p0.put("port", vv->port);
+			p0.put("is_sram", vv->is_sram);
+			p0.put("en_compression", vv->en_compression);
+			p0.put("sram_coord", vv->sram_coord.to_str());
+			break;
+		}
+		case Vertex::WRITE_AND_INDEX_VERTEX:
+		{
+			WriteAndIndexVertex *vv = static_cast<WriteAndIndexVertex *>(v);
+			p0.put("port", vv->port);
+			p0.put("is_sram", vv->is_sram);
+			p0.put("en_compression", vv->en_compression);
+			p0.put("sram_coord", vv->sram_coord.to_str());
+			break;
+		}
+		case Vertex::SRAM_INSTR_VERTEX:
+		{
+			SramInstrVertex *vv = static_cast<SramInstrVertex *>(v);
+			p0.put("sram_coord", vv->sram_coord.to_str());
+			break;
+		}
+		case Vertex::BRANCH_INSTR_VERTEX:
+		case Vertex::DPU_INSTR_VERTEX:
+		case Vertex::JUMP_INSTR_VERTEX:
+		case Vertex::LOOPH_INSTR_VERTEX:
+		case Vertex::LOOPT_INSTR_VERTEX:
+		case Vertex::RACCU_INSTR_VERTEX:
+		case Vertex::REFI_INSTR_VERTEX:
+		case Vertex::ROUTE_INSTR_VERTEX:
+		case Vertex::SWB_INSTR_VERTEX:
+		case Vertex::WAIT_INSTR_VERTEX:
+		case Vertex::MERGE_VERTEX:
+		case Vertex::INDEXING_VERTEX:
+		default:
+			break;
+		}
+		p.add_child("vertex", p0);
+	}
+
+	for (auto &e : get_edges())
+	{
+		pt::ptree p0;
+		p0.put("id", e->id);
+		p0.put("src_id", e->src_id);
+		p0.put("src_port", e->src_port);
+		p0.put("dest_id", e->dest_id);
+		p0.put("dest_port", e->dest_port);
+		p0.put("edge_type", e->edge_type);
+		p0.put("var_name", e->var_name);
+		p.add_child("edge", p0);
+	}
+	return p;
 }
 
 } // namespace cidfg

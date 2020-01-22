@@ -15,13 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Vesyla.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __VESYLA_UTIL_CONFIG_HPP__
-#define __VESYLA_UTIL_CONFIG_HPP__
+#ifndef __VESYLA_UTIL_OBJECT_HPP__
+#define __VESYLA_UTIL_OBJECT_HPP__
 
-#include <boost/foreach.hpp>
+#include <string>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
-#include "GlobalVar.hpp"
 
 using namespace std;
 
@@ -29,14 +27,16 @@ namespace vesyla
 {
 namespace util
 {
-class Config
+class Object
 {
 public:
-	Config(string config_file_);
-	~Config();
+	string name;
+	Object();
+	Object(boost::property_tree::ptree p_);
+	virtual boost::property_tree::ptree serialize();
+	//virtual void *translate(int id_) = 0;
 };
-
 } // namespace util
 } // namespace vesyla
 
-#endif // __VESYLA_UTIL_CONFIG_HPP__
+#endif // __VESYLA_UTIL_OBJECT_HPP__

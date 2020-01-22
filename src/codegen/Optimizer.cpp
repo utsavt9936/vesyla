@@ -64,10 +64,10 @@ schedule::Descriptor Optimizer::optimize(cidfg::CidfgGraph &g_)
 	e8.transform(g_);
 	to_dot_graph(g_, 8);
 	vesyla::codegen::SwbRearrangeEngine e9;
-	e9.transform(g_);
+	//e9.transform(g_);
 	to_dot_graph(g_, 9);
 	vesyla::codegen::StorageAccessRearrangeEngine e10;
-	//	e10.transform(g_);
+	//e10.transform(g_);
 	to_dot_graph(g_, 10);
 	vesyla::codegen::CleanConverter cleaner;
 	cleaner.convert(g_);

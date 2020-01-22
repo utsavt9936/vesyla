@@ -25,16 +25,24 @@ int Simulator::simulate(map<string, vector<BIR::Instruction *>> instr_list_)
 {
 	int raccu_reg_file_depth = 0;
 	int raccu_max_loop_num = 0;
+	int utilized_drra_row = 0;
+	int utilized_drra_col = 0;
 	vesyla::util::GlobalVar glv;
 	CHECK(glv.geti("raccu_reg_file_depth", raccu_reg_file_depth));
 	CHECK(glv.geti("raccu_max_loop_num", raccu_max_loop_num));
+	CHECK(glv.geti("utilized_drra_row", utilized_drra_row));
+	CHECK(glv.geti("utilized_drra_col", utilized_drra_col));
 	CHECK_GT(raccu_reg_file_depth, 0);
 	CHECK_GT(raccu_max_loop_num, 0);
 	int max_time = 0;
 	for (auto &p : instr_list_)
 	{
+		int row;
+		int col;
+		sscanf(p.first.c_str(), "%d_%d", &row, &col);
+		int init_delay = row + col;
 		Model m(raccu_reg_file_depth, raccu_max_loop_num);
-		int t = m.simulate(p.second);
+		int t = m.simulate(p.second, init_delay);
 		if (t > max_time)
 		{
 			max_time = t;

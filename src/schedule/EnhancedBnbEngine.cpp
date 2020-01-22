@@ -93,10 +93,6 @@ bool EnhancedBnbEngine::schedule_graph(Graph &g, Rot &global_rot_in, int &min_en
 		priority_info_list[index].c = FLT_MAX;
 		if (g[*vi].scheduled_time >= 0)
 		{
-			if (g[*vi].name() == "__temp1")
-			{
-				LOG(DEBUG) << "RETURN HERE";
-			}
 			continue;
 		}
 		// check its predecessors

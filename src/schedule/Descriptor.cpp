@@ -509,7 +509,6 @@ void Descriptor::fill_timestamp()
 				int j = i;
 				for (; j < instr_vec.size(); j++)
 				{
-
 					if (instr_vec[j] == wait_instr)
 					{
 						break;
@@ -537,6 +536,7 @@ void Descriptor::fill_timestamp()
 				}
 			}
 		}
+
 		e.second = instr_vec;
 
 		// int size_after = instr_map.size();
@@ -549,6 +549,104 @@ void Descriptor::fill_timestamp()
 		// 					});
 	}
 
+	struct Prop
+	{
+		int start;
+		int end;
+		int iteration;
+		int duration;
+		int cursor;
+	};
+
+	typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS, Prop> Tree;
+	Tree loop_tree;
+	map<LoopHeaderInstruction *, Tree::vertex_descriptor> loop2vertex;
+	map<Tree::vertex_descriptor, LoopHeaderInstruction *> vertex2loop;
+	for (auto &e : _instr_lists)
+	{
+
+		stack<LoopHeaderInstruction *> curr_loop_h;
+		for (auto &instr : e.second)
+		{
+			if (instr->kind() == BIR::BIREnumerations::bktLoopHeaderInstruction)
+			{
+				BIR::LoopHeaderInstruction *ii = static_cast<BIR::LoopHeaderInstruction *>(instr);
+				Prop p;
+				if (ii->isStatic)
+				{
+					p.start = ii->issue_time;
+					p.end = -1;
+					p.iteration = ii->iterationNumber;
+					p.duration = 0;
+					p.cursor = ii->issue_time;
+				}
+				else
+				{
+					p.start = -1;
+					p.end = -1;
+					p.iteration = -1;
+					p.duration = -1;
+					p.cursor = -1;
+				}
+
+				Tree::vertex_descriptor vd = add_vertex(p, loop_tree);
+				loop2vertex[ii] = vd;
+				vertex2loop[vd] = ii;
+
+				if (!curr_loop_h.empty())
+				{
+					add_edge(loop2vertex[curr_loop_h.top()], vd, loop_tree);
+				}
+				curr_loop_h.push(ii);
+			}
+
+			if (instr->kind() == BIR::BIREnumerations::bktLoopTailInstruction)
+			{
+				int deduction = 0;
+				BIR::LoopTailInstruction *ii = static_cast<BIR::LoopTailInstruction *>(instr);
+
+				CHECK(!curr_loop_h.empty()) << "Found a LOOP TAIL before LOOP HEADER, something is wrong!";
+
+				if (loop_tree[loop2vertex[curr_loop_h.top()]].start >= 0)
+				{
+					Tree::vertex_descriptor vd = loop2vertex[curr_loop_h.top()];
+					loop_tree[vd].end = ii->issue_time;
+					int duration = loop_tree[vd].duration;
+					duration += (loop_tree[vd].end - loop_tree[vd].start + 1);
+					deduction += (loop_tree[vd].end - loop_tree[vd].start + 1);
+					Tree::out_edge_iterator oei, oei_end;
+
+					bool dynamic = false;
+					for (tie(oei, oei_end) = out_edges(vd, loop_tree); oei != oei_end; oei++)
+					{
+						Prop child_prop = loop_tree[target(*oei, loop_tree)];
+						if (child_prop.duration < 0)
+						{
+							dynamic = true;
+							loop_tree[vd].start = -1;
+							loop_tree[vd].end = -1;
+							loop_tree[vd].iteration = -1;
+							loop_tree[vd].duration = -1;
+							break;
+						}
+						duration += child_prop.duration * child_prop.iteration;
+					}
+
+					if (!dynamic)
+					{
+						loop_tree[vd].duration = duration;
+					}
+				}
+				curr_loop_h.pop();
+				if (!curr_loop_h.empty() && loop_tree[loop2vertex[curr_loop_h.top()]].start >= 0)
+				{
+					Tree::vertex_descriptor vd = loop2vertex[curr_loop_h.top()];
+					loop_tree[vd].duration -= deduction;
+				}
+			}
+		}
+	}
+
 	for (auto &e : _instr_lists)
 	{
 		for (auto &instr : e.second)
@@ -559,12 +657,14 @@ void Descriptor::fill_timestamp()
 				if (refi_instr->corresponding_looph_l1 && refi_instr->corresponding_loopt_l1)
 				{
 					refi_instr->middleDelay.isStatic = true;
-					refi_instr->middleDelay.value = refi_instr->corresponding_loopt_l1->issue_time - refi_instr->corresponding_looph_l1->issue_time;
+					refi_instr->middleDelay.value = loop_tree[loop2vertex[static_cast<LoopHeaderInstruction *>(refi_instr->corresponding_looph_l1)]].duration - 1;
+					CHECK_GT(static_cast<LoopHeaderInstruction *>(refi_instr->corresponding_looph_l1)->isStatic, 0) << "Can't move REFI instruction across dynamic loop, something wrong!";
 				}
 				if (refi_instr->corresponding_looph_l2 && refi_instr->corresponding_loopt_l2)
 				{
 					refi_instr->repetitionDelay.isStatic = true;
-					refi_instr->repetitionDelay.value = refi_instr->corresponding_loopt_l2->issue_time - refi_instr->corresponding_looph_l2->issue_time - ((refi_instr->middleDelay.value + 1) * refi_instr->numberOfAddress.value) + 1;
+					refi_instr->repetitionDelay.value = loop_tree[loop2vertex[static_cast<LoopHeaderInstruction *>(refi_instr->corresponding_looph_l2)]].duration - ((refi_instr->middleDelay.value + 1) * refi_instr->numberOfAddress.value + 1);
+					CHECK_GT(static_cast<LoopHeaderInstruction *>(refi_instr->corresponding_looph_l2)->isStatic, 0) << "Can't move REFI instruction across dynamic loop, something wrong!";
 				}
 			}
 		}
@@ -575,6 +675,11 @@ string Descriptor::generate_dot_graph_for_operation(string operation_, std::set<
 {
 	string str = "";
 	Operation o = get_operation(operation_);
+	if (o.scheduled_time > 0 && o.scheduled_time < INT_MAX)
+	{
+		return str;
+	}
+
 	if (o.children0.size() == 0 && o.children1.size() == 0)
 	{
 		str += o.name() + "[shape=box, color=blue, label=\"" + o.name() + "\"];\n";
@@ -647,6 +752,99 @@ string Descriptor::generate_dot_graph()
 			}
 			str += "label=\"[" + lo + "," + hi + "]\"";
 			str += ", style=dashed, color=red";
+			if (c.second.src_hook == Constraint::HOOK_END)
+			{
+				str += ", taillabel=\"E\"";
+			}
+			if (c.second.dest_hook == Constraint::HOOK_END)
+			{
+				str += ", headlabel=\"E\"";
+			}
+			str += "];\n";
+		}
+	}
+
+	str += "}";
+
+	return str;
+}
+
+string Descriptor::generate_dot_graph(string name_)
+{
+	std::set<string> operation_set;
+	string str = "digraph g {\n";
+	str += generate_dot_graph_for_operation(name_, operation_set);
+
+	for (auto &c : _constraints)
+	{
+		if (operation_set.find(c.second.src()) != operation_set.end() && operation_set.find(c.second.dest()) != operation_set.end())
+		{
+			str += c.second.src() + " -> " + c.second.dest() + "[";
+			string hi = "+INF";
+			string lo = "-INF";
+			if (c.second.d_lo > INT_MIN)
+			{
+				lo = to_string(c.second.d_lo);
+			}
+			if (c.second.d_hi < INT_MAX)
+			{
+				hi = to_string(c.second.d_hi);
+			}
+			str += "label=\"[" + lo + "," + hi + "]\"";
+			str += ", style=dashed, color=red";
+			if (c.second.src_hook == Constraint::HOOK_END)
+			{
+				str += ", taillabel=\"E\"";
+			}
+			if (c.second.dest_hook == Constraint::HOOK_END)
+			{
+				str += ", headlabel=\"E\"";
+			}
+			str += "];\n";
+		}
+	}
+
+	str += "}";
+
+	return str;
+}
+
+string Descriptor::generate_dot_graph(std::set<string> names_)
+{
+	std::set<string> operation_set;
+	string str = "digraph g {\n";
+
+	for (auto name : names_)
+	{
+		operation_set.insert(name);
+		str += generate_dot_graph_for_operation(name, operation_set);
+	}
+
+	for (auto &c : _constraints)
+	{
+		if (operation_set.find(c.second.src()) != operation_set.end() && operation_set.find(c.second.dest()) != operation_set.end())
+		{
+			str += c.second.src() + " -> " + c.second.dest() + "[";
+			string hi = "+INF";
+			string lo = "-INF";
+			if (c.second.d_lo > INT_MIN)
+			{
+				lo = to_string(c.second.d_lo);
+			}
+			if (c.second.d_hi < INT_MAX)
+			{
+				hi = to_string(c.second.d_hi);
+			}
+			str += "label=\"[" + lo + "," + hi + "]\"";
+			str += ", style=dashed, color=red";
+			if (c.second.src_hook == Constraint::HOOK_END)
+			{
+				str += ", taillabel=\"E\"";
+			}
+			if (c.second.dest_hook == Constraint::HOOK_END)
+			{
+				str += ", headlabel=\"E\"";
+			}
 			str += "];\n";
 		}
 	}

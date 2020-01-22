@@ -38,6 +38,7 @@ struct DPUOptions {
 	int dpuMode;
 	int outPort;
 	bool saturation;
+  bool dynamic;
 };
 
 struct StorageOptions {
@@ -187,7 +188,7 @@ std::vector<std::string> global_reference_list;
 %token STRUCTURAL
 %token DPU RFILE MEMORY CDPU
 %token EVENDIST FULLDIST CUSTOMDIST COMPRESS
-%token DPUMODE DPUOUT DPU_SATURATION  ADDRESS_REG
+%token DPUMODE DPUOUT DPU_SATURATION DPU_DYNAMIC ADDRESS_REG
 %token VAR_INPUT VAR_OUTPUT
 %token RACCU_VAR ADDRESS_VAR TEMP_VAR MEM_ADDRESS
 %token CONSTROW CONSTCOL CONSTDIMENSION CONSTPARALLELISM
@@ -471,6 +472,7 @@ dpu_options			  :
 						dpuOptions->dpuMode = 0;
 						dpuOptions->outPort = 0;
 						dpuOptions->saturation = false;
+            dpuOptions->dynamic = false;
 
 						$$ = dpuOptions;
 					  }
@@ -481,6 +483,7 @@ dpu_options			  :
 						dpuOptions->dpuMode = 0;
 						dpuOptions->outPort = 0;
 						dpuOptions->saturation = false;
+            dpuOptions->dynamic = false;
 
 						$$ = dpuOptions;
 					  }
@@ -491,6 +494,18 @@ dpu_options			  :
 						dpuOptions->dpuMode = 0;
 						dpuOptions->outPort = 0;
 						dpuOptions->saturation = true;
+            dpuOptions->dynamic = false;
+
+						$$ = dpuOptions;
+					  }
+
+            | '<' DPU_DYNAMIC '>'
+					  {
+						DPUOptions * dpuOptions = new DPUOptions;
+						dpuOptions->dpuMode = 0;
+						dpuOptions->outPort = 0;
+						dpuOptions->saturation = true;
+            dpuOptions->dynamic = true;
 
 						$$ = dpuOptions;
 					  }
@@ -502,6 +517,7 @@ dpu_options			  :
 						dpuOptions->dpuMode = $4;
 						dpuOptions->outPort = $8;
 						dpuOptions->saturation = false;
+            dpuOptions->dynamic = false;
 
 						$$ = dpuOptions;
 					  }
@@ -1454,8 +1470,8 @@ if_cmd_list           : expr if_pragma statement_list opt_else
                         }
                         else
                         {
-                          ifStatement = CREATE_OBJECT(IfThenElseStatement);
-                          fillStatementList($4, &((IfThenElseStatement*)ifStatement)->elsePart());
+                          ifStatement = CREATE_OBJECT(IfStatement);
+                          fillStatementList($4, &((IfStatement*)ifStatement)->elsePart());
                         }
                         ifStatement->lineNumber(@1.first_line);
                         ifStatement->condition($1);
@@ -1541,8 +1557,8 @@ opt_else              :
                         }
                         else
                         {
-                          ifStatement = CREATE_OBJECT(IfThenElseStatement);
-                          fillStatementList($5, &((IfThenElseStatement*)ifStatement)->elsePart());
+                          ifStatement = CREATE_OBJECT(IfStatement);
+                          fillStatementList($5, &((IfStatement*)ifStatement)->elsePart());
                         }
                         ifStatement->lineNumber(@1.first_line);
                         ifStatement->condition($2);

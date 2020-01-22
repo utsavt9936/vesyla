@@ -54,11 +54,13 @@
 
 #include <set>
 
+#include "util/Object.hpp"
+
 namespace vesyla
 {
 namespace cidfg
 {
-class CidfgGraph
+class CidfgGraph : public util::Object
 {
 private:
 	std::unordered_map<int, Vertex *> _vertices;
@@ -119,6 +121,9 @@ public:
 	void print_graph();
 
 	void get_parent(int id_, int &parent_id_, int &child_index_);
+
+	CidfgGraph(boost::property_tree::ptree p_);
+	virtual boost::property_tree::ptree serialize();
 };
 } // namespace cidfg
 } // namespace vesyla

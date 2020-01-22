@@ -43,6 +43,8 @@ public:
 
 private:
 	void create_graph(cidfg::CidfgGraph &g_, Graph &g0_, VIR::Coordinate coord_, std::unordered_map<int, Graph::vertex_descriptor> &map_g2g0, std::unordered_map<Graph::vertex_descriptor, int> &map_g02g);
+	int pre_assign(Graph &g0_);
+	void pre_group(Graph &g0_);
 };
 } // namespace codegen
 } // namespace vesyla

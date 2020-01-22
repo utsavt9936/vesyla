@@ -36,6 +36,12 @@ public:
     DEPENDENCY
   };
 
+  enum HookType
+  {
+    HOOK_BEGIN,
+    HOOK_END
+  };
+
 public:
   int src_id;
   int src_port;
@@ -45,11 +51,14 @@ public:
   EdgeType edge_type;
   int d_lo;
   int d_hi;
+  bool dynamic;
   static int temp_name_counter;
+  HookType src_hook;
+  HookType dest_hook;
 
 public:
   Edge();
-  Edge(int src_id_, int src_port_, int dest_id_, int dest_port_, string var_name_ = "", EdgeType edge_type_ = SCALAR_DATA_SIG, int d_lo_ = 1, int d_hi_ = INT_MAX);
+  Edge(int src_id_, int src_port_, int dest_id_, int dest_port_, string var_name_ = "", EdgeType edge_type_ = SCALAR_DATA_SIG, int d_lo_ = 1, int d_hi_ = INT_MAX, bool dynamic_ = false, HookType src_hook_ = HOOK_BEGIN, HookType dest_hook_ = HOOK_BEGIN);
   ~Edge();
 
   bool is_weak_dependency();

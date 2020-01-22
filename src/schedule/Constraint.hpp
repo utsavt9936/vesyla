@@ -31,7 +31,14 @@ namespace schedule
 
 class Constraint
 {
-private:
+public:
+	enum Hook
+	{
+		HOOK_BEGIN,
+		HOOK_END
+	};
+
+public:
 	string _src;
 	string _dest;
 
@@ -39,7 +46,23 @@ public:
 	int d_lo;
 	int d_hi;
 
-	Constraint(const string src_ = "", const string dest_ = "", int d_lo_ = INT_MIN, int d_hi_ = INT_MAX) : _src(src_), _dest(dest_), d_lo(d_lo_), d_hi(d_hi_) {}
+public:
+	Hook src_hook;
+	Hook dest_hook;
+
+	Constraint(
+			const string src_ = "",
+			const string dest_ = "",
+			int d_lo_ = INT_MIN,
+			int d_hi_ = INT_MAX,
+			Hook src_hook_ = HOOK_BEGIN,
+			Hook dest_hook_ = HOOK_BEGIN)
+			: _src(src_),
+				_dest(dest_),
+				d_lo(d_lo_),
+				d_hi(d_hi_),
+				src_hook(src_hook_),
+				dest_hook(dest_hook_) {}
 	void load(pt::ptree p);
 	pt::ptree dump();
 	string src();

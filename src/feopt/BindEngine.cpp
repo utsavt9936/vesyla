@@ -716,8 +716,29 @@ void BindEngine::split_vertex(CidfgGraph &g_)
 
 	// Adjust the edges for shadow vertex
 	vector<Edge *> vec_edge = g_.get_edges();
+
 	for (auto e : vec_edge)
 	{
+		if (shadow_vertex_map.find(e->src_id) == shadow_vertex_map.end() && shadow_vertex_map.find(e->dest_id) != shadow_vertex_map.end() && g_.get_vertex(e->dest_id)->vertex_type == Vertex::COMPUTATION_VERTEX)
+		{
+			// special treatment for computation nodes on top of branch
+			int edge_id = g_.get_out_edge(e->dest_id, 0);
+			if (edge_id >= 0)
+			{
+				int branch_vertex_id = g_.get_edge(edge_id)->dest_id;
+				if (branch_vertex_id >= 0 && g_.get_vertex(branch_vertex_id)->vertex_type == Vertex::BRANCH_VERTEX)
+				{
+					for (auto &s : all_coord_str)
+					{
+						Edge new_e(e->src_id, e->src_port, shadow_vertex_map[e->dest_id][s], e->dest_port, e->var_name, e->edge_type);
+						g_.add_edge(new_e);
+					}
+					continue;
+				}
+			}
+		}
+
+		// Other nodes
 		if (shadow_vertex_map.find(e->src_id) != shadow_vertex_map.end() && shadow_vertex_map.find(e->dest_id) != shadow_vertex_map.end())
 		{
 			for (auto &s : all_coord_str)
@@ -767,8 +788,12 @@ void BindEngine::split_vertex(CidfgGraph &g_)
 					{
 						vvv->children[i].push_back(vvvv->children[i][j]);
 					}
+					vvvv->children[i].clear();
 				}
-				vvvv->children.clear();
+				if (vvvv->vertex_type == Vertex::ROOT_VERTEX)
+				{
+					vvvv->children.clear();
+				}
 				Edge e(vvv->id, 100, vvvv->id, 100, "", Edge::DEPENDENCY, 0, 0);
 				g_.add_edge(e);
 			}

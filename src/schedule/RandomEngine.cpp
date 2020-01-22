@@ -33,6 +33,23 @@ RandomEngine::~RandomEngine()
 {
 }
 
+template <class D, class W, class URBG>
+void weighted_shuffle(D first, D last, W first_weight, W last_weight, URBG &&g)
+{
+	while (first != last and first_weight != last_weight)
+	{
+		std::discrete_distribution<int> dd(first_weight, last_weight);
+		auto i = dd(g);
+		if (i)
+		{
+			std::iter_swap(first, std::next(first, i));
+			std::iter_swap(first_weight, std::next(first_weight, i));
+		}
+		++first;
+		++first_weight;
+	}
+}
+
 void my_copy_graph(Graph &g_src_, Graph &g_dest_)
 {
 	g_dest_.clear();
@@ -57,16 +74,16 @@ bool RandomEngine::schedule_graph(Graph &g_, Rot &global_rot_in_, int &min_end_t
 	bool flag_changed = false;
 	Graph solution_g;
 	Rot solution_rot;
-	LOG(DEBUG) << "Random Engine set optimization iteration number to: 100 ";
+	//LOG(DEBUG) << "Random Engine set optimization iteration number to: 100 ";
 	for (int i = 0; i < 100; i++)
 	{
 		Graph g0;
 		my_copy_graph(g_, g0);
 		Rot rot0 = global_rot_in_;
 		int min_end_time0 = min_end_time_;
-		if (schedule_graph_trial(g0, rot0, min_end_time0))
+		if (schedule_graph_trial(g0, rot0, min_end_time0, (100 - i) / 20))
 		{
-			LOG(DEBUG) << "Random Engine found a better solution at iteration " << i;
+			//LOG(DEBUG) << "Random Engine found a better solution at iteration " << i;
 			my_copy_graph(g0, solution_g);
 			solution_rot = rot0;
 			min_end_time_ = min_end_time0;
@@ -77,7 +94,7 @@ bool RandomEngine::schedule_graph(Graph &g_, Rot &global_rot_in_, int &min_end_t
 	global_rot_in_ = solution_rot;
 	return flag_changed;
 }
-bool RandomEngine::schedule_graph_trial(Graph &g, Rot &global_rot_in, int &min_end_time)
+bool RandomEngine::schedule_graph_trial(Graph &g, Rot &global_rot_in, int &min_end_time, int max_slack)
 {
 	// Early return if timing of current solution is worse than the known solution
 	for (auto &r : global_rot_in)
@@ -135,17 +152,26 @@ bool RandomEngine::schedule_graph_trial(Graph &g, Rot &global_rot_in, int &min_e
 	bool flag_solution_found = false;
 
 	vector<Graph::vertex_descriptor> vec_vd;
+	vector<int> vec_priority;
 	for (tie(vi, vi_end) = vertices(g); vi != vi_end; vi++)
 	{
 		if (g[*vi].scheduled_time != INT_MIN)
 		{
 			continue;
 		}
+		int slack = find_slack(g, *vi, max_slack);
+		if (slack <= 0)
+		{
+			return false;
+		}
+		vec_priority.push_back(int(exp(-slack) * 10000));
 		vec_vd.push_back(*vi);
 	}
 
-	// shuffle the ready vector to randomize it
-	std::random_shuffle(vec_vd.begin(), vec_vd.end());
+	// shuffle the ready vector to randomize it considering the priority
+	auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+	std::mt19937 gen{seed};
+	weighted_shuffle(vec_vd.begin(), vec_vd.end(), vec_priority.begin(), vec_priority.end(), gen);
 
 	for (auto vd : vec_vd)
 	{
@@ -220,11 +246,11 @@ bool RandomEngine::schedule_graph_trial(Graph &g, Rot &global_rot_in, int &min_e
 		{
 			continue;
 		}
-		// LOG(DEBUG) << "Schedule vertex11111111111111111111 " << g[vd].name() << " Range [" << min_schedule_time << ", " << max_schedule_time << "]";
-		// LOG(DEBUG) << "old ROT" << endl
-		// 					 << global_rot_in.dump();
-		// LOG(DEBUG) << "add ROT" << endl
-		// 					 << g[vd].rot.dump();
+		//LOG(DEBUG) << "Schedule vertex11111111111111111111 " << g[vd].name() << " Range [" << min_schedule_time << ", " << max_schedule_time << "]";
+		//LOG(DEBUG) << "old ROT" << endl
+		//					 << global_rot_in.dump();
+		//LOG(DEBUG) << "add ROT" << endl
+		//					 << g[vd].rot.dump();
 		Rot new_global_rot = global_rot_in;
 		int schedule_time = new_global_rot.merge_and_verify(g[vd].rot, min_schedule_time, max_schedule_time);
 		if (schedule_time == INT_MIN)
@@ -235,7 +261,7 @@ bool RandomEngine::schedule_graph_trial(Graph &g, Rot &global_rot_in, int &min_e
 		Graph new_g;
 		my_copy_graph(g, new_g);
 		new_g[vd].scheduled_time = schedule_time;
-		if (!schedule_graph_trial(new_g, new_global_rot, min_end_time))
+		if (!schedule_graph_trial(new_g, new_global_rot, min_end_time, max_slack))
 		{
 			//continue;
 			// directly return
@@ -258,6 +284,39 @@ bool RandomEngine::schedule_graph_trial(Graph &g, Rot &global_rot_in, int &min_e
 		g[*vii].scheduled_time = solution[*vii].scheduled_time;
 	}
 	return flag_solution_found;
+}
+
+int RandomEngine::find_slack(Graph &g_, Graph::vertex_descriptor vd_, int max_slack_)
+{
+	Graph::in_edge_iterator ei, ei_end;
+	int min_slack = INT_MAX;
+	for (tie(ei, ei_end) = in_edges(vd_, g_); ei != ei_end; ei++)
+	{
+		long slack = INT_MAX;
+		int src_time = g_[source(*ei, g_)].scheduled_time;
+		if (src_time != INT_MAX)
+		{
+			int max_delay = g_[*ei].d_hi;
+			if (max_delay != INT_MAX)
+			{
+				slack = long(src_time) + long(max_delay);
+				slack = slack > max_slack_ ? max_slack_ : slack;
+			}
+			else
+			{
+				slack = max_slack_;
+			}
+		}
+		else
+		{
+			slack = max_slack_;
+		}
+		if (min_slack > slack)
+		{
+			min_slack = slack;
+		}
+	}
+	return min_slack;
 }
 
 } // namespace schedule

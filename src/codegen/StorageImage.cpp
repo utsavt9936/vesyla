@@ -23,6 +23,29 @@ namespace vesyla
 {
 namespace codegen
 {
+
+void StorageImage::find_all_assign_statement(vector<VIR::Statement *> v_, vector<VIR::Statement *> &list_)
+{
+	for (auto &v : v_)
+	{
+		if (v->kind() == VIR::VirEnumerations::ktAssignmentStatement)
+		{
+			list_.push_back(v);
+		}
+		else if (v->kind() == VIR::VirEnumerations::ktIfStatement || v->kind() == VIR::VirEnumerations::ktIfThenElseStatement)
+		{
+			VIR::IfStatement *st = static_cast<VIR::IfStatement *>(v);
+			find_all_assign_statement(st->thenPart(), list_);
+			find_all_assign_statement(st->elsePart(), list_);
+		}
+		else if (v->kind() == VIR::VirEnumerations::ktForStatement)
+		{
+			VIR::ForStatement *st = static_cast<VIR::ForStatement *>(v);
+			find_all_assign_statement(st->loopBody(), list_);
+		}
+	}
+}
+
 StorageImage::StorageImage(VIR::MainProgram *p_, cidfg::CidfgGraph &g_)
 {
 	int reg_file_depth;
@@ -41,7 +64,10 @@ StorageImage::StorageImage(VIR::MainProgram *p_, cidfg::CidfgGraph &g_)
 	std::set<int> drra_cols;
 	std::set<int> sram_rows;
 	std::set<int> sram_cols;
-	for (auto &s : p_->body())
+
+	vector<VIR::Statement *> stmt_list;
+	find_all_assign_statement(p_->body(), stmt_list);
+	for (auto &s : stmt_list)
 	{
 		if (s->kind() == VIR::VirEnumerations::ktAssignmentStatement)
 		{
@@ -101,6 +127,9 @@ StorageImage::StorageImage(VIR::MainProgram *p_, cidfg::CidfgGraph &g_)
 	{
 		utilized_dimarch_col = *sram_cols.rbegin() + 1;
 	}
+
+	// Utilized DRRA cell may be caused by DPU instead of storage
+
 	glv.puti("utilized_drra_row", utilized_drra_row);
 	glv.puti("utilized_drra_col", utilized_drra_col);
 	glv.puti("utilized_dimarch_row", utilized_dimarch_row);
@@ -165,6 +194,8 @@ StorageImage::StorageImage(VIR::MainProgram *p_, cidfg::CidfgGraph &g_)
 							string tag = vv->coord.to_str();
 							for (auto &ele : vv->int_data_array)
 							{
+								CHECK_LT(reg_counter[tag], reg_file_depth)
+										<< "Too much memory is needed for Register File " << tag << ". (> " << sram_depth << " rows)";
 								_reg[tag][reg_counter[tag]].var_name = vv->var_name;
 								_reg[tag][reg_counter[tag]].int_value = ele;
 								_reg[tag][reg_counter[tag]].is_fixed_point = false;
@@ -182,6 +213,8 @@ StorageImage::StorageImage(VIR::MainProgram *p_, cidfg::CidfgGraph &g_)
 							string tag = vv->coord.to_str();
 							for (auto &ele : vv->float_data_array)
 							{
+								CHECK_LT(reg_counter[tag], reg_file_depth)
+										<< "Too much memory is needed for Register File " << tag << ". (> " << sram_depth << " rows)";
 								_reg[tag][reg_counter[tag]].var_name = vv->var_name;
 								_reg[tag][reg_counter[tag]].float_value = ele;
 								_reg[tag][reg_counter[tag]].is_fixed_point = true;
@@ -211,6 +244,8 @@ StorageImage::StorageImage(VIR::MainProgram *p_, cidfg::CidfgGraph &g_)
 							string tag = vv->sram_coord.to_str();
 							for (auto &ele : vv->int_data_array)
 							{
+								CHECK_LT(sram_counter[tag], sram_depth * sram_width / reg_file_width)
+										<< "Too much memory is needed for DiMArch " << tag << ". (> " << sram_depth * sram_width / reg_file_width << " words)";
 								_sram[tag][sram_counter[tag]].var_name = vv->var_name;
 								_sram[tag][sram_counter[tag]].int_value = ele;
 								_sram[tag][sram_counter[tag]].is_fixed_point = false;
@@ -228,6 +263,8 @@ StorageImage::StorageImage(VIR::MainProgram *p_, cidfg::CidfgGraph &g_)
 							string tag = vv->sram_coord.to_str();
 							for (auto &ele : vv->float_data_array)
 							{
+								CHECK_LT(sram_counter[tag], sram_depth * sram_width / reg_file_width)
+										<< "Too much memory is needed for DiMArch " << tag << ". (> " << sram_depth * sram_width / reg_file_width << " words)";
 								_sram[tag][sram_counter[tag]].var_name = vv->var_name;
 								_sram[tag][sram_counter[tag]].float_value = ele;
 								_sram[tag][sram_counter[tag]].is_fixed_point = true;

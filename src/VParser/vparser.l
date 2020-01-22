@@ -378,6 +378,11 @@ BeginToken();
                                   Return("DPU_SATURATION", DPU_SATURATION);
                                 }
 
+<PRAGMA_STATE>"dynamic"         {
+BeginToken();
+                                  Return("DPU_DYNAMIC", DPU_DYNAMIC);
+                                }
+
 <PRAGMA_STATE>"address"			{
 BeginToken();
                                   Return("ADDRESS", ADDRESS_REG);

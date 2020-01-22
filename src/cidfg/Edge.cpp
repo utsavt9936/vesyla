@@ -27,7 +27,7 @@ Edge::Edge() : edge_type(SCALAR_DATA_SIG), d_lo(1), d_hi(INT_MAX)
   var_name = "temp_var_" + to_string(temp_name_counter);
   temp_name_counter++;
 }
-Edge::Edge(int src_id_, int src_port_, int dest_id_, int dest_port_, string var_name_, EdgeType edge_type_, int d_lo_, int d_hi_) : src_id(src_id_), src_port(src_port_), dest_id(dest_id_), dest_port(dest_port_), edge_type(edge_type_), d_lo(d_lo_), d_hi(d_hi_)
+Edge::Edge(int src_id_, int src_port_, int dest_id_, int dest_port_, string var_name_, EdgeType edge_type_, int d_lo_, int d_hi_, bool dynamic_, Edge::HookType src_hook_, Edge::HookType dest_hook_) : src_id(src_id_), src_port(src_port_), dest_id(dest_id_), dest_port(dest_port_), edge_type(edge_type_), d_lo(d_lo_), d_hi(d_hi_), dynamic(dynamic_), src_hook(src_hook_), dest_hook(dest_hook_)
 {
   if (var_name_ == "")
   {

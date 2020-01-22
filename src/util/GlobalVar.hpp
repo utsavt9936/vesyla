@@ -1,17 +1,17 @@
 // Copyright (C) 2019 Yu Yang
-// 
+//
 // This file is part of Vesyla.
-// 
+//
 // Vesyla is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Vesyla is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Vesyla.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -24,8 +24,10 @@
 
 using namespace std;
 
-namespace vesyla {
-namespace util {
+namespace vesyla
+{
+namespace util
+{
 
 /**
  * \class GlobalVar
@@ -38,9 +40,9 @@ namespace util {
  * GlobalVar class defines a set of API dealing with bool, int, float and string
  * type global variables.
  */
-class GlobalVar {
+class GlobalVar
+{
 public:
-
 	/**
 	 * \union glvar_t
 	 * \description The global variable entry type. It wraps all common variable type
@@ -49,9 +51,9 @@ public:
 	 * contains a char vector of 256 bytes.
 	 */
 	typedef union {
-		bool b; /**< boolean type */
-		int i; /**< signed integer type */
-		float f; /**< single floating point type */
+		bool b;			 /**< boolean type */
+		int i;			 /**< signed integer type */
+		float f;		 /**< single floating point type */
 		char s[256]; /**< string type */
 	} glvar_t;
 
@@ -63,7 +65,7 @@ public:
 	 * \param val The glvar_t type container to receive the result.
 	 * \return True if found, otherwise false.
 	 */
-	bool get(const string key, glvar_t& val);
+	bool get(const string key, glvar_t &val);
 	/**
 	 * \fn getb()
 	 * \brief Search the bool variable wrapped as glvar_t from the pool by a string type key
@@ -72,7 +74,7 @@ public:
 	 * \param val The bool type container to receive the result.
 	 * \return True if found, otherwise false.
 	 */
-	bool getb(const string key, bool& val);
+	bool getb(const string key, bool &val);
 	/**
 	 * \fn geti()
 	 * \brief Search the int variable wrapped as glvar_t from the pool by a string type key
@@ -81,7 +83,7 @@ public:
 	 * \param val The int type container to receive the result.
 	 * \return True if found, otherwise false.
 	 */
-	bool geti(const string key, int& val);
+	bool geti(const string key, int &val);
 	/**
 	 * \fn getf()
 	 * \brief Search the float variable wrapped as glvar_t from the pool by a string type key
@@ -90,7 +92,7 @@ public:
 	 * \param val The float type container to receive the result.
 	 * \return True if found, otherwise false.
 	 */
-	bool getf(const string key, float& val);
+	bool getf(const string key, float &val);
 	/**
 	 * \fn gets()
 	 * \brief Search the string variable wrapped as glvar_t from the pool by a string type key
@@ -99,7 +101,7 @@ public:
 	 * \param val The string type container to receive the result.
 	 * \return True if found, otherwise false.
 	 */
-	bool gets(const string key, string& val);
+	bool gets(const string key, string &val);
 	/**
 	 * \fn put()
 	 * \brief Update the glvar_t variable in the pool located by a string type key
@@ -160,7 +162,7 @@ private:
 	static map<string, glvar_t> _pool;
 };
 
-}
-}
+} // namespace util
+} // namespace vesyla
 
 #endif // __VESYLA_UTIL_GLOBAL_VAR_HPP__

@@ -1,17 +1,17 @@
 // Copyright (C) 2019 Yu Yang
-// 
+//
 // This file is part of Vesyla.
-// 
+//
 // Vesyla is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Vesyla is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Vesyla.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -27,16 +27,21 @@
 
 using namespace std;
 
-namespace vesyla{
-namespace codegen{
+namespace vesyla
+{
+namespace codegen
+{
 
-class PrimitiveFuncLib{
+class PrimitiveFuncLib
+{
 
 public:
-	struct FuncConfig{
+	struct FuncConfig
+	{
 		int mode;
 		int exec_cycle;
 		bool reductive;
+		bool output_register;
 		map<int, int> arg_port;
 		map<int, int> ret_port;
 	};
@@ -69,6 +74,12 @@ public:
 	 */
 	bool get_reductive(const string name) const;
 	/**
+	 * \brief Check if the output of the function is registered or not.
+	 * \param name The name of the function.
+	 * \return true if it is registered, otherwise false.
+	 */
+	bool get_output_register(const string name) const;
+	/**
 	 * \brief Find the input port position of a function.
 	 * \param name The name of the function.
 	 * \param arg_pos The index of the argument.
@@ -89,6 +100,6 @@ private:
 	map<string, FuncConfig> _primitive_func_map;
 };
 
-}
-}
+} // namespace codegen
+} // namespace vesyla
 #endif // __VESYLA_CODE_GEN_PRIMITIVE_FUNC_LIB_HPP__

@@ -42,7 +42,7 @@ private:
   int _max_repetition_offset;
 
 private:
-  vector<BIR::Instruction *> sync_one_cell(vector<BIR::Instruction *> instr_list_, int end_time_);
+  vector<BIR::Instruction *> sync_one_cell(int init_delay_, vector<BIR::Instruction *> instr_list_, int end_time_);
   void add_wait(vector<BIR::Instruction *> &instr_list_, int &pc_, int &clk_, int num_cycles_);
   void sync_instr(vector<BIR::Instruction *> &instr_list_, int &pc, int &clk, Instruction *instr);
   vector<BIR::Instruction *> adjust_refis(vector<BIR::Instruction *> instr_list_);

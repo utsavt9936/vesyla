@@ -41,6 +41,13 @@ int main(int argc, char **argv)
 	el::Loggers::reconfigureLogger("default", c);
 	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
 
+	util::Object obj1, obj2;
+	obj1.name = "obj1";
+	obj2.name = "obj2";
+	util::Database db;
+	db.add(&obj1);
+	db.add(&obj2);
+
 	// Argument parsing
 	string path_output;
 	vector<string> file_list;
@@ -221,37 +228,16 @@ int main(int argc, char **argv)
 		 * CIDFG conversion
 		 **************************************************************************/
 		LOG(INFO) << "Start AST to CIDFG conversion ...";
-
-		// legacy code for determin variable start address and size.
-		//BEngine bEngine;
-		//bEngine.setRaccuMode(true);
-		//bEngine.run1(mainProgram);
-
 		vesyla::util::GlobalVar glv;
 		string path;
-		// CHECK(glv.gets("$OUTPUT_DIR", path));
-		// path = path + "cidfg/";
-		// mkdir(path.c_str(), 0755);
 		string input_file_name;
-		// CHECK(glv.gets("input_file_name", input_file_name));
-
-		// cidfg::ScriptGenerator sg;
-		// string path_script;
-		// path_script = path + "convert.sh";
-		// ofstream ofs_script(path_script, ofstream::out);
-		// ofs_script << sg.generate();
-		// ofs_script.close();
-
 		vesyla::cidfg::CidfgGraph cc;
 		vesyla::cidfg::Converter cv;
 		cv.convert(mainProgram, cc);
-		// string path_dot;
-		// path_dot = path + input_file_name + ".dot";
-		// ofstream ofs0(path_dot, ofstream::out);
-		// ofs0 << cc.generate_dot_graph();
-		// ofs0.close();
-
 		LOG(INFO) << "Done";
+
+		db.add(&cc);
+		db.snapshot("after_cidfg_creation");
 
 		/***************************************************************************
 		 * Front-end optimization
@@ -265,9 +251,7 @@ int main(int argc, char **argv)
 		 * Back-end transformation and optimization
 		 **************************************************************************/
 		LOG(INFO) << "Start back-end optimization ...";
-
 		vesyla::codegen::StorageImage esi(mainProgram, cc);
-
 		codegen::Optimizer bopt;
 		schedule::Descriptor d = bopt.optimize(cc);
 		LOG(INFO) << "Done";
@@ -306,7 +290,6 @@ int main(int argc, char **argv)
 		map<string, vector<BIR::Instruction *>> instr_lists = s.desc().get_instr_lists();
 		vesyla::sync::Synchronizer sy;
 		instr_lists = sy.synchronize(instr_lists, s.get_end_time());
-		//bEngine.run2(instr_lists);
 		LOG(INFO) << "Done";
 
 		/***************************************************************************
@@ -323,14 +306,10 @@ int main(int argc, char **argv)
 		LOG(INFO) << "Start file generation ...";
 		vesyla::filegen::FileGenerator fg;
 		fg.generate(mainProgram, instr_lists, esi);
-		// dump.dumpDRRACluster(bEngine.drraCluster());
-		// dump.drraCodeGeneration(bEngine.drraCluster(), mainProgram);
-		// dump.dump_layout(bEngine.layout());
 		LOG(INFO) << "Done";
 
 		// Releasing the data structure and close all files.
 		GarbageCollector;
-		//	CLOSE_ALL_FILES;
 	}
 
 	// Get stop time

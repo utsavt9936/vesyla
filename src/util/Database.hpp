@@ -15,13 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Vesyla.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __VESYLA_UTIL_CONFIG_HPP__
-#define __VESYLA_UTIL_CONFIG_HPP__
+#ifndef __VESYLA_UTIL_DATABASE_HPP__
+#define __VESYLA_UTIL_DATABASE_HPP__
 
-#include <boost/foreach.hpp>
-#include <boost/property_tree/ptree.hpp>
+#include <string.h>
+#include <unistd.h>
+#include <limits.h>
+#include <cfloat>
+#include <math.h>
 #include <boost/property_tree/xml_parser.hpp>
-#include "GlobalVar.hpp"
+#include <boost/property_tree/ptree.hpp>
+#include <unordered_map>
+#include <string>
+#include "easylogpp/easylogging++.h"
+#include "Object.hpp"
+#include "SysPath.hpp"
 
 using namespace std;
 
@@ -29,14 +37,22 @@ namespace vesyla
 {
 namespace util
 {
-class Config
+class Database
 {
-public:
-	Config(string config_file_);
-	~Config();
-};
+private:
+	std::unordered_map<string, Object *> _data;
+	boost::property_tree::ptree _p;
 
+public:
+	Database();
+	Database(string filename_);
+	bool add(Object *obj_);
+	bool remove(string name_);
+	Object *get_object(string name_);
+	void snapshot(string snapshot_name_);
+	boost::property_tree::ptree get_object_ptree(string name_);
+};
 } // namespace util
 } // namespace vesyla
 
-#endif // __VESYLA_UTIL_CONFIG_HPP__
+#endif // __VESYLA_UTIL_DATABASE_HPP__

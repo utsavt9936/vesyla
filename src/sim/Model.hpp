@@ -48,7 +48,7 @@ private:
 public:
 	Model(int raccu_reg_count_, int loop_manager_count_);
 	~Model();
-	int simulate(vector<BIR::Instruction *> instrs_);
+	int simulate(vector<BIR::Instruction *> instrs_, int init_delay_ = 0);
 	void reset();
 };
 } // namespace sim
