@@ -1484,8 +1484,8 @@ string RtlGenerator::dump_testbench_header(map<string, vector<BIR::Instruction *
 	Common::write_line(str, "DUT : ENTITY work.fabric", 1);
 	Common::write_line(str, "PORT MAP (clk                       => clk,", 2);
 	Common::write_line(str, "          rst_n                     => rst_n,", 2);
-	Common::write_line(str, "          clk_input                 => clk_input,", 2);
-	Common::write_line(str, "          rst_input                 => rst_input,", 2);
+	Common::write_line(str, "          --clk_input                 => clk_input,", 2);
+	Common::write_line(str, "          --rst_input                 => rst_input,", 2);
 	Common::write_line(str, "          instr_ld                  => instr_load,", 2);
 	Common::write_line(str, "          instr_inp                 => instr_input,", 2);
 	Common::write_line(str, "          seq_address_rb            => seq_address_rb,", 2);
